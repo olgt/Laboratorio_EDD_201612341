@@ -78,8 +78,11 @@ void guardarRecursivo(NodoC* aux,FILE* fp,char c[]){
         return;
     }else{
         if(aux->derecha!=NULL){
-
             sprintf(c,"node%p[label=\"%i\"]\n",&(*aux),aux->val);
+            fputs(c,fp);
+            sprintf(c,"node%p[fillcolor = red];\n",&(*aux), aux->val);
+            fputs(c,fp);
+            sprintf(c,"node%p -> def [arrowhead = diamond];\n",&(*aux), aux->val);
             fputs(c,fp);
             guardarRecursivo(aux->derecha,fp,c);
             sprintf(c,"node%p->node%p;\n node%p->node%p;\n",&(*aux),&(*aux->derecha),&(*aux->derecha),&(*aux));
