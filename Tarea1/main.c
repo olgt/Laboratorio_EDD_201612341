@@ -29,8 +29,10 @@ int main(){
     add(l,i);
     add(l,j);
 
-    borrarNodo(l, 3);
-    getNodo(l, 4);
+    borrarNodo(l, 1);
+    borrarNodo(l,7);
+    borrarNodo(l,8);
+    //getNodo(l, 4);
 
     imprimir(l);
     generar(l);

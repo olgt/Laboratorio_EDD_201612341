@@ -1,0 +1,28 @@
+-------------Errores-----------------------
+1) No me dejo compilar por que en el metodo de generar recursivo en la linea 83 me dice que le 
+estas agregando dos parametros y solo tiene un argumento. igual pasa con la linea 85.
+
+2) La imagen que se genera no se le aplica el color y tiene un enlace a def
+
+3) el metodo borrarnodo no se encuentra en el header de la ListaC.h entonces cuando mando a llamar a la funcion me da error.
+
+4) Tu metodo de eliminar unicamente estas colocando los objetos a NULL, lo que tienes que hacer es darle free(aux)
+
+
+
+
+-----------------------------------Recomendaciones--------------
+
+1) Normalmente los elementos de un array y eso se inician en 0 lo digo porque si quiero eliminar como el de la posicion 0.
+
+2) En lugar del break es mejor darle un return ya que no tiene que hacer nada mas
+
+
+Nota---------------------------------------------
+
+Grafica 5/20
+Eliminar 30/40
+Get 40/40
+
+
+Total ---------- 75 
