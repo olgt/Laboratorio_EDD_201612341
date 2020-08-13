@@ -1,0 +1,13 @@
+----------Errores--------------------
+1) No estan declarados los metodos en el archivo header.
+2) En el metodo de generar graphviz tienen mas parametros de los que le mandas en la linea 85,87
+3) El metodo de eliminar no tiene free 
+----------Recomendaciones-----------
+----------Nota----------------------
+
+Grafica 20/20
+Eliminar 30/40
+Get 40/40
+
+Total 90
+

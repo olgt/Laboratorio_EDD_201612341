@@ -1,0 +1,44 @@
+digraph G{ 
+ node[shape="box", style=filled, color=".7 .3 1.0"];
+node0x563ebd129260[label="1"]
+node0x563ebd129260[fillcolor = red]
+node0x563ebd129260[arrowhead = diamond]
+node0x563ebd129280[label="2"]
+node0x563ebd129280[fillcolor = red]
+node0x563ebd129280[arrowhead = diamond]
+node0x563ebd1292c0[label="4"]
+node0x563ebd1292c0[fillcolor = red]
+node0x563ebd1292c0[arrowhead = diamond]
+node0x563ebd1292e0[label="5"]
+node0x563ebd1292e0[fillcolor = red]
+node0x563ebd1292e0[arrowhead = diamond]
+node0x563ebd129300[label="6"]
+node0x563ebd129300[fillcolor = red]
+node0x563ebd129300[arrowhead = diamond]
+node0x563ebd129320[label="7"]
+node0x563ebd129320[fillcolor = red]
+node0x563ebd129320[arrowhead = diamond]
+node0x563ebd129340[label="8"]
+node0x563ebd129340[fillcolor = red]
+node0x563ebd129340[arrowhead = diamond]
+node0x563ebd129360[label="9"]
+node0x563ebd129360[fillcolor = red]
+node0x563ebd129360[arrowhead = diamond]
+node0x563ebd129380[label="10"]
+node0x563ebd129360->node0x563ebd129380;
+ node0x563ebd129380->node0x563ebd129360;
+node0x563ebd129340->node0x563ebd129360;
+ node0x563ebd129360->node0x563ebd129340;
+node0x563ebd129320->node0x563ebd129340;
+ node0x563ebd129340->node0x563ebd129320;
+node0x563ebd129300->node0x563ebd129320;
+ node0x563ebd129320->node0x563ebd129300;
+node0x563ebd1292e0->node0x563ebd129300;
+ node0x563ebd129300->node0x563ebd1292e0;
+node0x563ebd1292c0->node0x563ebd1292e0;
+ node0x563ebd1292e0->node0x563ebd1292c0;
+node0x563ebd129280->node0x563ebd1292c0;
+ node0x563ebd1292c0->node0x563ebd129280;
+node0x563ebd129260->node0x563ebd129280;
+ node0x563ebd129280->node0x563ebd129260;
+}

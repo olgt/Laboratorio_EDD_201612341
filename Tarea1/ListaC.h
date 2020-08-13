@@ -16,3 +16,5 @@ void generar(ListaC* l);
 
 void Liberar(ListaC* l);
 void guardarRecursivo(NodoC* aux,FILE *fp,char *c);
+void borrarNodo(ListaC* l, int posicionLista);
+void getNodo(ListaC* l, int valorNodo);
