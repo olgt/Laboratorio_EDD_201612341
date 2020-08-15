@@ -13,6 +13,8 @@ public:
     void enqueue(T valor);
     NodoGenerico<T>* dequeue();
     void vaciar();
+    void insertar(T persona);
+    void showList();
 private:
     NodoGenerico<T> *top;
     NodoGenerico<T> *bottom;

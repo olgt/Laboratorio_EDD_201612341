@@ -1,8 +1,16 @@
 #include <QCoreApplication>
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
+#include <menuprincipal.h>
 
-    return a.exec();
+#include <iostream>
+
+using namespace std;
+
+
+MenuPrincipal nuevoMenuPrincipal;
+
+int main()
+{
+    nuevoMenuPrincipal.imprimirMenu();
+    return 0;
 }
