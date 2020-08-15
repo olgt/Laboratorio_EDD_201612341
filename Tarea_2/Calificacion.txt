@@ -1,0 +1,9 @@
+La logica del metodo esta muy bien
+lo malo es que era hacerlo con la clase persona.
+
+-------------Recomendaciones---------------------
+1) En las lineas donde tienes if(){/*codigo*/ break;} es mejor decirle al compilador que le de un return
+como ya no tienes acciones fuera del while.
+
+Nota---------------
+100

@@ -22,6 +22,7 @@ int main()
     cola->insertar(2);
     cola->insertar(3);
     cola->insertar(25);
+    cola->insertar(90);
     cola->showList();
 
 
