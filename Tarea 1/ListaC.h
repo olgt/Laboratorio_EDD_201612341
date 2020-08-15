@@ -6,7 +6,7 @@
 typedef struct ListaC
 {
     NodoC* head;
-    
+
 }ListaC;
 
 ListaC* nuevaLista();

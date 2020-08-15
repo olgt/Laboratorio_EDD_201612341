@@ -57,13 +57,13 @@ ListaC* nuevaLista(){
 }
 void generar(ListaC* l){
     FILE * fp;
-    fp=fopen("./cadigo.txt","w");
+    fp=fopen("./codigo.gv","w");
     if(fp==NULL){
         printf("Error");
         return;
     }
     char cad[1024];
-    sprintf(cad,"digraph G{ \n node[shape=\"box\"];\n");
+    sprintf(cad,"digraph G{ \n node[shape=\"box\", style=filled, color=\".7 .3 1.0\"];\n");
     fputs(cad,fp);
     NodoC* aux;
     aux=l->head;
@@ -71,6 +71,8 @@ void generar(ListaC* l){
     sprintf(cad,"}\n");
     fputs(cad,fp);
     fclose(fp);
+    system("dot -Tps codigo.gv -o codigo.ps");
+
 }
 
 void guardarRecursivo(NodoC* aux,FILE* fp,char c[]){
@@ -80,9 +82,9 @@ void guardarRecursivo(NodoC* aux,FILE* fp,char c[]){
         if(aux->derecha!=NULL){
             sprintf(c,"node%p[label=\"%i\"]\n",&(*aux),aux->val);
             fputs(c,fp);
-            sprintf(c,"node%p[fillcolor = red];\n",&(*aux), aux->val);
+            sprintf(c,"node%p[fillcolor = red]\n",&(*aux), aux->val);
             fputs(c,fp);
-            sprintf(c,"node%p -> def [arrowhead = diamond];\n",&(*aux), aux->val);
+            sprintf(c,"node%p[arrowhead = diamond]\n",&(*aux), aux->val);
             fputs(c,fp);
             guardarRecursivo(aux->derecha,fp,c);
             sprintf(c,"node%p->node%p;\n node%p->node%p;\n",&(*aux),&(*aux->derecha),&(*aux->derecha),&(*aux));
