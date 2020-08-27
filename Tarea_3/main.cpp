@@ -29,7 +29,7 @@ int main()
     cout << "Recorrdigo Inorden:" << endl;
     nuevoArbolBinario->recorrerInorden(nuevoArbolBinario->getRaiz());
 
-    //delete nuevoArbolBinario;
+    delete nuevoArbolBinario;
 
     return 0;
 }

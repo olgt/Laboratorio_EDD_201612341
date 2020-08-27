@@ -6,6 +6,10 @@ Arbol_Binario::Arbol_Binario()
     this->raiz = NULL;
 }
 
+Arbol_Binario::~Arbol_Binario(){
+    Delete(this->raiz);
+}
+
 
 void Arbol_Binario::Delete(NodoArbol *raiz){
     if(raiz==NULL){return;}
@@ -13,6 +17,8 @@ void Arbol_Binario::Delete(NodoArbol *raiz){
     Delete(raiz->getDerecha());
     delete raiz;
 }
+
+
 
 NodoArbol* Arbol_Binario::getRaiz(){
     return this->raiz;
