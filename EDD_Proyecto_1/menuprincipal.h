@@ -1,7 +1,6 @@
 #ifndef MENUPRINCIPAL_H
 #define MENUPRINCIPAL_H
 
-#include <menuverproyectos.h>
 #include <Lista_Niveles.h>
 
 #include <iostream>

@@ -15,17 +15,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        Arbol_AVL.cpp \
-        Cabecera.cpp \
-        Lista_Niveles.cpp \
-        Matriz.cpp \
-        Nodo_Matriz.cpp \
-        Nodo_Nivel.cpp \
-        Nodo_Objeto.cpp \
-        Nodo_ProyectoAVL.cpp \
+        arbol_binario.cpp \
+        arbolavl.cpp \
         main.cpp \
-        menuprincipal.cpp \
-        utilities.cpp
+        nodoarbol.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -33,13 +26,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Arbol_AVL.h \
-    Cabecera.h \
-    Lista_Niveles.h \
-    Matriz.h \
-    Nodo_Matriz.h \
-    Nodo_Nivel.h \
-    Nodo_Objeto.h \
-    Nodo_ProyectoAVL.h \
-    menuprincipal.h \
-    utilities.h
+    arbol_binario.h \
+    arbolavl.h \
+    nodoarbol.h
