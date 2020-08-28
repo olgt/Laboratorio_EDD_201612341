@@ -10,16 +10,16 @@ int main()
     Arbol_Binario* nuevoArbolBinario = new Arbol_Binario();
 
 
-    nuevoArbolBinario->insertar(5);
-    nuevoArbolBinario->insertar(4);
-    nuevoArbolBinario->insertar(3);
+    nuevoArbolBinario->insertar(10);
     nuevoArbolBinario->insertar(1);
-    nuevoArbolBinario->insertar(2);
-    nuevoArbolBinario->insertar(6);
+    nuevoArbolBinario->insertar(20);
+    nuevoArbolBinario->insertar(15);
     nuevoArbolBinario->insertar(8);
+    nuevoArbolBinario->insertar(96);
+    nuevoArbolBinario->insertar(23);
+    nuevoArbolBinario->insertar(4);
     nuevoArbolBinario->insertar(7);
-    nuevoArbolBinario->insertar(9);
-
+    nuevoArbolBinario->insertar(32);
 
     cout << "Recorrdigo Preorden:" << endl;
     nuevoArbolBinario->recorrerPreorden(nuevoArbolBinario->getRaiz());

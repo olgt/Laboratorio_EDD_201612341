@@ -1,0 +1,12 @@
+---------------Errores--------------
+
+---------------Recomendaciones------
+************Muy buena manera de programar*****************
+************Todo bien*****
+---------------Nota-----------------
+Arbol     40/40
+Preorden  20/20
+Inorden   20/20
+Postorden 20/20
+Total 100
+
