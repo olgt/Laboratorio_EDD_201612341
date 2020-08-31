@@ -59,9 +59,13 @@ SOURCES       = ../EDD_Proyecto_1/Arbol_AVL.cpp \
 		../EDD_Proyecto_1/Nodo_Matriz.cpp \
 		../EDD_Proyecto_1/Nodo_Nivel.cpp \
 		../EDD_Proyecto_1/Nodo_Objeto.cpp \
-		../EDD_Proyecto_1/Nodo_ProyectoAVL.cpp \
+		../EDD_Proyecto_1/arbol_binario.cpp \
+		../EDD_Proyecto_1/lista_puntos.cpp \
 		../EDD_Proyecto_1/main.cpp \
 		../EDD_Proyecto_1/menuprincipal.cpp \
+		../EDD_Proyecto_1/nodo_binario.cpp \
+		../EDD_Proyecto_1/nodo_puntos.cpp \
+		../EDD_Proyecto_1/nodoarbol.cpp \
 		../EDD_Proyecto_1/utilities.cpp 
 OBJECTS       = Arbol_AVL.o \
 		Cabecera.o \
@@ -70,9 +74,13 @@ OBJECTS       = Arbol_AVL.o \
 		Nodo_Matriz.o \
 		Nodo_Nivel.o \
 		Nodo_Objeto.o \
-		Nodo_ProyectoAVL.o \
+		arbol_binario.o \
+		lista_puntos.o \
 		main.o \
 		menuprincipal.o \
+		nodo_binario.o \
+		nodo_puntos.o \
+		nodoarbol.o \
 		utilities.o
 DIST          = ../../../../Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.15.1/gcc_64/mkspecs/common/unix.conf \
@@ -290,8 +298,12 @@ DIST          = ../../../../Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../EDD_Proyecto_1/Nodo_Matriz.h \
 		../EDD_Proyecto_1/Nodo_Nivel.h \
 		../EDD_Proyecto_1/Nodo_Objeto.h \
-		../EDD_Proyecto_1/Nodo_ProyectoAVL.h \
+		../EDD_Proyecto_1/arbol_binario.h \
+		../EDD_Proyecto_1/lista_puntos.h \
 		../EDD_Proyecto_1/menuprincipal.h \
+		../EDD_Proyecto_1/nodo_binario.h \
+		../EDD_Proyecto_1/nodo_puntos.h \
+		../EDD_Proyecto_1/nodoarbol.h \
 		../EDD_Proyecto_1/utilities.h ../EDD_Proyecto_1/Arbol_AVL.cpp \
 		../EDD_Proyecto_1/Cabecera.cpp \
 		../EDD_Proyecto_1/Lista_Niveles.cpp \
@@ -299,9 +311,13 @@ DIST          = ../../../../Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../EDD_Proyecto_1/Nodo_Matriz.cpp \
 		../EDD_Proyecto_1/Nodo_Nivel.cpp \
 		../EDD_Proyecto_1/Nodo_Objeto.cpp \
-		../EDD_Proyecto_1/Nodo_ProyectoAVL.cpp \
+		../EDD_Proyecto_1/arbol_binario.cpp \
+		../EDD_Proyecto_1/lista_puntos.cpp \
 		../EDD_Proyecto_1/main.cpp \
 		../EDD_Proyecto_1/menuprincipal.cpp \
+		../EDD_Proyecto_1/nodo_binario.cpp \
+		../EDD_Proyecto_1/nodo_puntos.cpp \
+		../EDD_Proyecto_1/nodoarbol.cpp \
 		../EDD_Proyecto_1/utilities.cpp
 QMAKE_TARGET  = EDD_Proyecto_1
 DESTDIR       = 
@@ -750,8 +766,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.h ../EDD_Proyecto_1/Cabecera.h ../EDD_Proyecto_1/Lista_Niveles.h ../EDD_Proyecto_1/Matriz.h ../EDD_Proyecto_1/Nodo_Matriz.h ../EDD_Proyecto_1/Nodo_Nivel.h ../EDD_Proyecto_1/Nodo_Objeto.h ../EDD_Proyecto_1/Nodo_ProyectoAVL.h ../EDD_Proyecto_1/menuprincipal.h ../EDD_Proyecto_1/utilities.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.cpp ../EDD_Proyecto_1/Cabecera.cpp ../EDD_Proyecto_1/Lista_Niveles.cpp ../EDD_Proyecto_1/Matriz.cpp ../EDD_Proyecto_1/Nodo_Matriz.cpp ../EDD_Proyecto_1/Nodo_Nivel.cpp ../EDD_Proyecto_1/Nodo_Objeto.cpp ../EDD_Proyecto_1/Nodo_ProyectoAVL.cpp ../EDD_Proyecto_1/main.cpp ../EDD_Proyecto_1/menuprincipal.cpp ../EDD_Proyecto_1/utilities.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.h ../EDD_Proyecto_1/Cabecera.h ../EDD_Proyecto_1/Lista_Niveles.h ../EDD_Proyecto_1/Matriz.h ../EDD_Proyecto_1/Nodo_Matriz.h ../EDD_Proyecto_1/Nodo_Nivel.h ../EDD_Proyecto_1/Nodo_Objeto.h ../EDD_Proyecto_1/arbol_binario.h ../EDD_Proyecto_1/lista_puntos.h ../EDD_Proyecto_1/menuprincipal.h ../EDD_Proyecto_1/nodo_binario.h ../EDD_Proyecto_1/nodo_puntos.h ../EDD_Proyecto_1/nodoarbol.h ../EDD_Proyecto_1/utilities.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.cpp ../EDD_Proyecto_1/Cabecera.cpp ../EDD_Proyecto_1/Lista_Niveles.cpp ../EDD_Proyecto_1/Matriz.cpp ../EDD_Proyecto_1/Nodo_Matriz.cpp ../EDD_Proyecto_1/Nodo_Nivel.cpp ../EDD_Proyecto_1/Nodo_Objeto.cpp ../EDD_Proyecto_1/arbol_binario.cpp ../EDD_Proyecto_1/lista_puntos.cpp ../EDD_Proyecto_1/main.cpp ../EDD_Proyecto_1/menuprincipal.cpp ../EDD_Proyecto_1/nodo_binario.cpp ../EDD_Proyecto_1/nodo_puntos.cpp ../EDD_Proyecto_1/nodoarbol.cpp ../EDD_Proyecto_1/utilities.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -800,7 +816,7 @@ compiler_clean: compiler_moc_predefs_clean
 ####### Compile
 
 Arbol_AVL.o: ../EDD_Proyecto_1/Arbol_AVL.cpp ../EDD_Proyecto_1/Arbol_AVL.h \
-		../EDD_Proyecto_1/Nodo_ProyectoAVL.h \
+		../EDD_Proyecto_1/nodoarbol.h \
 		../EDD_Proyecto_1/Lista_Niveles.h \
 		../EDD_Proyecto_1/Nodo_Nivel.h \
 		../EDD_Proyecto_1/utilities.h
@@ -832,11 +848,15 @@ Nodo_Objeto.o: ../EDD_Proyecto_1/Nodo_Objeto.cpp ../EDD_Proyecto_1/Nodo_Objeto.h
 		../EDD_Proyecto_1/Nodo_Matriz.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Nodo_Objeto.o ../EDD_Proyecto_1/Nodo_Objeto.cpp
 
-Nodo_ProyectoAVL.o: ../EDD_Proyecto_1/Nodo_ProyectoAVL.cpp ../EDD_Proyecto_1/Nodo_ProyectoAVL.h \
-		../EDD_Proyecto_1/Lista_Niveles.h \
-		../EDD_Proyecto_1/Nodo_Nivel.h \
-		../EDD_Proyecto_1/utilities.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Nodo_ProyectoAVL.o ../EDD_Proyecto_1/Nodo_ProyectoAVL.cpp
+arbol_binario.o: ../EDD_Proyecto_1/arbol_binario.cpp ../EDD_Proyecto_1/arbol_binario.h \
+		../EDD_Proyecto_1/nodo_binario.h \
+		../EDD_Proyecto_1/lista_puntos.h \
+		../EDD_Proyecto_1/nodo_puntos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arbol_binario.o ../EDD_Proyecto_1/arbol_binario.cpp
+
+lista_puntos.o: ../EDD_Proyecto_1/lista_puntos.cpp ../EDD_Proyecto_1/lista_puntos.h \
+		../EDD_Proyecto_1/nodo_puntos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lista_puntos.o ../EDD_Proyecto_1/lista_puntos.cpp
 
 main.o: ../EDD_Proyecto_1/main.cpp ../../../../Qt/5.15.1/gcc_64/include/QtCore/QCoreApplication \
 		../../../../Qt/5.15.1/gcc_64/include/QtCore/qcoreapplication.h \
@@ -900,7 +920,9 @@ main.o: ../EDD_Proyecto_1/main.cpp ../../../../Qt/5.15.1/gcc_64/include/QtCore/Q
 		../EDD_Proyecto_1/Matriz.h \
 		../EDD_Proyecto_1/Nodo_Matriz.h \
 		../EDD_Proyecto_1/Nodo_Objeto.h \
-		../EDD_Proyecto_1/Cabecera.h
+		../EDD_Proyecto_1/Cabecera.h \
+		../EDD_Proyecto_1/Arbol_AVL.h \
+		../EDD_Proyecto_1/nodoarbol.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../EDD_Proyecto_1/main.cpp
 
 menuprincipal.o: ../EDD_Proyecto_1/menuprincipal.cpp ../EDD_Proyecto_1/menuprincipal.h \
@@ -908,6 +930,20 @@ menuprincipal.o: ../EDD_Proyecto_1/menuprincipal.cpp ../EDD_Proyecto_1/menuprinc
 		../EDD_Proyecto_1/Nodo_Nivel.h \
 		../EDD_Proyecto_1/utilities.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menuprincipal.o ../EDD_Proyecto_1/menuprincipal.cpp
+
+nodo_binario.o: ../EDD_Proyecto_1/nodo_binario.cpp ../EDD_Proyecto_1/nodo_binario.h \
+		../EDD_Proyecto_1/lista_puntos.h \
+		../EDD_Proyecto_1/nodo_puntos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo_binario.o ../EDD_Proyecto_1/nodo_binario.cpp
+
+nodo_puntos.o: ../EDD_Proyecto_1/nodo_puntos.cpp ../EDD_Proyecto_1/nodo_puntos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodo_puntos.o ../EDD_Proyecto_1/nodo_puntos.cpp
+
+nodoarbol.o: ../EDD_Proyecto_1/nodoarbol.cpp ../EDD_Proyecto_1/nodoarbol.h \
+		../EDD_Proyecto_1/Lista_Niveles.h \
+		../EDD_Proyecto_1/Nodo_Nivel.h \
+		../EDD_Proyecto_1/utilities.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o nodoarbol.o ../EDD_Proyecto_1/nodoarbol.cpp
 
 utilities.o: ../EDD_Proyecto_1/utilities.cpp ../EDD_Proyecto_1/utilities.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utilities.o ../EDD_Proyecto_1/utilities.cpp

@@ -1,31 +1,69 @@
 digraph G {
 rankdir = TB; 
 node [shape=box, width=.1, height=.1]; 
-node0 [label = "Matriz"] 
+node0 [label = "Matriz", group=0] 
 { 
-rank=same; nodeY1, nodeY2, nodeY3, nodeY4, nodeY5; 
+rank=same; node0, nodeY1, nodeY2, nodeY3, nodeY4, nodeY5; 
 } 
 { 
-rank=same; node1, node3, node6; 
+rank=same; nodeX1, node1, node3, node6; 
 } 
 { 
-rank=same; node2, node4; 
+rank=same; nodeX2, node2, node4; 
 } 
 { 
-rank=same; node5; 
+rank=same; nodeX3, node5; 
 } 
-nodeY1[label = "1"]; 
-nodeY2[label = "2"]; 
-nodeY3[label = "3"]; 
-nodeY4[label = "4"]; 
-nodeY5[label = "5"]; 
-nodeX1[label = "1"]; 
-nodeX2[label = "2"]; 
-nodeX3[label = "3"]; 
-node1[label = "Pared x=1"]; 
-node3[label = "Silla x=1"]; 
-node6[label = "Sillon x=1"]; 
-node2[label = "Sillon x =2"]; 
-node4[label = "Pared x=2"]; 
-node5[label = "Sillon x=3"]; 
+nodeY1[label = "1", group=1]; 
+nodeY2[label = "2", group=2]; 
+nodeY3[label = "3", group=3]; 
+nodeY4[label = "4", group=4]; 
+nodeY5[label = "5", group=5]; 
+nodeX1[label = "1", group=0]; 
+nodeX2[label = "2", group=0]; 
+nodeX3[label = "3", group=0]; 
+node1[label = "1", group=2]; 
+node3[label = "3", group=3]; 
+node6[label = "6", group=4]; 
+node2[label = "2", group=1]; 
+node4[label = "4", group=4]; 
+node5[label = "5", group=5]; 
+node0->nodeY1; 
+node0->nodeX1; 
+nodeY1->nodeY2;
+nodeY2->nodeY1;
+nodeY1->node2; 
+node2->nodeY1; 
+nodeY2->nodeY3;
+nodeY3->nodeY2;
+nodeY2->node1; 
+node1->nodeY2; 
+nodeY3->nodeY4;
+nodeY4->nodeY3;
+nodeY3->node3; 
+node3->nodeY3; 
+nodeY4->nodeY5;
+nodeY5->nodeY4;
+nodeY4->node6; 
+node6->nodeY4; 
+node6->node4; 
+node4->node6; 
+nodeY5->node5; 
+node5->nodeY5; 
+nodeX1->nodeX2;
+nodeX2->nodeX1;
+nodeX1->node1; 
+node1->nodeX1; 
+node1->node3; 
+node3->node1; 
+node3->node6; 
+node6->node3; 
+nodeX2->nodeX3;
+nodeX3->nodeX2;
+nodeX2->node2; 
+node2->nodeX2; 
+node2->node4; 
+node4->node2; 
+nodeX3->node5; 
+node5->nodeX3; 
 }

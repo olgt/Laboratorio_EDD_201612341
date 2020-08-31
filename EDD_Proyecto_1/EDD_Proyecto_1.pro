@@ -22,9 +22,13 @@ SOURCES += \
         Nodo_Matriz.cpp \
         Nodo_Nivel.cpp \
         Nodo_Objeto.cpp \
-        Nodo_ProyectoAVL.cpp \
+        arbol_binario.cpp \
+        lista_puntos.cpp \
         main.cpp \
         menuprincipal.cpp \
+        nodo_binario.cpp \
+        nodo_puntos.cpp \
+        nodoarbol.cpp \
         utilities.cpp
 
 # Default rules for deployment.
@@ -40,6 +44,10 @@ HEADERS += \
     Nodo_Matriz.h \
     Nodo_Nivel.h \
     Nodo_Objeto.h \
-    Nodo_ProyectoAVL.h \
+    arbol_binario.h \
+    lista_puntos.h \
     menuprincipal.h \
+    nodo_binario.h \
+    nodo_puntos.h \
+    nodoarbol.h \
     utilities.h

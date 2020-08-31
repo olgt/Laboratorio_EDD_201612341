@@ -161,7 +161,6 @@ Cabecera* Matriz::getHorizontal(int y){
     return NULL;
 }
 
-
 void Matriz::add(Nodo_Objeto *nuevo){
     Cabecera* vertical = this->getVertical(nuevo->getX());
     Cabecera* horizontal = this->getHorizontal(nuevo->getY());
@@ -245,8 +244,8 @@ void Matriz::crearGrafica(){
     Nodo_Matriz *aux = this->vertical;
     Nodo_Matriz *aux2 = this->vertical;
 
-    Nodo_Matriz *tmp1 = this->vertical;
-    Nodo_Matriz *tmp2 = this->vertical;
+    Nodo_Matriz *tmpH = this->horizontal;
+    Nodo_Matriz *tmpV = this->vertical;
 
 
         ofstream MyFile("MatrizGrafica.gv");
@@ -254,11 +253,12 @@ void Matriz::crearGrafica(){
         MyFile << "\n";
         MyFile << "rankdir = TB; \n";
         MyFile << "node [shape=box, width=.1, height=.1]; \n";
-        MyFile << "node0 [label = \"Matriz\"] \n";
+        MyFile << "node0 [label = \"Matriz\", group=0] \n";
 
-        //Poniendo ranks en nodo cabecera X (Columnas se ponen automatica mente de arriba-abajo
+        //RANKS Nodos Cabecera Y
         MyFile << "{ \n";
         MyFile << "rank=same; ";
+        MyFile << "node0, ";
 
         while(horizontal != NULL){
           MyFile << "nodeY" << ((Cabecera*)horizontal)->getPos();
@@ -271,10 +271,11 @@ void Matriz::crearGrafica(){
         MyFile << "} \n";
         horizontal = this->horizontal;
 
-        //Poniendo ranks de nodos matriz X (Columnas se ponen automatica mente de arriba-abajo
+          //RANKS Nodos Matris y Cabecera "Y"
           while(aux2 != NULL){
               MyFile << "{ \n";
               MyFile << "rank=same; ";
+              MyFile << "nodeX" << ((Cabecera*)aux)->getPos() << ", ";
               aux = aux->getDerecha();
 
               while(aux!=NULL){
@@ -284,52 +285,115 @@ void Matriz::crearGrafica(){
                   else { MyFile << ", ";}
 
                   aux = aux->getDerecha();
-                  noNodo++;
               }
               aux = aux2->getAbajo();
               aux2 = aux2->getAbajo();
               MyFile << "} \n";
 
           }
+
           aux2 = this->vertical;
           aux = this->vertical;
 
 
-        //Creando Nodos de cabeceras, vamos aumentando en x, luego pasamos al siguiente Y y se comienza desde x again
+          //NODOS CABECERA
           while(horizontal != NULL){
-            MyFile << "nodeY" << ((Cabecera*)horizontal)->getPos() << "[label = \"" << ((Cabecera*)horizontal)->getPos() << "\"]; \n";
+            MyFile << "nodeY" << ((Cabecera*)horizontal)->getPos() << "[label = \"" << ((Cabecera*)horizontal)->getPos() << "\""
+                   << ", group=" << ((Cabecera*)horizontal)->getPos() << "]; \n";
             horizontal = horizontal->getDerecha();
           }
           while(vertical != NULL){
-              MyFile << "nodeX" << ((Cabecera*)vertical)->getPos()  << "[label = \"" << ((Cabecera*)vertical)->getPos() << "\"]; \n";
+              MyFile << "nodeX" << ((Cabecera*)vertical)->getPos()  << "[label = \"" << ((Cabecera*)vertical)->getPos()
+                     << "\""  << ", group=0" << "]; \n";
               vertical = vertical->getAbajo();
           }
 
 
-        //Creando Nodos de Matriz, aumentando x, pasamos y y de vuelta aumentar x
+          //NODOS MATRIZ
           while(aux2 != NULL){
               aux = aux->getDerecha();
               while(aux!=NULL){
-                  MyFile << "node" << ((Nodo_Objeto*)aux)->getId() << "[label = \"" << ((Nodo_Objeto*)aux)->getObjeto() << "\"]; \n";
+                  MyFile << "node" << ((Nodo_Objeto*)aux)->getId() << "[label = \"" << ((Nodo_Objeto*)aux)->getObjeto()
+                         << "\"" << ", group=" << ((Nodo_Objeto*)aux)->getY() << "]; \n";
                   aux = aux->getDerecha();
               }
               aux = aux2->getAbajo();
               aux2 = aux2->getAbajo();
           }
-          cout<< "LISTO Primera Parte";
 
+          //Creando Flechas de Matriz
+          MyFile << "node0" << "->" <<  "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+          MyFile << "node0" << "->" << "nodeX" <<((Cabecera*)tmpV)->getPos() << "; \n";
 
-          //Asignar flechas de anterior
-          while(tmp1 != NULL){
-
+          //FLECHAS CABECERA => MATRIZ & MATRIZ = MATRIZ
+          while(tmpH != NULL){
+              if(tmpH->getDerecha() != NULL){
+                  MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "nodeY" << ((Cabecera*)tmpH->getDerecha())->getPos() << ";" << endl;
+                  MyFile << "nodeY" << ((Cabecera*)tmpH->getDerecha())->getPos() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << ";" << endl;
+                  MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
+                  MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+                  enlacesNodosMatrizHorizontal(MyFile, tmpH->getAbajo());
+              } else {
+                  MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
+                  MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+              }
+              tmpH = tmpH->getDerecha();
+          }
+          while(tmpV != NULL){
+              if(tmpV->getAbajo() != NULL){
+                  MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "nodeX" << ((Cabecera*)tmpV->getAbajo())->getPos() << ";" << endl;
+                  MyFile << "nodeX" << ((Cabecera*)tmpV->getAbajo())->getPos() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << ";" << endl;
+                  MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
+                  MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+                  enlacesNodosMatrizVertical(MyFile, tmpV->getDerecha());
+              } else {
+                  MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
+                  MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+              }
+              tmpV = tmpV->getAbajo();
           }
 
+          //Asignando Flechas a Nodos
+          tmpH = this->horizontal;
+          tmpV = this->vertical;
+          //while(tmpH->get)
+
+
+        cout << "Done";
         MyFile << "}";
         MyFile.close();
         try {
             cout << "Creating" << endl;
-            system("dot -Tps DoubleLinkedList.gv -o DoubleLinkedList.ps");
+            system("dot -Tps MatrizGrafica.gv -o MatrizGrafica.ps");
         } catch (exception e) {
             cout << "error occurred" << endl;
         }
+}
+
+void Matriz::enlacesNodosMatrizHorizontal(ofstream & MyFile, Nodo_Matriz* horizontal){
+
+    Nodo_Matriz* actual = horizontal;
+    cout << ((Nodo_Objeto*)actual)->getId() << endl;
+
+    while(actual->getAbajo() != NULL){
+        cout << "Aqui: "  <<  ((Nodo_Objeto*)actual)->getId()<< endl;
+
+        MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getAbajo())->getId()  << "; \n";
+        MyFile << "node" << ((Nodo_Objeto*)actual->getAbajo())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        actual = actual->getAbajo();
+    }
+}
+
+void Matriz::enlacesNodosMatrizVertical(ofstream & MyFile, Nodo_Matriz* vertical){
+
+    Nodo_Matriz* actual = vertical;
+    cout << ((Nodo_Objeto*)actual)->getId() << endl;
+
+    while(actual->getDerecha() != NULL){
+        cout << "Aqui: "  <<  ((Nodo_Objeto*)actual)->getId()<< endl;
+
+        MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getDerecha())->getId()  << "; \n";
+        MyFile << "node" << ((Nodo_Objeto*)actual->getDerecha())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        actual = actual->getDerecha();
+    }
 }

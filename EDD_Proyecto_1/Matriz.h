@@ -32,7 +32,11 @@ public:
     void imprimirCabeceraY();
     void imprimirMatriz();
 
+
     void crearGrafica();
+    void enlacesNodosMatrizHorizontal(ofstream &, Nodo_Matriz *horizontal);
+    void enlacesNodosMatrizVertical(ofstream & MyFile, Nodo_Matriz* vertical);
+
 };
 
 #endif // MATRIZ_H
