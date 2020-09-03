@@ -1,0 +1,8 @@
+----------Errores-----------
+----------Recomendcaiones---
+1) hay metodos que estan declarados y no estan definidos, eso solo hace que ocupe espacio en memoria
+2) Tu metodo de imprimir esta malo, imprime todo menos el ultimo dato
+*---------Nota-----------
+
+Ordenamiento     80/80
+Buenas practicas 15/20

@@ -8,7 +8,7 @@ int main()
 {
     ordenamiento* nuevo = new ordenamiento();
 
-    string a[] = {"a", "abc", "ab", "abcde", "abcd", "abcdef"};
+    string a[]={"Hola como estas","Yo bien gracias","ESTE ES UN MENSAJE","Vamos a ganar EDD todos juntos","!!!!Vamos a sacar 100","$$$$$$$$$#$$$$$","Este es el ultimo mensaje del dia de hoy*45"};
 
     int length = sizeof(a)/sizeof(a[0]);
 
