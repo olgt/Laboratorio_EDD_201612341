@@ -9,6 +9,9 @@ class Lista_Puntos
 {
 public:
     Lista_Puntos();
+    ~Lista_Puntos();
+
+    void Delete(Nodo_Puntos*);
 
     void deleteNode(int x, int y);
     void addNode(Nodo_Puntos *nuevo);
@@ -16,6 +19,9 @@ public:
     void printLinkedList();
 
     Nodo_Puntos *gethead();
+
+    int getSizeX();
+    int getSizeY();
 
 private:
     Nodo_Puntos *head;

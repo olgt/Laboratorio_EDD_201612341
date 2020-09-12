@@ -4,7 +4,9 @@ Nodo_Puntos::Nodo_Puntos(int x, int y)
 {
     this->x = x;
     this->y = y;
+    this->siguiente = NULL;
 }
+
 
 void Nodo_Puntos::setSiguiente(Nodo_Puntos *n){
     this->siguiente = n;

@@ -1,10 +1,14 @@
 #include "nodoarbol.h"
 
-NodoArbol::NodoArbol(string nombre) //Poner lista de niveles
+NodoArbol::NodoArbol(string nombre, Lista_Niveles* niveles, int id) //Poner lista de niveles
 {
     this->nombre = nombre;
-    //this->niveles = niveles;
+    this->niveles = niveles;
     this->codigo = sumarCaracteres();
+    this->hijoDerecho=NULL;
+    this->hijoIzquierdo=NULL;
+    this->factorE=0;
+    this->id = id;
 }
 
 
@@ -20,7 +24,7 @@ int NodoArbol::sumarCaracteres(){
     for(int i = 0; i < n; i++){
         codigo += (int)char_array[i];
     }
-
+    cout<<codigo<<endl;
     return codigo;
 }
 
@@ -50,6 +54,13 @@ NodoArbol* NodoArbol::getIzquierda(){
 }
 
 
+int NodoArbol::getId(){
+    return this->id;
+}
+
+void NodoArbol::setid(int id){
+    this->id = id;
+}
 
 //Para arbol AVL
 void NodoArbol::setFactor(int factor){
@@ -58,4 +69,8 @@ void NodoArbol::setFactor(int factor){
 
 int NodoArbol::getFactor(){
     return this->factorE;
+}
+
+Lista_Niveles* NodoArbol::getListaNiveles(){
+    return this->niveles;
 }

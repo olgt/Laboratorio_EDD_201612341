@@ -13,19 +13,23 @@ private:
 
     string nombre;
     int codigo;
+    int id;
     Lista_Niveles *niveles;
 
     int factorE;
 
 
 public:
-    NodoArbol(string nombre); //Debo Poner *Lista de Niveles como parametro
+    NodoArbol(string nombre, Lista_Niveles* niveles, int id); //Debo Poner *Lista de Niveles como parametro
 
     void setCodigo(string nombre);
     int sumarCaracteres();
     int getCodigo();
+    int getId();
 
     string getName();
+
+    void setid(int id);
 
     void setIzquierda(NodoArbol* izq);
     void setDerecha(NodoArbol* der);
@@ -35,6 +39,8 @@ public:
 
     void setFactor(int factor);
     int getFactor();
+
+    Lista_Niveles* getListaNiveles();
 
 };
 

@@ -42,6 +42,50 @@ void ordenamiento::seleccion(string *a, int length){
     }
 }
 
+void ordenamiento::insercion(int *a, int length){
+    int aux, pos;
+
+    for(int i = 0; i < length; i++){
+        aux = a[i];
+        pos = i;
+        while((pos>0) &&a[pos-1]>aux){
+            a[pos] = a[pos-1];
+            pos--;
+        }
+        a[pos]=aux;
+    }
+}
+
+void ordenamiento::quickSort(int *a, int length){
+    QuickSort(a,0,length-1);
+}
+
+void ordenamiento::QuickSort(int *a, int start, int end){
+    int part=particion(a, start, end);
+    if(part - 1 > start){
+       QuickSort(a, start, part-1);
+    }
+    if(part+1<end){
+        QuickSort(a, part+1, end);
+    }
+}
+
+int ordenamiento::particion(int *a, int start, int end){
+    int pivot=a[end];
+    for(int i = start; i < end; i++){
+        if(a[i] < pivot){
+            int tmp = a[start];
+            a[start] = a[i];
+            a[i] = tmp;
+            start++;
+        }
+    }
+    int tmp=a[start];
+    a[start]=pivot;
+    a[end]=tmp;
+    return start;
+}
+
 int ordenamiento::sumarCaracteres(string nombre){
 
     int codigo = 0;

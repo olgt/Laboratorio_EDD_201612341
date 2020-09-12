@@ -2,6 +2,7 @@
 #define MENUPRINCIPAL_H
 
 #include <Lista_Niveles.h>
+#include "cargador_proyectos.h"
 
 #include <iostream>
 #include <utilities.h>

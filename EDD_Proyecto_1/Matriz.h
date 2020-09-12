@@ -33,7 +33,7 @@ public:
     void imprimirMatriz();
 
 
-    void crearGrafica();
+    void crearGrafica(string nombre);
     void enlacesNodosMatrizHorizontal(ofstream &, Nodo_Matriz *horizontal);
     void enlacesNodosMatrizVertical(ofstream & MyFile, Nodo_Matriz* vertical);
 

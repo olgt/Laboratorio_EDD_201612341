@@ -7,19 +7,20 @@ Lista_Niveles::Lista_Niveles()
     this->size = 0;
 }
 
-//TODO:
-void Lista_Niveles::imprimirNiveles(){
-    imprimirEspacios(10);
-    int opcion = 0;
+Lista_Niveles::~Lista_Niveles(){
+    Delete(this->getHead());
+}
 
-    while(opcion != 3){
-        cout << "Nivel 1" << endl;
-        cout << "Nivel 2" << endl;
-        cout << "3. Salir" << endl;
-        cout << "Escoja su opcion: ";
-
-        cin >> opcion;
-        imprimirEspacios(10);
+void Lista_Niveles::Delete(Nodo_Nivel* raiz){
+    Nodo_Nivel* actual = raiz;
+    Nodo_Nivel* next= raiz->getSiguiente();
+    while(actual != NULL){
+        actual->getMatriz()->~Matriz();
+        delete actual;
+        actual = NULL;
+        if(next != NULL){
+            next = next->getSiguiente();
+        }
     }
 }
 
@@ -74,6 +75,24 @@ void Lista_Niveles::deleteNode(int id){
          }
 }
 
+void Lista_Niveles::graficarNiveles(string nombreProyecto){
+    Nodo_Nivel* actual = this->getHead();
+    while(actual != NULL){
+        string nombreNivel = "Proyecto_" + nombreProyecto + "_Nivel" + to_string(actual->getId());
+        actual->getMatriz()->crearGrafica(nombreNivel);
+        actual = actual->getSiguiente();
+    }
+}
+
 int Lista_Niveles::getSize(){
     return this->size;
 }
+
+Nodo_Nivel* Lista_Niveles::getHead(){
+    return this->head;
+}
+
+Nodo_Nivel* Lista_Niveles::getTail(){
+    return this->tail;
+}
+

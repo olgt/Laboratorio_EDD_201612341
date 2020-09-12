@@ -3,19 +3,23 @@
 
 #include <iostream>
 #include <utilities.h>
+#include "Matriz.h"
+#include "arbol_binario.h"
+
 using namespace std;
 
 class Nodo_Nivel
 {
 private:
     int id;
-    string matriz;
-    string abb;
+    Matriz* matriz;
+    Arbol_Binario* abb;
+    Arbol_Binario* auxAbb;
     Nodo_Nivel *siguiente;
     Nodo_Nivel *anterior;
 
 public:
-    Nodo_Nivel(int id, string matriz, string abb);
+    Nodo_Nivel(int id, Matriz* matriz, Arbol_Binario* abb);
 
     void imprimirOpciones();
 
@@ -24,6 +28,10 @@ public:
     Nodo_Nivel * getSiguiente();
     Nodo_Nivel * getAnterior();
     int getId();
+
+    Matriz* getMatriz();
+
+    void setABB(Arbol_Binario* abb);
 
 };
 

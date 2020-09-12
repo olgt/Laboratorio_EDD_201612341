@@ -19,6 +19,9 @@ private:
 
 public:
     Lista_Niveles();
+    ~Lista_Niveles();
+
+    void Delete(Nodo_Nivel*);
 
     void addNode(Nodo_Nivel *nuevo);
     void searchNode(int id);
@@ -26,6 +29,10 @@ public:
     int getSize();
     int getId();
     void imprimirNiveles();
+    void graficarNiveles(string nombreProyecto);
+
+    Nodo_Nivel* getHead();
+    Nodo_Nivel* getTail();
 
 };
 

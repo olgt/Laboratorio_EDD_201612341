@@ -11,6 +11,10 @@ Nodo_Objeto::Nodo_Objeto(int id, string objeto, char letra, string color, int x,
 
 }
 
+string Nodo_Objeto::getColor(){
+    return this->color;
+}
+
 string Nodo_Objeto::getObjeto(){
     return this->objeto;
 }

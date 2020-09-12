@@ -1,11 +1,14 @@
 #include "Nodo_Nivel.h"
 
-Nodo_Nivel::Nodo_Nivel(int id, string matriz, string abb)
+Nodo_Nivel::Nodo_Nivel(int id, Matriz* matriz, Arbol_Binario* abb)
 {
     this->id = id;
     this->matriz = matriz;
     this->abb = abb;
+    this->siguiente = NULL;
+    this->anterior = NULL;
 }
+
 
 Nodo_Nivel* Nodo_Nivel::getSiguiente(){
     return this->siguiente;
@@ -42,4 +45,12 @@ void Nodo_Nivel::imprimirOpciones(){
 
 int Nodo_Nivel::getId(){
     return this->id;
+}
+
+Matriz* Nodo_Nivel::getMatriz(){
+    return this->matriz;
+}
+
+void Nodo_Nivel::setABB(Arbol_Binario* abb){
+    this->abb = abb;
 }

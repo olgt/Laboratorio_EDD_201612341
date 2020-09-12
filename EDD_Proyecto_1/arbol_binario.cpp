@@ -14,6 +14,7 @@ void Arbol_Binario::Delete(Nodo_Binario *raiz){
     if(raiz==NULL){return;}
     Delete(raiz->getIzquierda());
     Delete(raiz->getDerecha());
+    raiz->getListaPuntos()->~Lista_Puntos();
     delete raiz;
 }
 
@@ -28,12 +29,15 @@ Nodo_Binario* Arbol_Binario::insertar(Nodo_Binario* raiz, int id, string nombre,
         raiz->setIzquierda(NULL);
     } else if(id<raiz->getId()){
         Nodo_Binario* izq = insertar(raiz->getIzquierda(), id, nombre, letra, color, xy);
-        raiz->setIzquierda(izq);
-
+        if(izq->getId() != raiz->getId()){
+            raiz->setIzquierda(izq);
+        }
     } else if(id>raiz->getId()){
         Nodo_Binario* der = insertar(raiz->getDerecha(), id, nombre, letra, color, xy);
-        raiz->setDerecha(der);
-    }
+        if(der->getId() != raiz->getId()){
+            raiz->setDerecha(der);
+        }
+    }//estoy aqui 09/11/2020
     return raiz;
 }
 
@@ -88,7 +92,7 @@ void Arbol_Binario::crearGrafica(){
     MyFile << "node [shape=record, width=.1, height=.1]; \n";
 
     if(this->getRaiz()->getDerecha() == NULL && this->getRaiz()->getIzquierda() == NULL){
-        MyFile << "node" << this->getRaiz()->getId() << "; \n";
+        MyFile << "Objeto_" << this->getRaiz()->getName() << "; \n";
     } else {
         try {
             crearGraficaRamas(MyFile, aux);
@@ -111,17 +115,16 @@ void Arbol_Binario::crearGrafica(){
 
 void Arbol_Binario::crearGraficaRamas(ofstream &file, Nodo_Binario* aux){
 
-    cout << "Aqui" << endl;
     cout << "CodigoNodo: " << aux->getId() << endl;
 
     if(aux->getIzquierda() != NULL){
-        file << "node" << aux->getId() << "->" << "node" << aux->getIzquierda()->getId() <<  "; \n";
+        file << "Objeto_" << aux->getName() << "->" << "Objeto_" << aux->getIzquierda()->getName() <<  "; \n";
         crearGraficaRamas(file, aux->getIzquierda());
     }
 
 
     if(aux->getDerecha() != NULL){
-        file << "node" << aux->getId() << "->" << "node" << aux->getDerecha()->getId() <<  "; \n";
+        file << "Objeto_" << aux->getName() << "->" << "Objeto_" << aux->getDerecha()->getName() <<  "; \n";
         crearGraficaRamas(file, aux->getDerecha());
     }
 }

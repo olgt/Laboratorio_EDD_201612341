@@ -1,0 +1,130 @@
+digraph G {
+rankdir = TB; 
+node [shape=box, width=.1, height=.1]; 
+node0 [label = "Matriz", group=-1] 
+{ 
+rank=same; node0, nodeY0; 
+} 
+{ 
+rank=same; nodeX0, node10000; 
+} 
+{ 
+rank=same; nodeX1, node10001; 
+} 
+{ 
+rank=same; nodeX2, node10002; 
+} 
+{ 
+rank=same; nodeX3, node10003; 
+} 
+{ 
+rank=same; nodeX4, node10004; 
+} 
+{ 
+rank=same; nodeX5, node10005; 
+} 
+{ 
+rank=same; nodeX6, node10006; 
+} 
+{ 
+rank=same; nodeX7, node10007; 
+} 
+{ 
+rank=same; nodeX8, node10008; 
+} 
+{ 
+rank=same; nodeX9, node10009; 
+} 
+{ 
+rank=same; nodeX10, node10010; 
+} 
+nodeY0[label = "0", group=0]; 
+nodeX0[label = "0", group=-1]; 
+nodeX1[label = "1", group=-1]; 
+nodeX2[label = "2", group=-1]; 
+nodeX3[label = "3", group=-1]; 
+nodeX4[label = "4", group=-1]; 
+nodeX5[label = "5", group=-1]; 
+nodeX6[label = "6", group=-1]; 
+nodeX7[label = "7", group=-1]; 
+nodeX8[label = "8", group=-1]; 
+nodeX9[label = "9", group=-1]; 
+nodeX10[label = "10", group=-1]; 
+node10000[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10001[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10002[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10003[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10004[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10005[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10006[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10007[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10008[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10009[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10010[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node0->nodeY0; 
+node0->nodeX0; 
+nodeY0->node10000; 
+node10000->nodeY0; 
+node10000->node10001; 
+node10001->node10000; 
+node10001->node10002; 
+node10002->node10001; 
+node10002->node10003; 
+node10003->node10002; 
+node10003->node10004; 
+node10004->node10003; 
+node10004->node10005; 
+node10005->node10004; 
+node10005->node10006; 
+node10006->node10005; 
+node10006->node10007; 
+node10007->node10006; 
+node10007->node10008; 
+node10008->node10007; 
+node10008->node10009; 
+node10009->node10008; 
+node10009->node10010; 
+node10010->node10009; 
+nodeX0->nodeX1;
+nodeX1->nodeX0;
+nodeX0->node10000; 
+node10000->nodeX0; 
+nodeX1->nodeX2;
+nodeX2->nodeX1;
+nodeX1->node10001; 
+node10001->nodeX1; 
+nodeX2->nodeX3;
+nodeX3->nodeX2;
+nodeX2->node10002; 
+node10002->nodeX2; 
+nodeX3->nodeX4;
+nodeX4->nodeX3;
+nodeX3->node10003; 
+node10003->nodeX3; 
+nodeX4->nodeX5;
+nodeX5->nodeX4;
+nodeX4->node10004; 
+node10004->nodeX4; 
+nodeX5->nodeX6;
+nodeX6->nodeX5;
+nodeX5->node10005; 
+node10005->nodeX5; 
+nodeX6->nodeX7;
+nodeX7->nodeX6;
+nodeX6->node10006; 
+node10006->nodeX6; 
+nodeX7->nodeX8;
+nodeX8->nodeX7;
+nodeX7->node10007; 
+node10007->nodeX7; 
+nodeX8->nodeX9;
+nodeX9->nodeX8;
+nodeX8->node10008; 
+node10008->nodeX8; 
+nodeX9->nodeX10;
+nodeX10->nodeX9;
+nodeX9->node10009; 
+node10009->nodeX9; 
+nodeX10->node10010; 
+node10010->nodeX10; 
+}

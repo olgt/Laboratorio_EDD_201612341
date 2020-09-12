@@ -26,6 +26,7 @@ public:
     int getX();
     void setY(int);
     int getY();
+    string getColor();
 };
 
 #endif // NODO_OBJETO_H

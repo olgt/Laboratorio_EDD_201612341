@@ -13,6 +13,7 @@ void Arbol_AVL::Delete(NodoArbol *raiz){
     if(raiz==NULL){return;}
     Delete(raiz->getIzquierda());
     Delete(raiz->getDerecha());
+    raiz->getListaNiveles()->~Lista_Niveles();
     delete raiz;
 }
 
@@ -85,14 +86,14 @@ NodoArbol* Arbol_AVL::rotacionDI(NodoArbol *n, NodoArbol *n1){
     return n2;
 }
 
-NodoArbol* Arbol_AVL::insertar(NodoArbol *raiz, string name, bool &hc){
+NodoArbol* Arbol_AVL::insertar(NodoArbol *raiz, string name, bool &hc, Lista_Niveles* niveles, int id, Arbol_Binario* abb){
     int dato = sumarCaracteres(name);
     NodoArbol* n1;
     if(raiz==NULL){
-        raiz = new NodoArbol(name);
+        raiz = new NodoArbol(name, niveles, id);
         hc=true;
     } else if(dato<raiz->getCodigo()){
-        NodoArbol* izq = insertar(raiz->getIzquierda(), name, hc);
+        NodoArbol* izq = insertar(raiz->getIzquierda(), name, hc, niveles, id, abb);
         raiz->setIzquierda(izq);
         if(hc){
             switch(raiz->getFactor()){
@@ -114,7 +115,7 @@ NodoArbol* Arbol_AVL::insertar(NodoArbol *raiz, string name, bool &hc){
             }
         }
     } else if(dato>raiz->getCodigo()){
-        NodoArbol* der = insertar(raiz->getDerecha(), name, hc);
+        NodoArbol* der = insertar(raiz->getDerecha(), name, hc, niveles, id, abb);
         raiz->setDerecha(der);
         if(hc){
             switch(raiz->getFactor()){
@@ -140,11 +141,11 @@ NodoArbol* Arbol_AVL::insertar(NodoArbol *raiz, string name, bool &hc){
     return raiz;
 }
 
-void Arbol_AVL::insertar(string name){
+void Arbol_AVL::insertar(string name, Lista_Niveles* niveles, int id, Arbol_Binario* abb){
     bool b=false;
     bool *a = &b;
 
-    this->raiz=insertar(this->raiz, name,*a);
+    this->raiz=insertar(this->raiz, name,*a, niveles, id, abb);
 }
 
 
@@ -165,16 +166,55 @@ int Arbol_AVL::sumarCaracteres(string nombre){
 
 void Arbol_AVL::recorrerArbol(NodoArbol *raiz){
 
+    if(this->getRaiz() == NULL){
+        imprimirEspacios(20);
+        cout << "No hay proyectos guardados";
+        imprimirEspacios(5);
+    }
+    else {
         if(raiz->getIzquierda() != NULL){
             recorrerArbol(raiz->getIzquierda());
         }
 
-        cout << "Dato: " << raiz->getCodigo() << endl;
+        cout << "Proyecto: " << raiz->getName() << " Id: "<< raiz->getId() << endl;
 
         if(raiz->getDerecha() != NULL){
             recorrerArbol(raiz->getDerecha());
         }
+    }
 }
+
+void Arbol_AVL::graficarProyecto(NodoArbol* raiz, int id){
+
+        if(raiz->getIzquierda() != NULL){
+            graficarProyecto(raiz->getIzquierda(), id);
+        }
+
+        if(raiz->getDerecha() != NULL){
+            graficarProyecto(raiz->getDerecha(), id);
+        }
+
+        if(id == raiz->getId()){
+            raiz->getListaNiveles()->graficarNiveles(raiz->getName());
+        }
+
+}
+
+void Arbol_AVL::graficarTodosProyectos(NodoArbol *raiz){
+    if(raiz->getIzquierda() != NULL){
+        graficarTodosProyectos(raiz->getIzquierda());
+    }
+
+    if(raiz->getDerecha() != NULL){
+        graficarTodosProyectos(raiz->getDerecha());
+    }
+
+    raiz->getListaNiveles()->graficarNiveles(raiz->getName());
+}
+
+//void Arbol_AVL::imprimirListaArboles(){
+//    while()
+//}
 
 NodoArbol* Arbol_AVL::getRaiz(){
     return this->raiz;
@@ -217,3 +257,4 @@ void Arbol_AVL::crearGraficaRamas(ofstream &file, NodoArbol* aux){
         crearGraficaRamas(file, aux->getDerecha());
     }
 }
+

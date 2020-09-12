@@ -7,6 +7,8 @@ Nodo_Binario::Nodo_Binario(int id, string nombre, char letra, string color, List
     this->letra = letra;
     this->color = color;
     this->xy = xy;
+    this->hijoDerecho = NULL;
+    this->hijoIzquierdo = NULL;
 }
 
 void Nodo_Binario::setIzquierda(Nodo_Binario* izq){
@@ -61,4 +63,8 @@ void Nodo_Binario::setLetra(char letra){
 }
 void Nodo_Binario::setColor(string color){
     this->color = color;
+}
+
+Lista_Puntos* Nodo_Binario::getListaPuntos(){
+    return this->xy;
 }

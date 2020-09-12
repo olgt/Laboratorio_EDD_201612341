@@ -42,6 +42,7 @@ public:
     void setName(string nombre);
     void setLetra(char letra);
     void setColor(string color);
+    Lista_Puntos *getListaPuntos();
 
 };
 

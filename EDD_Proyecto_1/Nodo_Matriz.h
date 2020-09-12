@@ -3,6 +3,7 @@
 
 
 using namespace std;
+#include <iostream>
 
 class Nodo_Matriz
 {
@@ -13,6 +14,7 @@ class Nodo_Matriz
 
 public:
     Nodo_Matriz();
+    ~Nodo_Matriz();
 
     Nodo_Matriz *getIzquierda(){return this->izquierda;}
     Nodo_Matriz* getDerecha(){return this->derecha;}
