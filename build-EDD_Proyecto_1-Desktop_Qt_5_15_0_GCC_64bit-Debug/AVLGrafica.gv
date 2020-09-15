@@ -1,11 +1,11 @@
 digraph G {
 rankdir = TB; 
 node [shape=record, width=.1, height=.1]; 
-node331->node221; 
-node221->node327; 
-node331->node337; 
-node337->node335; 
-node337->node429; 
-node429->node420; 
-node429->node654; 
+node331que->node221no; 
+node221no->node327tra; 
+node331que->node337yes; 
+node337yes->node335tri; 
+node337yes->node429cuat; 
+node429cuat->node420hola; 
+node429cuat->node654cuatro; 
 }

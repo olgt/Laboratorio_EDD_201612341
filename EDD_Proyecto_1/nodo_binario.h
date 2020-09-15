@@ -12,6 +12,7 @@ private:
 
     Nodo_Binario *hijoDerecho;
     Nodo_Binario *hijoIzquierdo;
+    Nodo_Binario *padre;
     Lista_Puntos *xy;
 
     int id;
@@ -23,7 +24,7 @@ private:
 
 
 public:
-    Nodo_Binario(int id, string nombre, char letra, string color, Lista_Puntos* xy);
+    Nodo_Binario(int id, string nombre, char letra, string color, Lista_Puntos* xy, Nodo_Binario* padre);
 
     void setIzquierda(Nodo_Binario* izq);
     void setDerecha(Nodo_Binario* der);
@@ -37,12 +38,18 @@ public:
     string getColor();
     int getX();
     int getY();
+    Lista_Puntos *getListaPuntos();
 
     void setId(int id);
     void setName(string nombre);
     void setLetra(char letra);
     void setColor(string color);
-    Lista_Puntos *getListaPuntos();
+    void setListaPuntos(Lista_Puntos* xy);
+    void setPadre(Nodo_Binario* padre);
+
+    //Metodos para elimnar Nodo
+    void eliminarNodo(int idObjeto);
+    Nodo_Binario* getPadre();
 
 };
 

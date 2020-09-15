@@ -22,22 +22,22 @@ Nodo_Binario* Arbol_Binario::getRaiz(){
     return this->raiz;
 }
 
-Nodo_Binario* Arbol_Binario::insertar(Nodo_Binario* raiz, int id, string nombre, char letra, string color, Lista_Puntos* xy){
+Nodo_Binario* Arbol_Binario::insertar(Nodo_Binario* raiz, int id, string nombre, char letra, string color, Lista_Puntos* xy, Nodo_Binario* padre){
     if(raiz==NULL){
-        raiz = new Nodo_Binario(id, nombre, letra, color, xy);
+        raiz = new Nodo_Binario(id, nombre, letra, color, xy, padre);
         raiz->setDerecha(NULL);
         raiz->setIzquierda(NULL);
     } else if(id<raiz->getId()){
-        Nodo_Binario* izq = insertar(raiz->getIzquierda(), id, nombre, letra, color, xy);
+        Nodo_Binario* izq = insertar(raiz->getIzquierda(), id, nombre, letra, color, xy, raiz);
         if(izq->getId() != raiz->getId()){
             raiz->setIzquierda(izq);
         }
     } else if(id>raiz->getId()){
-        Nodo_Binario* der = insertar(raiz->getDerecha(), id, nombre, letra, color, xy);
+        Nodo_Binario* der = insertar(raiz->getDerecha(), id, nombre, letra, color, xy, raiz);
         if(der->getId() != raiz->getId()){
             raiz->setDerecha(der);
         }
-    }//estoy aqui 09/11/2020
+    }
     return raiz;
 }
 
@@ -78,7 +78,7 @@ void Arbol_Binario::recorrerInorden(Nodo_Binario* raiz){
 }
 
 void Arbol_Binario::insertar(int id, string nombre, char letra, string color, Lista_Puntos* xy){
-    this->raiz=insertar(this->getRaiz(), id, nombre, letra, color, xy);
+    this->raiz=insertar(this->getRaiz(), id, nombre, letra, color, xy, NULL);
 }
 
 void Arbol_Binario::crearGrafica(){
@@ -118,14 +118,87 @@ void Arbol_Binario::crearGraficaRamas(ofstream &file, Nodo_Binario* aux){
     cout << "CodigoNodo: " << aux->getId() << endl;
 
     if(aux->getIzquierda() != NULL){
-        file << "Objeto_" << aux->getName() << "->" << "Objeto_" << aux->getIzquierda()->getName() <<  "; \n";
+        file << "Objeto_" << aux->getId() << aux->getName() << "->" << "Objeto_" << aux->getIzquierda()->getId() << aux->getIzquierda()->getName() <<  "; \n";
         crearGraficaRamas(file, aux->getIzquierda());
     }
 
-
     if(aux->getDerecha() != NULL){
-        file << "Objeto_" << aux->getName() << "->" << "Objeto_" << aux->getDerecha()->getName() <<  "; \n";
+        file << "Objeto_" << aux->getId() << aux->getName() << "->" << "Objeto_" << aux->getDerecha()->getId()<< aux->getDerecha()->getName() <<  "; \n";
         crearGraficaRamas(file, aux->getDerecha());
     }
 }
 
+//Funciones para EliminarNodoDeArbolBinario
+
+void Arbol_Binario::eliminarNodo(Nodo_Binario* raiz, int id){
+    if(this->getRaiz() == NULL){
+        return;
+    }
+    else if(id < raiz->getId()){
+        eliminarNodo(raiz->getIzquierda(), id);
+    }
+    else if(id > raiz->getId()){
+        eliminarNodo(raiz->getDerecha(), id);
+    }
+    else if (id == raiz->getId()){
+        eliminarNodoDeArbol(raiz);
+    }
+}
+
+void Arbol_Binario::eliminarNodoDeArbol(Nodo_Binario *raizEliminar){
+    if(raizEliminar->getIzquierda() && raizEliminar->getDerecha()){ //Si nodo tiene izq & der
+        Nodo_Binario* menor = minimo(raizEliminar);
+        raizEliminar->setId(menor->getId());
+        raizEliminar->setName(menor->getName());
+        raizEliminar->setColor(menor->getColor());
+        raizEliminar->setLetra(menor->getLetra());
+        raizEliminar->setListaPuntos(menor->getListaPuntos());
+
+        eliminarNodoDeArbol(menor);
+    }
+    else if(raizEliminar->getIzquierda()){
+        reemplazar(raizEliminar, raizEliminar->getIzquierda());
+        destruir(raizEliminar);
+    } else if (raizEliminar->getDerecha()){
+        reemplazar(raizEliminar, raizEliminar->getDerecha());
+        destruir(raizEliminar);
+    } else{
+        reemplazar(raizEliminar, NULL);
+        destruir(raizEliminar);
+    }
+}
+
+//Funcion Determina nodo mas izquierdo
+Nodo_Binario* Arbol_Binario::minimo(Nodo_Binario* raiz){
+    if(raiz == NULL){
+        return NULL;
+    }
+    if(raiz->getIzquierda()){
+        return minimo(raiz->getIzquierda());
+    }
+    else {
+        return raiz;
+    }
+}
+
+void Arbol_Binario::reemplazar(Nodo_Binario* nodoRemplazar, Nodo_Binario* nuevoNodo){
+    if(nodoRemplazar->getPadre()){
+        if(nodoRemplazar->getId() == nodoRemplazar->getPadre()->getIzquierda()->getId()){
+            nodoRemplazar->getPadre()->setIzquierda(nuevoNodo);
+        }
+        else if(nodoRemplazar->getId() == nodoRemplazar->getPadre()->getDerecha()->getId()){
+            nodoRemplazar->getPadre()->setDerecha(nuevoNodo);
+        }
+    }
+    if(nuevoNodo){
+        //asignar padre
+        nuevoNodo->setPadre(nodoRemplazar->getPadre());
+
+    }
+}
+
+void Arbol_Binario::destruir(Nodo_Binario *raizEliminar){
+    raizEliminar->setIzquierda(NULL);
+    raizEliminar->setDerecha(NULL);
+    delete raizEliminar;
+}

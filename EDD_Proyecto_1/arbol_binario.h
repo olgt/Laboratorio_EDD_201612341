@@ -16,7 +16,7 @@ class Arbol_Binario
         Nodo_Binario* raiz;
 
         void Delete(Nodo_Binario* raiz);
-        Nodo_Binario* insertar(Nodo_Binario* raiz, int id, string nombre, char letra, string color, Lista_Puntos *xy);
+        Nodo_Binario* insertar(Nodo_Binario* raiz, int id, string nombre, char letra, string color, Lista_Puntos *xy, Nodo_Binario* padre);
 
     public:
         Arbol_Binario();
@@ -31,6 +31,12 @@ class Arbol_Binario
         void recorrerPreorden(Nodo_Binario* raiz);
         void recorrerInorden(Nodo_Binario* raiz);
         void recorrerPostorden(Nodo_Binario* raiz);
+        //metodos eliminar
+        void eliminarNodo(Nodo_Binario* raiz, int id);
+        void eliminarNodoDeArbol(Nodo_Binario* raiz);
+        void reemplazar(Nodo_Binario* nodoRemplazar, Nodo_Binario* nuevoNodo);
+        Nodo_Binario* minimo(Nodo_Binario* raiz);
+        void destruir(Nodo_Binario* raizEliminar);
 };
 
 #endif // ARBOL_BINARIO_H

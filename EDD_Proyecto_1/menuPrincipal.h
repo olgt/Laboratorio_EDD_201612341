@@ -6,6 +6,10 @@
 
 #include <iostream>
 #include <utilities.h>
+#include <menueditarnivel.h>
+#include <cargadorreportes.h>
+#include <cargador_save.h>
+
 using namespace std;
 
 class MenuPrincipal

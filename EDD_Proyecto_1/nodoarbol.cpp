@@ -74,3 +74,4 @@ int NodoArbol::getFactor(){
 Lista_Niveles* NodoArbol::getListaNiveles(){
     return this->niveles;
 }
+

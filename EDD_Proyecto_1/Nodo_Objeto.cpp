@@ -44,3 +44,17 @@ int Nodo_Objeto::getY(){
 int Nodo_Objeto::getId(){
     return this->id;
 }
+
+void Nodo_Objeto::setLetra(char letra){
+    this->letra = letra;
+}
+void Nodo_Objeto::setColor(string color){
+    this->color = color;
+}
+void Nodo_Objeto::setId(int id){
+    this->id = id;
+}
+
+char Nodo_Objeto::getLetra(){
+    return this->letra;
+}

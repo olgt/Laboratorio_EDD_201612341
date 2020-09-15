@@ -24,9 +24,12 @@ SOURCES += \
         Nodo_Objeto.cpp \
         arbol_binario.cpp \
         cargador_proyectos.cpp \
+        cargador_save.cpp \
+        cargadorreportes.cpp \
         lista_puntos.cpp \
         main.cpp \
-        menuprincipal.cpp \
+        menuPrincipal.cpp \
+        menueditarnivel.cpp \
         nodo_binario.cpp \
         nodo_puntos.cpp \
         nodoarbol.cpp \
@@ -47,8 +50,11 @@ HEADERS += \
     Nodo_Objeto.h \
     arbol_binario.h \
     cargador_proyectos.h \
+    cargador_save.h \
+    cargadorreportes.h \
     lista_puntos.h \
-    menuprincipal.h \
+    menuPrincipal.h \
+    menueditarnivel.h \
     nodo_binario.h \
     nodo_puntos.h \
     nodoarbol.h \

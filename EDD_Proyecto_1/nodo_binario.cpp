@@ -1,6 +1,6 @@
 #include "nodo_binario.h"
 
-Nodo_Binario::Nodo_Binario(int id, string nombre, char letra, string color, Lista_Puntos* xy)
+Nodo_Binario::Nodo_Binario(int id, string nombre, char letra, string color, Lista_Puntos* xy, Nodo_Binario* padre)
 {
     this->id = id;
     this->nombre = nombre;
@@ -9,6 +9,7 @@ Nodo_Binario::Nodo_Binario(int id, string nombre, char letra, string color, List
     this->xy = xy;
     this->hijoDerecho = NULL;
     this->hijoIzquierdo = NULL;
+    this->padre = padre;
 }
 
 void Nodo_Binario::setIzquierda(Nodo_Binario* izq){
@@ -67,4 +68,16 @@ void Nodo_Binario::setColor(string color){
 
 Lista_Puntos* Nodo_Binario::getListaPuntos(){
     return this->xy;
+}
+
+Nodo_Binario* Nodo_Binario::getPadre(){
+    return this->padre;
+}
+
+void Nodo_Binario::setPadre(Nodo_Binario *padre){
+    this->padre = padre;
+}
+
+void Nodo_Binario::setListaPuntos(Lista_Puntos *xy){
+    this->xy = xy;
 }

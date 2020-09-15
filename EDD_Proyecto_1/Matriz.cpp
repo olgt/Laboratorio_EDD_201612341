@@ -4,6 +4,7 @@ Matriz::Matriz()
 {
     this->horizontal = NULL;
     this->vertical = NULL;
+    this->objetos = 0;
 }
 
 Matriz::~Matriz(){
@@ -37,13 +38,20 @@ Cabecera* Matriz::crearHorizontal(int y){
     }
     Cabecera* aux = this->horizontal;
     //cout << "Acutal: " << aux->getPos() << endl;;
-    if(y <= aux->getPos()){
+    if(y == aux->getPos()){
          cout << "Caso requerido" << endl;
          Cabecera* nueva = new Cabecera(y);
          nueva->setDerecha(aux);
          this->horizontal->setIzquierda(nueva);
          this->horizontal = nueva;
          return nueva;
+    }
+    else if (y < aux->getPos()){
+        Cabecera* nueva = new Cabecera(y);
+        nueva->setDerecha(this->horizontal);
+        this->horizontal->setIzquierda(nueva);
+        this->horizontal = nueva;
+        return nueva;
     }
     while(aux->getDerecha() != NULL){
         if(y <= aux->getPos() && y <= (((Cabecera*)aux->getDerecha())->getPos())){
@@ -74,12 +82,19 @@ Cabecera* Matriz::crearVertical(int x){
         return nueva;
     }
     Cabecera* aux = this->vertical;
-    if(x <= aux->getPos()){
+    if(x == aux->getPos()){
          Cabecera* nueva = new Cabecera(x);
          nueva->setAbajo(aux);
          this->vertical->setAbajo(nueva);
          this->vertical = nueva;
          return nueva;
+    }
+    else if( x < aux->getPos()){
+        Cabecera* nueva = new Cabecera(x);
+        nueva->setAbajo(this->vertical);
+        this->vertical->setArriba(nueva);
+        this->vertical = nueva;
+        return nueva;
     }
     while(aux->getAbajo() != NULL){
         if(x <= aux->getPos() && x <= ((Cabecera*)aux->getAbajo())->getPos()){
@@ -106,31 +121,42 @@ Cabecera* Matriz::crearVertical(int x){
 Nodo_Matriz* Matriz::obtenerUltimoHorizontal(Cabecera* cabecera, int y){
     if(cabecera->getDerecha() == NULL){return cabecera;}
     Nodo_Matriz* aux = cabecera->getDerecha();
+
     while(aux->getDerecha() != NULL){
-        if(y <= (((Nodo_Objeto*)aux)->getY())){
+        if(y == (((Nodo_Objeto*)aux)->getY())){
+               Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
                return aux;
+        }
+        else if(y < (((Nodo_Objeto*)aux)->getY())){
+            return aux->getIzquierda();
         }
         aux=aux->getDerecha();
     }
-    if(y <= (((Nodo_Objeto*)aux)->getY())){
+    if(y < (((Nodo_Objeto*)aux)->getY())){
         return aux->getIzquierda();
     }
+    Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
     return aux;
-
 }
 
 Nodo_Matriz* Matriz::obtenerUltimoVertical(Cabecera* cabecera, int x){
     if(cabecera->getAbajo() == NULL){return cabecera;}
     Nodo_Matriz* aux = cabecera->getAbajo();
+
     while(aux->getAbajo() != NULL){
-        if(x <= ((Nodo_Objeto*)aux)->getX()){
+        if(x == ((Nodo_Objeto*)aux)->getX()){
+            Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
                return aux;
+        }
+        else if( x < ((Nodo_Objeto*)aux)->getX()){
+            return aux->getArriba();
         }
         aux=aux->getAbajo();
     }
-    if(x <= ((Nodo_Objeto*)aux)->getX()){
+    if(x < ((Nodo_Objeto*)aux)->getX()){
         return aux->getArriba();
     }
+    Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
     return aux;
 }
 
@@ -174,64 +200,80 @@ void Matriz::add(Nodo_Objeto *nuevo){
     Nodo_Matriz *izquierda = this->obtenerUltimoHorizontal(vertical, nuevo->getY());
     Nodo_Matriz *superior = this->obtenerUltimoVertical(horizontal, nuevo->getX());
 
-    int nodoNumeroX = ((Nodo_Objeto*)izquierda)->getX();
-    int nodoNumeroY = ((Nodo_Objeto*)superior)->getY();
+    int nodoNumeroIzquierdaX = ((Nodo_Objeto*)izquierda)->getX();
+    int nodoNumeroIzquierdaY = ((Nodo_Objeto*)izquierda)->getY();
+    int nodoNumeroSuperiorY = ((Nodo_Objeto*)superior)->getY();
+    int nodoNumeroSuperiorX = ((Nodo_Objeto*)superior)->getX();
 
+    bool izquierdaEsCabecera = chequearNodoEsCabecera(izquierda);
+    bool superiorEsCabecera = chequearNodoEsCabecera(superior);
+    //Problem
+    if(nodoNumeroIzquierdaX == nuevo->getX() && nodoNumeroIzquierdaY == nuevo->getY()
+            && nodoNumeroSuperiorY == nuevo->getY() && nodoNumeroSuperiorX == nuevo->getX()
+            && !izquierdaEsCabecera && !superiorEsCabecera){
+        ((Nodo_Objeto*)izquierda)->setObjeto(nuevo->getObjeto());
+        ((Nodo_Objeto*)izquierda)->setLetra(nuevo->getLetra());
+        ((Nodo_Objeto*)izquierda)->setColor(nuevo->getColor());
+        ((Nodo_Objeto*)izquierda)->setId(nuevo->getId());
 
-    if(izquierda->getDerecha() == NULL){
-
-        /*Condicional && !(((Nodo_Objeto*)izquierda)->getX() == nuevo->getX() && ((Nodo_Objeto*)superior)->getY() == nuevo->getY()
-                                            && izquierda->getIzquierda() != NULL)){*/
-
-        izquierda->setDerecha(nuevo);
-        nuevo->setIzquierda(izquierda);
-    }else{
-        /*if(((Nodo_Objeto*)izquierda)->getX() == nuevo->getX()
-             && ((Nodo_Objeto*)superior)->getY() == nuevo->getY()){
-            nuevo->setDerecha(izquierda->getDerecha());
-            nuevo->setIzquierda(izquierda->getIzquierda());
-            izquierda->getIzquierda()->setDerecha(nuevo);
-            if(izquierda->getDerecha()!=NULL){
-                izquierda->getDerecha()->setIzquierda(nuevo);
-            }
-        } else {*/
-            Nodo_Matriz* tmp = izquierda->getDerecha();
+    } else {
+        if(izquierda->getDerecha() == NULL){
             izquierda->setDerecha(nuevo);
             nuevo->setIzquierda(izquierda);
-            tmp->setIzquierda(nuevo);
-            nuevo->setDerecha(tmp);
-    }
-    if(superior->getAbajo()==NULL){
+        }else{
+                Nodo_Matriz* tmp = izquierda->getDerecha();
+                izquierda->setDerecha(nuevo);
+                nuevo->setIzquierda(izquierda);
+                tmp->setIzquierda(nuevo);
+                nuevo->setDerecha(tmp);
+        }
+        if(superior->getAbajo()==NULL){
 
-        /* condicional && !(((Nodo_Objeto*)superior)->getY() == nuevo->getY() && ((Nodo_Objeto*)izquierda)->getX() == nuevo->getX()
-                                       && superior->getArriba() != NULL)){*/
-
-        superior->setAbajo(nuevo);
-        nuevo->setArriba(superior);
-    } else {
-        /*if(((Nodo_Objeto*)superior)->getY() == nuevo->getY() && ((Nodo_Objeto*)izquierda)->getX() == nuevo->getX()){
-            nuevo->setAbajo(superior->getAbajo());
-            nuevo->setArriba(superior->getArriba());
-            superior->getArriba()->setAbajo(nuevo);
-            if(superior->getAbajo() != NULL){
-                superior->getAbajo()->setArriba(nuevo);
-            }
-        } else {*/
-            Nodo_Matriz* tmp = superior->getAbajo();
             superior->setAbajo(nuevo);
             nuevo->setArriba(superior);
-            tmp->setArriba(nuevo);
-            nuevo->setAbajo(tmp);
-
+        } else {
+                Nodo_Matriz* tmp = superior->getAbajo();
+                superior->setAbajo(nuevo);
+                nuevo->setArriba(superior);
+                tmp->setArriba(nuevo);
+                nuevo->setAbajo(tmp);
+        }
 
     }
 }
 
+
+
+bool Matriz::chequearNodoEsCabecera(Nodo_Matriz* nodoAnalizado){
+    bool esCabecera = false;
+
+    Nodo_Matriz* vertical = this->vertical;
+    Nodo_Matriz* horizontal = this->horizontal;
+
+    while(vertical!=NULL){
+        if(vertical == nodoAnalizado){
+            return true;
+        }
+        vertical = vertical->getAbajo();
+
+    }
+    while(horizontal!=NULL){
+        if(horizontal == nodoAnalizado){
+            return true;
+        }
+
+        horizontal = horizontal->getDerecha();
+    }
+    return esCabecera;
+}
+
+
 void Matriz::imprimirCabeceraX(){
     Nodo_Matriz* aux = this->vertical;
     while(aux != NULL){
+        int pos = ((Cabecera*)aux)->getPos();
         cout << "Cabecera X: ";
-        cout << ((Cabecera*)aux)->getPos();
+        cout << pos;
         cout << ", ";
         aux = aux->getAbajo();
     }
@@ -267,6 +309,7 @@ void Matriz::imprimirMatriz(){
     }
 }
 
+//Metodos crear Grafica
 
 void Matriz::crearGrafica(string nombre){
     Nodo_Matriz *vertical = this->vertical;
@@ -313,6 +356,7 @@ void Matriz::crearGrafica(string nombre){
 
               while(aux!=NULL){
                   MyFile << "node" << ((Nodo_Objeto*)aux)->getId();
+                  agregarNodosVaciosARank(MyFile, ((Nodo_Objeto*)aux)->getX());
 
                   if(aux->getDerecha() == NULL){MyFile << "; \n";}
                   else { MyFile << ", ";}
@@ -341,8 +385,12 @@ void Matriz::crearGrafica(string nombre){
               vertical = vertical->getAbajo();
           }
 
+          //creamosNodos vacios
+          crearNodosExtraMatrizHorizontal(MyFile, this->horizontal);
 
-          //NODOS MATRIZ Propiedades
+
+
+          //NODOS MATRIZ Propiedades y Creando Nodos de Matriz
           while(aux2 != NULL){
               aux = aux->getDerecha();
               while(aux!=NULL){
@@ -362,36 +410,88 @@ void Matriz::crearGrafica(string nombre){
           //FLECHAS CABECERA => MATRIZ & MATRIZ = MATRIZ
           while(tmpH != NULL){
               if(tmpH->getDerecha() != NULL){
+                  //tmpH es una cabecera, su pos = 0;
+                  Nodo_Objeto* nodoAbajo = (Nodo_Objeto*)tmpH->getAbajo();
+                  int posCabeceraY = ((Cabecera*)tmpH)->getPos();
+                  int xAbajo = nodoAbajo->getX();
+                  int primerCabeceraX = this->vertical->getPos();
+
                   MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "nodeY" << ((Cabecera*)tmpH->getDerecha())->getPos() << ";" << endl;
                   MyFile << "nodeY" << ((Cabecera*)tmpH->getDerecha())->getPos() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << ";" << endl;
-                  MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
-                  MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+
+                  if(xAbajo - primerCabeceraX > 0){
+                      enlacesVaciosCabeceraArribaAbajo(MyFile, xAbajo, -1, posCabeceraY, nodoAbajo->getId());
+
+                  } else {
+                      MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
+                      MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+                  }
+
                   enlacesNodosMatrizHorizontal(MyFile, tmpH->getAbajo());
               } else {
-                  MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
-                  MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+                  Nodo_Objeto* nodoAbajo = (Nodo_Objeto*)tmpH->getAbajo();
+                  int posCabeceraY = ((Cabecera*)tmpH)->getPos();
+                  int xAbajo = nodoAbajo->getX();
+
+                  if(xAbajo - 1 > 0){
+                      enlacesVaciosCabeceraArribaAbajo(MyFile, xAbajo, -1, posCabeceraY, nodoAbajo->getId());
+
+                  } else {
+                      MyFile << "nodeY" << ((Cabecera*)tmpH)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "; \n";
+                      MyFile << "node" << ((Nodo_Objeto*)tmpH->getAbajo())->getId() << "->" << "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
+                  }
+
                   enlacesNodosMatrizHorizontal(MyFile, tmpH->getAbajo());
               }
               tmpH = tmpH->getDerecha();
           }
 
+          //Flechaas matriz->matriz
           while(tmpV != NULL){
               if(tmpV->getAbajo() != NULL){
+                  //tmpH es una cabecera, su pos = 0;
+                  Nodo_Objeto* nodoDerecha = (Nodo_Objeto*)tmpV->getDerecha();
+                  int posCabeceraX = ((Cabecera*)tmpV)->getPos();
+                  int yDerecha = nodoDerecha->getY();
+                  int primerCabeceraY = this->horizontal->getPos();
+
+
                   MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "nodeX" << ((Cabecera*)tmpV->getAbajo())->getPos() << ";" << endl;
                   MyFile << "nodeX" << ((Cabecera*)tmpV->getAbajo())->getPos() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << ";" << endl;
-                  MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
-                  MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+
+                  if(yDerecha - primerCabeceraY > 0){
+                      enlacesVaciosCabeceraIzquierdaDerecha(MyFile, yDerecha, -1, posCabeceraX, nodoDerecha->getId());
+
+                  } else {
+                      MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
+                      MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+                  }
+
                   enlacesNodosMatrizVertical(MyFile, tmpV->getDerecha());
               } else {
-                  MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
-                  MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+                  Nodo_Objeto* nodoDerecha = (Nodo_Objeto*)tmpV->getDerecha();
+                  int posCabeceraX = ((Cabecera*)tmpV)->getPos();
+                  int yDerecha = nodoDerecha->getY();
+
+                  if(yDerecha - 1 > 0){
+                      enlacesVaciosCabeceraIzquierdaDerecha(MyFile, yDerecha, -1, posCabeceraX, nodoDerecha->getId());
+                  } else {
+                      MyFile << "nodeX" << ((Cabecera*)tmpV)->getPos() << "->" << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "; \n";
+                      MyFile << "node" << ((Nodo_Objeto*)tmpV->getDerecha())->getId() << "->" << "nodeX" << ((Cabecera*)tmpV)->getPos() << "; \n";
+                  }
+
                   enlacesNodosMatrizVertical(MyFile, tmpV->getDerecha());
               }
               tmpV = tmpV->getAbajo();
           }
 
 
+
           //Lenar Espacios vacios
+
+//          enlacesNodosVaciosVertical(MyFile);
+//          enlacesNodosVaciosHorizontal(MyFile);
+//          enlacesNodosVaciosCabeceraVertical(MyFile);
 
 
           //Asignando Flechas a Nodos
@@ -413,30 +513,568 @@ void Matriz::crearGrafica(string nombre){
         }
 }
 
+
+
+//Crea Nodos vacios para espacios en blanco
+void Matriz::crearNodosExtraMatrizHorizontal(ofstream & MyFile, Nodo_Matriz* horizontal){
+    if(horizontal == NULL){return;}
+    int maxHorizontal = getLengthHorizontal();
+    int maxVertical = getLengthVertical();
+
+    for(int j= 0; j<maxHorizontal + 1; j++){
+        Nodo_Matriz* actualHorizontal = this->getHorizontal(j);
+        if(actualHorizontal == NULL){
+
+        } else {
+            for(int i = 0; i<maxVertical + 1; i++){
+                Nodo_Matriz* actualVertical = this->getVertical(i);
+                Nodo_Matriz* nodoEncontrado = getFromMatriz(i, j);
+                if(actualVertical == NULL){}
+                else if(nodoEncontrado!=NULL){
+
+
+                }
+                else {
+                    MyFile << "nodeExtra" << i << j << "[label = \"" << i << "-" << j << "\"" << ", group=" << j
+                           << ", style=filled" << "]; \n";
+                }
+            }
+        }
+
+    }
+}
+
 void Matriz::enlacesNodosMatrizHorizontal(ofstream & MyFile, Nodo_Matriz* horizontal){
 
     Nodo_Matriz* actual = horizontal;
-    //cout << ((Nodo_Objeto*)actual)->getId() << endl;
 
     while(actual->getAbajo() != NULL){
-        //cout << "Aqui: "  <<  ((Nodo_Objeto*)actual)->getId()<< endl;
+        Nodo_Objeto* nodoObjetoActual = ((Nodo_Objeto*)actual);
+        Nodo_Objeto* nodoObjetoAbajo = ((Nodo_Objeto*)actual->getAbajo());
 
-        MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getAbajo())->getId()  << "; \n";
-        MyFile << "node" << ((Nodo_Objeto*)actual->getAbajo())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        int xActual = nodoObjetoActual->getX();
+        int xAbajo= nodoObjetoAbajo->getX();
+
+        if((xAbajo - xActual) <= 1){
+            MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getAbajo())->getId()  << "; \n";
+            MyFile << "node" << ((Nodo_Objeto*)actual->getAbajo())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        } else {
+            enlacesVaciosArribaAbajo(MyFile, nodoObjetoActual->getId(), nodoObjetoAbajo->getId(), xActual, xAbajo, nodoObjetoActual->getY());
+        }
+
         actual = actual->getAbajo();
+    }
+    if(actual->getAbajo() == NULL){
+        Nodo_Objeto* nodoObjetoActual = ((Nodo_Objeto*)actual);
+        int xActual = nodoObjetoActual->getX();
+
+        Cabecera* cabeceraExistente = this->getVertical(xActual+1);
+        if(cabeceraExistente){
+            enlacesNodosVaciosAbajoRestantes(MyFile, nodoObjetoActual->getId(), xActual, nodoObjetoActual->getY());
+        }
     }
 }
 
 void Matriz::enlacesNodosMatrizVertical(ofstream & MyFile, Nodo_Matriz* vertical){
 
     Nodo_Matriz* actual = vertical;
-    //cout << ((Nodo_Objeto*)actual)->getId() << endl;
 
     while(actual->getDerecha() != NULL){
-        //cout << "Aqui: "  <<  ((Nodo_Objeto*)actual)->getId()<< endl;
+        Nodo_Objeto* nodoObjetoActual = ((Nodo_Objeto*)actual);
+        Nodo_Objeto* nodoObjetoDerecha = ((Nodo_Objeto*)actual->getDerecha());
 
-        MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getDerecha())->getId()  << "; \n";
-        MyFile << "node" << ((Nodo_Objeto*)actual->getDerecha())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        int yActual = nodoObjetoActual->getY();
+        int yDerecha= nodoObjetoDerecha->getY();
+
+
+        if(yDerecha - yActual <= 1){
+            MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "node" <<  ((Nodo_Objeto*)actual->getDerecha())->getId()  << "; \n";
+            MyFile << "node" << ((Nodo_Objeto*)actual->getDerecha())->getId() << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+        } else {
+            enlacesVaciosIzquierdaDerecha(MyFile, nodoObjetoActual->getId(), nodoObjetoDerecha->getId(), yActual, yDerecha, nodoObjetoActual->getX());
+        }
         actual = actual->getDerecha();
     }
+    if(actual->getDerecha() ==NULL){
+        Nodo_Objeto* nodoObjetoActual = ((Nodo_Objeto*)actual);
+        int yActual = nodoObjetoActual->getY();
+
+        Cabecera* cabeceraExistente = this->getHorizontal(yActual+1);
+        if(cabeceraExistente){
+            enlacesNodosVaciosDerechaRestantes(MyFile, nodoObjetoActual->getId(), yActual, nodoObjetoActual->getX());
+        }
+
+    }
+}
+
+//Metodos para nodos vacios
+void Matriz::agregarNodosVaciosARank(ofstream & MyFile, int x){
+    if(horizontal == NULL){return;}
+    int maxHorizontal = getLengthHorizontal();
+
+        Cabecera* actualVertical = this->getVertical(x);
+        if(actualVertical == NULL){
+
+        } else {
+            for(int i = 0; i<maxHorizontal + 1; i++){
+                Nodo_Matriz* actualHorizontal = this->getHorizontal(i);
+                Nodo_Matriz* nodoEncontrado = getFromMatriz(x, i);
+                Nodo_Matriz* nodoEncontradoNext = getFromMatriz(x, i+1);
+                if(actualHorizontal == NULL){}
+                else if(nodoEncontrado!=NULL){
+                }
+                else {
+                    if(i == maxHorizontal){
+                        MyFile << ", "  << "nodeExtra" << x << i;
+                    } else {
+                        MyFile << ", " << "nodeExtra" << x << i;
+                    }
+                }
+            }
+        }
+
+}
+
+void Matriz::enlacesVaciosArribaAbajo(ofstream & MyFile, int idActual, int idAbajo, int xActual, int xAbajo, int y){ //PRoblema no hago validacion si la cabecera existe en atual-1
+    MyFile << "node" << idActual << "->" << "nodeExtra" << xActual+1 << y << "; \n";
+    MyFile << "nodeExtra" << xActual +1 << y << "->" << "node" << idActual << "; \n";
+
+    MyFile << "nodeExtra" << xAbajo -1 << y << "->" << "node" << idAbajo << "; \n";
+    MyFile << "node" << idAbajo << "->" << "nodeExtra" << xAbajo-1 << y << "; \n";
+
+    for(int i = xActual + 1; i < xAbajo - 1; i++){
+        MyFile << "nodeExtra" << i << y << "->" << "nodeExtra" << i+1 << y << "; \n";
+        MyFile << "nodeExtra" << i+1 << y << "->" << "nodeExtra" << i << y << "; \n";
+    }
+
+}
+
+void Matriz::enlacesNodosVaciosAbajoRestantes(ofstream & MyFile, int idActual, int xActual, int y){
+    int cantidadX = this->getLengthVertical();
+
+    if(cantidadX == xActual){    }
+    else {
+        MyFile << "node" << idActual << "->" << "nodeExtra" << xActual+1 << y << "; \n";
+        MyFile << "nodeExtra" << xActual +1 << y << "->" << "node" << idActual << "; \n";
+
+        for(int i = xActual + 1; i < cantidadX; i++){
+            MyFile << "nodeExtra" << i << y << "->" << "nodeExtra" << i+1 << y << "; \n";
+            MyFile << "nodeExtra" << i+1 << y << "->" << "nodeExtra" << i << y << "; \n";
+        }
+
+    }
+
+}
+
+void Matriz::enlacesVaciosIzquierdaDerecha(ofstream & MyFile, int idActual, int idDerecha, int yActual, int yDerecha, int x){ //PRoblema no hago validacion si la cabecera existe en atual-1
+    MyFile << "node" << idActual << "->" << "nodeExtra" << x << yActual+1 << "; \n";
+    MyFile << "nodeExtra" << x << yActual +1 << "->" << "node" << idActual << "; \n";
+
+    MyFile << "nodeExtra" << x << yDerecha -1 << "->" << "node" << idDerecha << "; \n";
+    MyFile << "node" << idDerecha << "->" << "nodeExtra" << x << yDerecha -1 << "; \n";
+
+    for(int i = yActual + 1; i < yDerecha - 1; i++){
+        MyFile << "nodeExtra" << x << i << "->" << "nodeExtra" << x << i+1 << "; \n";
+        MyFile << "nodeExtra" << x << i+1 << "->" << "nodeExtra" << x << i << "; \n";
+    }
+
+}
+
+void Matriz::enlacesNodosVaciosDerechaRestantes(ofstream & MyFile, int idActual, int yActual, int x){
+    int cantidadY = this->getLengthHorizontal();
+
+    if(cantidadY == yActual){    }
+    else {
+        MyFile << "node" << idActual << "->" << "nodeExtra" << x << yActual+1 << "; \n";
+        MyFile << "nodeExtra" << x << yActual +1 << "->" << "node" << idActual << "; \n";
+
+        for(int i = yActual + 1; i < cantidadY; i++){
+            MyFile << "nodeExtra" << x << i << "->" << "nodeExtra" << x << i+1 << "; \n";
+            MyFile << "nodeExtra" << x << i+1 << "->" << "nodeExtra" << x << i << "; \n";
+        }
+
+    }
+
+}
+
+void Matriz::enlacesVaciosCabeceraArribaAbajo(ofstream &MyFile, int xAbajo, int xCabecera, int posCabeceraY, int idAbajo){
+
+    int diferencia = xAbajo - xCabecera;
+    int cantidadNodos = diferencia - 1;
+
+    if(xAbajo-1 == xCabecera){    }
+    else {
+
+        for(int i = xCabecera+1; i < xAbajo; i++){
+            Cabecera* cabeceraExistenteSiguiente = getVertical(i);
+
+            if(cabeceraExistenteSiguiente){
+                MyFile << "nodeY" << posCabeceraY << "->" << "nodeExtra" << i << posCabeceraY << "; \n";
+                MyFile << "nodeExtra" << i << posCabeceraY << "->" << "nodeY" << posCabeceraY << "; \n";
+                break;
+            }
+        }
+        for(int i = xAbajo-1; i > xCabecera; i--){
+            Cabecera* cabeceraExistenteSiguiente = getVertical(i);
+
+            if(cabeceraExistenteSiguiente){
+                MyFile << "node" << idAbajo << "->" << "nodeExtra" << i << posCabeceraY << "; \n";
+                MyFile << "nodeExtra" << i << posCabeceraY << "->" << "node" << idAbajo << "; \n";
+                break;
+            }
+        }
+        for(int i = xCabecera + 1; i < cantidadNodos-1; i++){
+            Cabecera* cabeceraExistente = getVertical(i);
+            Cabecera* cabeceraExistenteSiguiente = getVertical(i+1);
+            if(cabeceraExistente){
+                MyFile << "nodeExtra" << i << posCabeceraY << "->" << "nodeExtra" << i+1 << posCabeceraY << "; \n";
+                MyFile << "nodeExtra" << i+1 << posCabeceraY << "->" << "nodeExtra" << i << posCabeceraY << "; \n";
+            }
+        }
+
+    }
+
+}
+
+void Matriz::enlacesVaciosCabeceraIzquierdaDerecha(ofstream &MyFile, int yDerecha, int yCabecera, int posCabeceraX, int idDerecha){
+
+    int diferencia = yDerecha - yCabecera;
+    int cantidadNodos = diferencia - 1;
+
+    if(yDerecha-1 == yCabecera){    }
+    else {
+
+        for(int i = yCabecera+1; i < yDerecha; i++){
+            Cabecera* cabeceraExistenteSiguiente = getHorizontal(i);
+
+            if(cabeceraExistenteSiguiente){
+                MyFile << "nodeX" << posCabeceraX << "->" << "nodeExtra"<< posCabeceraX << i  << "; \n";
+                MyFile << "nodeExtra" << posCabeceraX << i << "->" << "nodeX" << posCabeceraX << "; \n";
+                break;
+            }
+        }
+        for(int i = yDerecha-1; i > yCabecera; i--){
+            Cabecera* cabeceraExistenteSiguiente = getHorizontal(i);
+
+            if(cabeceraExistenteSiguiente){
+                MyFile << "node" << idDerecha << "->" << "nodeExtra" << posCabeceraX << i  << "; \n";
+                MyFile << "nodeExtra" << posCabeceraX << i  << "->" << "node" << idDerecha << "; \n";
+                break;
+            }
+        }
+        for(int i = yCabecera + 1; i < cantidadNodos-1; i++){
+            Cabecera* cabeceraExistente = getHorizontal(i);
+            Cabecera* cabeceraExistenteSiguiente = getHorizontal(i+1);
+            if(cabeceraExistente){
+                MyFile << "nodeExtra" << posCabeceraX << i  << "->" << "nodeExtra" << posCabeceraX << i+1 << "; \n";
+                MyFile << "nodeExtra" << posCabeceraX << i+1  << "->" << "nodeExtra" << posCabeceraX << i  << "; \n";
+            }
+        }
+
+    }
+
+}
+
+//Metodos para ayudar a nodos Vacios
+
+int Matriz::getLengthHorizontal(){
+    Nodo_Matriz* actual = (Nodo_Matriz*)this->horizontal;
+    int distancia = 0;
+
+    if(actual == NULL){
+        return 0;
+    }
+    else{
+        while(actual != NULL){
+            distancia++;
+            actual = actual->getDerecha();
+        }
+    }
+
+    return distancia;
+
+}
+
+int Matriz::getLengthVertical(){
+    Nodo_Matriz* actual = (Nodo_Matriz*)this->vertical;
+    int distancia = 0;
+
+    if(actual == NULL){
+        return 0;
+    }
+    else{
+        while(actual != NULL){
+            distancia++;
+            actual = actual->getAbajo();
+        }
+    }
+
+    return distancia;
+
+}
+
+Nodo_Matriz* Matriz::getFromMatriz(int x, int y){
+    Nodo_Matriz* aux = this->vertical;
+    Nodo_Matriz* aux2 = this->vertical->getAbajo();
+
+
+    while(aux != NULL){
+        aux=aux->getDerecha();
+        while(aux != NULL){
+            int yActual = (((Nodo_Objeto*)aux)->getY());
+            int xActual = (((Nodo_Objeto*)aux)->getX());
+            if(y == yActual && x == xActual){
+                   return aux;
+            }
+            if(yActual > y && xActual > x){
+                return NULL;
+            }
+            aux = aux->getDerecha();
+        }
+        aux = aux2;
+        if(aux2 != NULL){
+            aux2 = aux2->getAbajo();
+        }
+    }
+    return NULL;
+
+}
+
+
+/*
+//Enlaza Horizontalmente nodos vacios
+void Matriz::enlacesNodosVaciosHorizontal(ofstream &MyFile){
+    Nodo_Matriz* actual = this->vertical->getDerecha();
+    Nodo_Matriz* actual2 = actual->getDerecha();
+    Nodo_Matriz* aux = this->vertical->getAbajo();
+    while(actual != NULL){
+        while(actual->getAbajo() != NULL){
+            int xActual = ((Nodo_Objeto*)actual)->getX();
+            int xAbajo = ((Nodo_Objeto*)actual->getAbajo())->getX();
+            int columna = ((Nodo_Objeto*)actual)->getY();
+
+            if((xAbajo - xActual) > 1){
+                MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "nodeExtra" << xActual+1 << columna << "; \n";
+                MyFile << "nodeExtra" << xActual +1 << columna << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+
+                MyFile << "nodeExtra" << xAbajo -1 << columna << "->" << "node" << ((Nodo_Objeto*)actual->getAbajo())->getId() << "; \n";
+                MyFile << "node" << ((Nodo_Objeto*)actual->getAbajo())->getId() << "->" << "nodeExtra" << xAbajo-1 << columna << "; \n";
+
+                for(int i = xActual + 1; i < xAbajo - 1; i++){
+                    MyFile << "nodeExtra" << i << columna << "->" << "nodeExtra" << i+1 << columna << "; \n";
+                    MyFile << "nodeExtra" << i+1 << columna << "->" << "nodeExtra" << i << columna << "; \n";
+                }
+            }
+            actual=actual->getAbajo();
+
+        }
+        if(actual->getAbajo() == NULL){
+            int xActual = ((Nodo_Objeto*)actual)->getX();
+            int xMaxima = this->getLengthVertical();
+            int columna = ((Nodo_Objeto*)actual)->getY();
+
+            if(xActual == xMaxima){}
+            else {
+                MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "nodeExtra" << xActual+1 << columna << "; \n";
+                MyFile << "nodeExtra" << xActual +1 << columna << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+
+                for(int i = xActual + 1; i < xMaxima; i++){
+                    MyFile << "nodeExtra" << i << columna << "->" << "nodeExtra" << i+1 << columna << "; \n";
+                    MyFile << "nodeExtra" << i+1 << columna << "->" << "nodeExtra" << i << columna << "; \n";
+                }
+            }
+        }
+        actual = actual2;
+        if(actual2!=NULL){
+            actual2= actual2->getDerecha();
+        }
+    }
+
+}
+*/
+
+//Enlaza Verticalmente nodos vacios
+void Matriz::enlacesNodosVaciosVertical(ofstream &MyFile){
+        Nodo_Matriz* actual = this->horizontal->getAbajo();
+        Nodo_Matriz* actual2 = actual->getAbajo();
+        while(actual != NULL){
+            while(actual->getDerecha() != NULL){
+                int yActual = ((Nodo_Objeto*)actual)->getY();
+                int yDerecha= ((Nodo_Objeto*)actual->getDerecha())->getY();
+                int fila = ((Nodo_Objeto*)actual)->getX();
+
+                if((yDerecha - yActual) > 1){
+                    MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "nodeExtra" << fila << yActual+1 << "; \n";
+                    MyFile << "nodeExtra" << fila << yActual +1 << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+
+                    MyFile << "nodeExtra" << fila << yDerecha -1 << "->" << "node" << ((Nodo_Objeto*)actual->getDerecha())->getId() << "; \n";
+                    MyFile << "node" << ((Nodo_Objeto*)actual->getDerecha())->getId() << "->" << "nodeExtra" << fila << yDerecha-1 << "; \n";
+
+                    for(int i = yActual + 1; i < yDerecha - 1; i++){
+                        MyFile << "nodeExtra" << fila << i << "->" << "nodeExtra" << fila << i+1 << "; \n";
+                        MyFile << "nodeExtra" << fila << i+1 << "->" << "nodeExtra" << fila << i << "; \n";
+                    }
+                }
+                actual=actual->getDerecha();
+
+            }
+            if(actual->getDerecha() == NULL){
+                int yActual = ((Nodo_Objeto*)actual)->getY();
+                int yMaxima = this->getLengthHorizontal();
+                int fila = ((Nodo_Objeto*)actual)->getX();
+
+                if(yActual == yMaxima){}
+                else {
+                    MyFile << "node" << ((Nodo_Objeto*)actual)->getId() << "->" << "nodeExtra" << fila << yActual+1 << "; \n";
+                    MyFile << "nodeExtra" << fila << yActual +1 << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+
+                    for(int i = yActual + 1; i < yMaxima; i++){
+                        MyFile << "nodeExtra" << fila << i << "->" << "nodeExtra" << fila << i+1 << "; \n";
+                        MyFile << "nodeExtra" << fila << i+1 << "->" << "nodeExtra" << fila << i << "; \n";
+                    }
+                }
+            }
+            actual = actual2;
+            if(actual2!=NULL){
+                actual2= actual2->getAbajo();
+            }
+        }
+
+}
+
+/*
+void Matriz::enlacesNodosVaciosCabeceraVertical(ofstream & MyFile){
+    Nodo_Matriz* cabeceraY = this->horizontal;
+    Cabecera* cabeceraX = this->vertical;
+    Nodo_Matriz* actual = cabeceraY->getAbajo();
+
+    while(cabeceraY != NULL){ //CabeceraY->getX siempre sera 0
+        int xActual = ((Nodo_Objeto*)actual)->getX();
+        int columna = ((Nodo_Objeto*)actual)->getY();
+
+        if((cabeceraX->getPos() - xActual) < 0){
+
+            MyFile << "nodeY" << ((Cabecera*)cabeceraY)->getPos() << "->" << "nodeExtra" << cabeceraX->getPos() << columna << "; \n";
+            MyFile << "nodeExtra" << cabeceraX->getPos() << columna << "->" << "nodeY" << ((Cabecera*)cabeceraY)->getPos() << "; \n";
+
+            MyFile << "nodeExtra" << ((Nodo_Objeto*)actual)->getX()-1 << columna << "->" << "node" << ((Nodo_Objeto*)actual)->getId() << "; \n";
+            MyFile << "nodeY" << ((Nodo_Objeto*)actual)->getId() << "->" << "nodeExtra" << ((Nodo_Objeto*)actual)->getX()-1 << columna << "; \n";
+
+            for(int i = cabeceraX->getPos() + 1; i < xActual; i++){
+                MyFile << "nodeExtra" << i << columna << "->" << "nodeExtra" << i+1 << columna << "; \n";
+                MyFile << "nodeExtra" << i+1 << columna << "->" << "nodeExtra" << i << columna << "; \n";
+            }
+        }
+
+        cabeceraY = cabeceraY->getDerecha();
+        if(cabeceraY != NULL){
+            actual = cabeceraY->getAbajo();
+        }
+    }
+}
+*/
+//Metodos para Reportes
+
+int Matriz::getVentanas(){
+    Nodo_Matriz* aux = this->vertical;
+    Nodo_Matriz* aux2 = this->vertical->getAbajo();
+    int ventanas = 0;
+
+
+    while(aux != NULL){
+        aux=aux->getDerecha();
+        while(aux != NULL){
+
+            if((((Nodo_Objeto*)aux)->getObjeto() == "ventana") || (((Nodo_Objeto*)aux)->getObjeto() == "Ventana")){
+                   ventanas++;
+            }
+            aux = aux->getDerecha();
+        }
+        aux = aux2;
+        if(aux2 != NULL){
+            aux2 = aux2->getAbajo();
+        }
+    }
+    return ventanas;
+}
+
+int Matriz::getEspacio(){
+    int maxHorizontal = getLengthHorizontal();
+    int maxVertical = getLengthVertical();
+    int espacioLibre = 0;
+
+    for(int j= 0; j<maxHorizontal + 1; j++){
+        Nodo_Matriz* actualHorizontal = this->getHorizontal(j);
+        if(actualHorizontal == NULL){
+
+        } else {
+            for(int i = 0; i<maxVertical + 1; i++){
+                Nodo_Matriz* actualVertical = this->getVertical(i);
+                Nodo_Matriz* nodoEncontrado = getFromMatriz(i, j);
+                if(actualVertical == NULL){}
+                else if(nodoEncontrado!=NULL){
+
+//aqui
+                }
+                else {
+                    espacioLibre++;
+                }
+            }
+        }
+
+    }
+    return espacioLibre;
+}
+
+int Matriz::getParedes(){
+    Nodo_Matriz* aux = this->vertical;
+    Nodo_Matriz* aux2 = this->vertical->getAbajo();
+    int paredes = 0;
+
+
+    while(aux != NULL){
+        aux=aux->getDerecha();
+        while(aux != NULL){
+
+            if((((Nodo_Objeto*)aux)->getObjeto() == "pared") || (((Nodo_Objeto*)aux)->getObjeto() == "Pared")){
+                   paredes++;
+            }
+            aux = aux->getDerecha();
+        }
+        aux = aux2;
+        if(aux2 != NULL){
+            aux2 = aux2->getAbajo();
+        }
+    }
+    return paredes;
+}
+
+int Matriz::getObjetos(){
+    Nodo_Matriz* aux = this->vertical;
+    Nodo_Matriz* aux2 = this->vertical->getAbajo();
+    int objetos = 0;
+
+
+    while(aux != NULL){
+        aux=aux->getDerecha();
+        while(aux != NULL){
+            string objetoActual = ((Nodo_Objeto*)aux)->getObjeto();
+
+            if(objetoActual != "ventana" && objetoActual != "Ventana" &&
+                   objetoActual != "pared" && objetoActual != "Pared"
+                    && objetoActual != ""){
+                   objetos++;
+            }
+            aux = aux->getDerecha();
+        }
+        aux = aux2;
+        if(aux2 != NULL){
+            aux2 = aux2->getAbajo();
+        }
+    }
+    return objetos;
+}
+
+void Matriz::sumarCantidadObjeto(){
+    this->objetos = this->objetos+1;
 }

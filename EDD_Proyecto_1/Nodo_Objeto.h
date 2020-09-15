@@ -27,6 +27,10 @@ public:
     void setY(int);
     int getY();
     string getColor();
+    void setLetra(char letra);
+    void setColor(string color);
+    void setId(int id);
+    char getLetra();
 };
 
 #endif // NODO_OBJETO_H

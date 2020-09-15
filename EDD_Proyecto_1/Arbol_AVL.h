@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <fstream>
 #include "arbol_binario.h"
-
+#include <string>
 using namespace std;
 
 class Arbol_AVL
@@ -39,6 +39,22 @@ public:
     void graficarTodosProyectos(NodoArbol *raiz);
 
     void imprimirListaArboles();
+
+    NodoArbol* getProyecto(int a, NodoArbol* raiz);
+    //Funciones para Eliminar
+    void eliminarNodo(NodoArbol* raiz, int id);
+    void eliminarNodoDeArbol(NodoArbol* raiz);
+    void reemplazar(NodoArbol* nodoRemplazar, NodoArbol* nuevoNodo);
+    NodoArbol* minimo(NodoArbol* raiz);
+    void destruir(NodoArbol* raizEliminar);
+
+    int getCantidadNodos(int & cantidad, NodoArbol* raiz);
+    string* getProyectosNivelesAscendente();
+    string* getProyectosNivelesDescendete();
+
+
+    int ** llenarArrayProyectosNiveles(NodoArbol *raiz, string orden);
+    int ** llenarArray(int ** proyectoArray, NodoArbol* raiz, int & pos);
 };
 
 #endif // ARBOL_AVL_H

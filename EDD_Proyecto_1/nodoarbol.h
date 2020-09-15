@@ -40,6 +40,9 @@ public:
     void setFactor(int factor);
     int getFactor();
 
+    NodoArbol* getPadre();
+    void setPadre(NodoArbol* padre);
+
     Lista_Niveles* getListaNiveles();
 
 };

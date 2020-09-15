@@ -16,7 +16,6 @@ private:
     Nodo_Nivel *tail;
     int size;
 
-
 public:
     Lista_Niveles();
     ~Lista_Niveles();
@@ -33,6 +32,16 @@ public:
 
     Nodo_Nivel* getHead();
     Nodo_Nivel* getTail();
+    Nodo_Nivel* getNodo(int id);
+    Nodo_Nivel* nivelConMasEspacio();
+    Nodo_Nivel* nivelConMasParedes();
+    Nodo_Nivel* nivelConMenosParedes();
+    Nodo_Nivel* nivelConMasEspacioMenosVentanas();
+    Nodo_Nivel* nivelConMasEspacioMasVentanas();
+    void nivelesPorNumeroDeObjetos();
+    int ** llenarArray(int ** proyectoArray, Nodo_Nivel* nodo_Actual, int &pos);
+    int ** llenarArrayProyectosNiveles();
+
 
 };
 

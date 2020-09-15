@@ -1,4 +1,4 @@
-#include "menuprincipal.h"
+#include "menuPrincipal.h"
 
 MenuPrincipal::MenuPrincipal(){
 
@@ -11,14 +11,14 @@ Arbol_Binario *arbolObjetos = NULL;
 void MenuPrincipal::imprimirMenu(){
 
     string opciones[] = {"1. Ver Proyectos", "2. Editar Proyectos", "3. Cargar Proyectos",
-                         "4. Graficar Proyectos", "5. Guardar Proyectos", "6. Cargar Librerias", "7. Salir"};
+                         "4. Graficar Proyectos", "5. Guardar Proyectos", "6. Cargar Librerias", "7. Ver Reportes",  "8. Salir"};
 
     bool isContinue = true;
     int opcion = 0;
 
     while(isContinue != false){
         imprimirEncabezado();
-        for(int i = 0; i < 7 ; i++){
+        for(int i = 0; i < 8; i++){
             cout << opciones[i] << endl;
         }
         cout << "Escoja su opcion: ";
@@ -39,7 +39,13 @@ void MenuPrincipal::imprimirMenu(){
             imprimirEspacios(20);
         }
         if(opcion == 2){
-
+            arbolProyectos->recorrerArbol(arbolProyectos->getRaiz());
+            int a;
+            cout << "Ingrese id de proyecto a editar: ";
+            cin >> a;
+            menuEditarNivel menuEditar;
+            menuEditar.mostrarMenuEdicion(arbolProyectos, arbolObjetos, a);
+            imprimirEspacios(20);
         }
         if(opcion == 3){
             Cargador_Proyectos cargador;
@@ -52,13 +58,20 @@ void MenuPrincipal::imprimirMenu(){
             cout << endl << "Proporcione el nombre del archivo: ";
             cin >> nombreArchivo;
             arbolProyectos = cargador.cargarNuevo(nombreArchivo, arbolObjetos);
-            arbolObjetos->crearGrafica();
+            imprimirEspacios(20);
         }
         if(opcion == 4){
-            arbolProyectos->graficarTodosProyectos(arbolProyectos->getRaiz());
+            if(arbolProyectos!=NULL){
+                arbolProyectos->graficarTodosProyectos(arbolProyectos->getRaiz());
+            }
+            if(arbolObjetos != NULL){
+                arbolObjetos->crearGrafica();
+            }
+            imprimirEspacios(20);
         }
         if(opcion == 5){
-            //GuardarProyectos
+            Cargador_Save* nuevoSaver = new Cargador_Save(arbolProyectos, arbolObjetos);
+            nuevoSaver->guardarProyectos();
         }
         if(opcion == 6){
             Cargador_Proyectos cargador;
@@ -71,9 +84,17 @@ void MenuPrincipal::imprimirMenu(){
             cout << endl << "Proporcione el nombre del archivo: ";
             cin >> nombreArchivo;
             arbolObjetos = cargador.cargarLibrerias(nombreArchivo);
-            arbolObjetos->crearGrafica();
+            if(arbolObjetos != NULL){
+                arbolObjetos->crearGrafica();
+            }
+            imprimirEspacios(20);
         }
         if(opcion == 7){
+            cargadorReportes* cargador = new cargadorReportes(arbolProyectos, arbolObjetos);
+            cargador->mostrarOpciones();
+
+        }
+        if(opcion == 8){
             isContinue = false;
             cout << endl;
             cout << "Saliendo de sistema... ";
