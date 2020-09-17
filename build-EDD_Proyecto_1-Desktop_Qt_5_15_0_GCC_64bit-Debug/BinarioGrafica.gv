@@ -2,8 +2,14 @@ digraph G {
 rankdir = TB; 
 node [shape=record, width=.1, height=.1]; 
 Objeto_2Sofa->Objeto_1mesa; 
-Objeto_2Sofa->Objeto_3Television; 
+Objeto_2Sofa->Objeto_10Sillon T1; 
+Objeto_10Sillon T1->Objeto_3Television; 
 Objeto_3Television->Objeto_4planta; 
 Objeto_4planta->Objeto_6Escoba; 
-Objeto_6Escoba->Objeto_5puerta; 
+Objeto_10Sillon T1->Objeto_11Sillon T2; 
+Objeto_11Sillon T2->Objeto_12Sillon T4; 
+Objeto_12Sillon T4->Objeto_13Inclinado1; 
+Objeto_13Inclinado1->Objeto_14Inclinado2; 
+Objeto_14Inclinado2->Objeto_15Inclinado3; 
+Objeto_15Inclinado3->Objeto_16Inclinado4; 
 }

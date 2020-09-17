@@ -247,7 +247,7 @@ Lista_Puntos* Cargador_Proyectos::cargarCoordenadasObjetosProyecto(json jasonFil
 }
 
 
-//Cargar Librerias
+//Cargar Librerias y Cargar Librerias de Nivel
 Arbol_Binario* Cargador_Proyectos::cargarLibrerias(string nombreArchivo){
     int numeroObjetos = 0;
     int numeroCoordenadas = 0;
@@ -547,6 +547,7 @@ Matriz* Cargador_Proyectos::crearMatrizNivelExtra(json jasonFile, int numeroNive
             Nodo_Objeto* nuevoObjeto = new Nodo_Objeto(id, nombreObjeto, letra[0], color, xObjeto, yObjeto);
             nuevaMatriz->add(nuevoObjeto);
         }
+        nuevaMatriz->sumarCantidadObjeto();
     }
 
     //Agregar Ventanas

@@ -69,15 +69,28 @@ void Lista_Puntos::deleteNode(int x, int y){
     }
 }
 
+int Lista_Puntos::getSizeNodos(){
+    Nodo_Puntos* punto = this->gethead();
+    int size = 0;
+    while(punto != NULL){
+        size++;
+        punto = punto->getSiguiente();
+    }
+    return size;
+}
+
 int Lista_Puntos::getSizeX(){
     Nodo_Puntos* punto = this->gethead();
     int x = 0;
 
-    while(punto != NULL){
-        if(punto->getX() != 0){
+    while(punto->getSiguiente() != NULL){
+        if(punto->getX() != punto->getSiguiente()->getX()){
             x++;
         }
         punto = punto->getSiguiente();
+    }
+    if(punto->getSiguiente() == NULL){
+            x++;
     }
     return x;
 }
@@ -86,11 +99,14 @@ int Lista_Puntos::getSizeY(){
     Nodo_Puntos* punto = this->gethead();
     int y = 0;
 
-    while(punto != NULL){
-        if(punto->getY() != 0){
+    while(punto->getSiguiente() != NULL){
+        if(punto->getY() != punto->getSiguiente()->getY()){
             y++;
         }
         punto = punto->getSiguiente();
+    }
+    if(punto->getSiguiente()==NULL){
+        y++;
     }
     return y;
 }
@@ -99,3 +115,15 @@ Nodo_Puntos* Lista_Puntos::gethead(){
     return this->head;
 }
 
+Nodo_Puntos* Lista_Puntos::getPunto(int pos){
+    int i = 0;
+
+    Nodo_Puntos* punto = this->gethead();
+
+    while(i != pos){
+        i++;
+        punto = punto->getSiguiente();
+    }
+    return punto;
+
+}

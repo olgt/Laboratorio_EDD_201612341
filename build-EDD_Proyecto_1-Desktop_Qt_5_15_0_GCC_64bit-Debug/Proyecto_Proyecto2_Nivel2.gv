@@ -6,37 +6,37 @@ node0 [label = "Matriz", group=-1]
 rank=same; node0, nodeY0, nodeY2; 
 } 
 { 
-rank=same; nodeX0, node10000, nodeExtra02; 
+rank=same; nodeX0, node00, nodeExtra02; 
 } 
 { 
-rank=same; nodeX1, node10001, node1; 
+rank=same; nodeX1, node10, node12; 
 } 
 { 
-rank=same; nodeX2, node10002, nodeExtra22; 
+rank=same; nodeX2, node20, nodeExtra22; 
 } 
 { 
-rank=same; nodeX3, node10003, nodeExtra32; 
+rank=same; nodeX3, node30, nodeExtra32; 
 } 
 { 
-rank=same; nodeX4, node10004, nodeExtra42; 
+rank=same; nodeX4, node40, nodeExtra42; 
 } 
 { 
-rank=same; nodeX5, node10005, nodeExtra52; 
+rank=same; nodeX5, node50, nodeExtra52; 
 } 
 { 
-rank=same; nodeX6, node10006, nodeExtra62; 
+rank=same; nodeX6, node60, nodeExtra62; 
 } 
 { 
-rank=same; nodeX7, node10007, nodeExtra72; 
+rank=same; nodeX7, node70, nodeExtra72; 
 } 
 { 
-rank=same; nodeX8, node10008, nodeExtra82; 
+rank=same; nodeX8, node80, nodeExtra82; 
 } 
 { 
-rank=same; nodeX9, node10009, nodeExtra92; 
+rank=same; nodeX9, node90, nodeExtra92; 
 } 
 { 
-rank=same; nodeX10, node10010, nodeExtra102; 
+rank=same; nodeX10, node100, nodeExtra102; 
 } 
 nodeY0[label = "0", group=0]; 
 nodeY2[label = "2", group=2]; 
@@ -61,48 +61,48 @@ nodeExtra72[label = "7-2", group=2, style=filled];
 nodeExtra82[label = "8-2", group=2, style=filled]; 
 nodeExtra92[label = "9-2", group=2, style=filled]; 
 nodeExtra102[label = "10-2", group=2, style=filled]; 
-node10000[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10001[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node1[label = "Sofa", group=2, style=filled, color="#FDB546"]; 
-node10002[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10003[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10004[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10005[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10006[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10007[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10008[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10009[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
-node10010[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node00[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node10[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node12[label = "Sofa", group=2, style=filled, color="#FDB546"]; 
+node20[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node30[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node40[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node50[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node60[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node70[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node80[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node90[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
+node100[label = "Pared", group=0, style=filled, color="#F6FB34"]; 
 node0->nodeY0; 
 node0->nodeX0; 
 nodeY0->nodeY2;
 nodeY2->nodeY0;
-nodeY0->node10000; 
-node10000->nodeY0; 
-node10000->node10001; 
-node10001->node10000; 
-node10001->node10002; 
-node10002->node10001; 
-node10002->node10003; 
-node10003->node10002; 
-node10003->node10004; 
-node10004->node10003; 
-node10004->node10005; 
-node10005->node10004; 
-node10005->node10006; 
-node10006->node10005; 
-node10006->node10007; 
-node10007->node10006; 
-node10007->node10008; 
-node10008->node10007; 
-node10008->node10009; 
-node10009->node10008; 
-node10009->node10010; 
-node10010->node10009; 
-nodeY2->node1; 
-node1->nodeY2; 
-node1->nodeExtra22; 
-nodeExtra22->node1; 
+nodeY0->node00; 
+node00->nodeY0; 
+node00->node10; 
+node10->node00; 
+node10->node20; 
+node20->node10; 
+node20->node30; 
+node30->node20; 
+node30->node40; 
+node40->node30; 
+node40->node50; 
+node50->node40; 
+node50->node60; 
+node60->node50; 
+node60->node70; 
+node70->node60; 
+node70->node80; 
+node80->node70; 
+node80->node90; 
+node90->node80; 
+node90->node100; 
+node100->node90; 
+nodeY2->node12; 
+node12->nodeY2; 
+node12->nodeExtra22; 
+nodeExtra22->node12; 
 nodeExtra22->nodeExtra32; 
 nodeExtra32->nodeExtra22; 
 nodeExtra32->nodeExtra42; 
@@ -123,48 +123,48 @@ nodeExtra102->nodeExtra112;
 nodeExtra112->nodeExtra102; 
 nodeX0->nodeX1;
 nodeX1->nodeX0;
-nodeX0->node10000; 
-node10000->nodeX0; 
+nodeX0->node00; 
+node00->nodeX0; 
 nodeX1->nodeX2;
 nodeX2->nodeX1;
-nodeX1->node10001; 
-node10001->nodeX1; 
-node10001->nodeExtra11; 
-nodeExtra11->node10001; 
-nodeExtra11->node1; 
-node1->nodeExtra11; 
+nodeX1->node10; 
+node10->nodeX1; 
+node10->nodeExtra11; 
+nodeExtra11->node10; 
+nodeExtra11->node12; 
+node12->nodeExtra11; 
 nodeX2->nodeX3;
 nodeX3->nodeX2;
-nodeX2->node10002; 
-node10002->nodeX2; 
+nodeX2->node20; 
+node20->nodeX2; 
 nodeX3->nodeX4;
 nodeX4->nodeX3;
-nodeX3->node10003; 
-node10003->nodeX3; 
+nodeX3->node30; 
+node30->nodeX3; 
 nodeX4->nodeX5;
 nodeX5->nodeX4;
-nodeX4->node10004; 
-node10004->nodeX4; 
+nodeX4->node40; 
+node40->nodeX4; 
 nodeX5->nodeX6;
 nodeX6->nodeX5;
-nodeX5->node10005; 
-node10005->nodeX5; 
+nodeX5->node50; 
+node50->nodeX5; 
 nodeX6->nodeX7;
 nodeX7->nodeX6;
-nodeX6->node10006; 
-node10006->nodeX6; 
+nodeX6->node60; 
+node60->nodeX6; 
 nodeX7->nodeX8;
 nodeX8->nodeX7;
-nodeX7->node10007; 
-node10007->nodeX7; 
+nodeX7->node70; 
+node70->nodeX7; 
 nodeX8->nodeX9;
 nodeX9->nodeX8;
-nodeX8->node10008; 
-node10008->nodeX8; 
+nodeX8->node80; 
+node80->nodeX8; 
 nodeX9->nodeX10;
 nodeX10->nodeX9;
-nodeX9->node10009; 
-node10009->nodeX9; 
-nodeX10->node10010; 
-node10010->nodeX10; 
+nodeX9->node90; 
+node90->nodeX9; 
+nodeX10->node100; 
+node100->nodeX10; 
 }

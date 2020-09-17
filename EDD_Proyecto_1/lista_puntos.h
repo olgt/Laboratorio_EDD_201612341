@@ -22,6 +22,8 @@ public:
 
     int getSizeX();
     int getSizeY();
+    int getSizeNodos();
+    Nodo_Puntos *getPunto(int pos);
 
 private:
     Nodo_Puntos *head;

@@ -41,7 +41,7 @@ public:
     void nivelesPorNumeroDeObjetos();
     int ** llenarArray(int ** proyectoArray, Nodo_Nivel* nodo_Actual, int &pos);
     int ** llenarArrayProyectosNiveles();
-
+    void aumentarObjetos(int cantidad);
 
 };
 

@@ -58,3 +58,11 @@ void Nodo_Objeto::setId(int id){
 char Nodo_Objeto::getLetra(){
     return this->letra;
 }
+
+string Nodo_Objeto::getXY(){
+    int x = this->getX();
+    int y = this->getY();
+    string XY = to_string(x) + to_string(y);
+    return XY;
+
+}

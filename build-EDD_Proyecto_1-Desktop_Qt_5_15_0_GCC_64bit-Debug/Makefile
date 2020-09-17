@@ -67,6 +67,7 @@ SOURCES       = ../EDD_Proyecto_1/Arbol_AVL.cpp \
 		../EDD_Proyecto_1/main.cpp \
 		../EDD_Proyecto_1/menuPrincipal.cpp \
 		../EDD_Proyecto_1/menueditarnivel.cpp \
+		../EDD_Proyecto_1/menueditarnivel2.cpp \
 		../EDD_Proyecto_1/nodo_binario.cpp \
 		../EDD_Proyecto_1/nodo_puntos.cpp \
 		../EDD_Proyecto_1/nodoarbol.cpp \
@@ -86,6 +87,7 @@ OBJECTS       = Arbol_AVL.o \
 		main.o \
 		menuPrincipal.o \
 		menueditarnivel.o \
+		menueditarnivel2.o \
 		nodo_binario.o \
 		nodo_puntos.o \
 		nodoarbol.o \
@@ -313,6 +315,7 @@ DIST          = ../../../../Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../EDD_Proyecto_1/lista_puntos.h \
 		../EDD_Proyecto_1/menuPrincipal.h \
 		../EDD_Proyecto_1/menueditarnivel.h \
+		../EDD_Proyecto_1/menueditarnivel2.h \
 		../EDD_Proyecto_1/nodo_binario.h \
 		../EDD_Proyecto_1/nodo_puntos.h \
 		../EDD_Proyecto_1/nodoarbol.h \
@@ -331,6 +334,7 @@ DIST          = ../../../../Qt/5.15.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../EDD_Proyecto_1/main.cpp \
 		../EDD_Proyecto_1/menuPrincipal.cpp \
 		../EDD_Proyecto_1/menueditarnivel.cpp \
+		../EDD_Proyecto_1/menueditarnivel2.cpp \
 		../EDD_Proyecto_1/nodo_binario.cpp \
 		../EDD_Proyecto_1/nodo_puntos.cpp \
 		../EDD_Proyecto_1/nodoarbol.cpp \
@@ -782,8 +786,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.15.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.h ../EDD_Proyecto_1/Cabecera.h ../EDD_Proyecto_1/Lista_Niveles.h ../EDD_Proyecto_1/Matriz.h ../EDD_Proyecto_1/Nodo_Matriz.h ../EDD_Proyecto_1/Nodo_Nivel.h ../EDD_Proyecto_1/Nodo_Objeto.h ../EDD_Proyecto_1/arbol_binario.h ../EDD_Proyecto_1/cargador_proyectos.h ../EDD_Proyecto_1/cargador_save.h ../EDD_Proyecto_1/cargadorreportes.h ../EDD_Proyecto_1/lista_puntos.h ../EDD_Proyecto_1/menuPrincipal.h ../EDD_Proyecto_1/menueditarnivel.h ../EDD_Proyecto_1/nodo_binario.h ../EDD_Proyecto_1/nodo_puntos.h ../EDD_Proyecto_1/nodoarbol.h ../EDD_Proyecto_1/utilities.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.cpp ../EDD_Proyecto_1/Cabecera.cpp ../EDD_Proyecto_1/Lista_Niveles.cpp ../EDD_Proyecto_1/Matriz.cpp ../EDD_Proyecto_1/Nodo_Matriz.cpp ../EDD_Proyecto_1/Nodo_Nivel.cpp ../EDD_Proyecto_1/Nodo_Objeto.cpp ../EDD_Proyecto_1/arbol_binario.cpp ../EDD_Proyecto_1/cargador_proyectos.cpp ../EDD_Proyecto_1/cargador_save.cpp ../EDD_Proyecto_1/cargadorreportes.cpp ../EDD_Proyecto_1/lista_puntos.cpp ../EDD_Proyecto_1/main.cpp ../EDD_Proyecto_1/menuPrincipal.cpp ../EDD_Proyecto_1/menueditarnivel.cpp ../EDD_Proyecto_1/nodo_binario.cpp ../EDD_Proyecto_1/nodo_puntos.cpp ../EDD_Proyecto_1/nodoarbol.cpp ../EDD_Proyecto_1/utilities.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.h ../EDD_Proyecto_1/Cabecera.h ../EDD_Proyecto_1/Lista_Niveles.h ../EDD_Proyecto_1/Matriz.h ../EDD_Proyecto_1/Nodo_Matriz.h ../EDD_Proyecto_1/Nodo_Nivel.h ../EDD_Proyecto_1/Nodo_Objeto.h ../EDD_Proyecto_1/arbol_binario.h ../EDD_Proyecto_1/cargador_proyectos.h ../EDD_Proyecto_1/cargador_save.h ../EDD_Proyecto_1/cargadorreportes.h ../EDD_Proyecto_1/lista_puntos.h ../EDD_Proyecto_1/menuPrincipal.h ../EDD_Proyecto_1/menueditarnivel.h ../EDD_Proyecto_1/menueditarnivel2.h ../EDD_Proyecto_1/nodo_binario.h ../EDD_Proyecto_1/nodo_puntos.h ../EDD_Proyecto_1/nodoarbol.h ../EDD_Proyecto_1/utilities.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../EDD_Proyecto_1/Arbol_AVL.cpp ../EDD_Proyecto_1/Cabecera.cpp ../EDD_Proyecto_1/Lista_Niveles.cpp ../EDD_Proyecto_1/Matriz.cpp ../EDD_Proyecto_1/Nodo_Matriz.cpp ../EDD_Proyecto_1/Nodo_Nivel.cpp ../EDD_Proyecto_1/Nodo_Objeto.cpp ../EDD_Proyecto_1/arbol_binario.cpp ../EDD_Proyecto_1/cargador_proyectos.cpp ../EDD_Proyecto_1/cargador_save.cpp ../EDD_Proyecto_1/cargadorreportes.cpp ../EDD_Proyecto_1/lista_puntos.cpp ../EDD_Proyecto_1/main.cpp ../EDD_Proyecto_1/menuPrincipal.cpp ../EDD_Proyecto_1/menueditarnivel.cpp ../EDD_Proyecto_1/menueditarnivel2.cpp ../EDD_Proyecto_1/nodo_binario.cpp ../EDD_Proyecto_1/nodo_puntos.cpp ../EDD_Proyecto_1/nodoarbol.cpp ../EDD_Proyecto_1/utilities.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1017,7 +1021,9 @@ main.o: ../EDD_Proyecto_1/main.cpp ../../../../Qt/5.15.1/gcc_64/include/QtCore/Q
 		../EDD_Proyecto_1/Arbol_AVL.h \
 		../EDD_Proyecto_1/nodoarbol.h \
 		../EDD_Proyecto_1/menueditarnivel.h \
-		../EDD_Proyecto_1/cargadorreportes.h
+		../EDD_Proyecto_1/menueditarnivel2.h \
+		../EDD_Proyecto_1/cargadorreportes.h \
+		../EDD_Proyecto_1/cargador_save.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../EDD_Proyecto_1/main.cpp
 
 menuPrincipal.o: ../EDD_Proyecto_1/menuPrincipal.cpp ../EDD_Proyecto_1/menuPrincipal.h \
@@ -1036,7 +1042,9 @@ menuPrincipal.o: ../EDD_Proyecto_1/menuPrincipal.cpp ../EDD_Proyecto_1/menuPrinc
 		../EDD_Proyecto_1/Arbol_AVL.h \
 		../EDD_Proyecto_1/nodoarbol.h \
 		../EDD_Proyecto_1/menueditarnivel.h \
-		../EDD_Proyecto_1/cargadorreportes.h
+		../EDD_Proyecto_1/menueditarnivel2.h \
+		../EDD_Proyecto_1/cargadorreportes.h \
+		../EDD_Proyecto_1/cargador_save.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menuPrincipal.o ../EDD_Proyecto_1/menuPrincipal.cpp
 
 menueditarnivel.o: ../EDD_Proyecto_1/menueditarnivel.cpp ../EDD_Proyecto_1/menueditarnivel.h \
@@ -1053,8 +1061,26 @@ menueditarnivel.o: ../EDD_Proyecto_1/menueditarnivel.cpp ../EDD_Proyecto_1/menue
 		../EDD_Proyecto_1/nodo_binario.h \
 		../EDD_Proyecto_1/lista_puntos.h \
 		../EDD_Proyecto_1/nodo_puntos.h \
-		../EDD_Proyecto_1/cargador_proyectos.h
+		../EDD_Proyecto_1/cargador_proyectos.h \
+		../EDD_Proyecto_1/menueditarnivel2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menueditarnivel.o ../EDD_Proyecto_1/menueditarnivel.cpp
+
+menueditarnivel2.o: ../EDD_Proyecto_1/menueditarnivel2.cpp ../EDD_Proyecto_1/menueditarnivel2.h \
+		../EDD_Proyecto_1/Arbol_AVL.h \
+		../EDD_Proyecto_1/nodoarbol.h \
+		../EDD_Proyecto_1/Lista_Niveles.h \
+		../EDD_Proyecto_1/Nodo_Nivel.h \
+		../EDD_Proyecto_1/utilities.h \
+		../EDD_Proyecto_1/Matriz.h \
+		../EDD_Proyecto_1/Nodo_Matriz.h \
+		../EDD_Proyecto_1/Nodo_Objeto.h \
+		../EDD_Proyecto_1/Cabecera.h \
+		../EDD_Proyecto_1/arbol_binario.h \
+		../EDD_Proyecto_1/nodo_binario.h \
+		../EDD_Proyecto_1/lista_puntos.h \
+		../EDD_Proyecto_1/nodo_puntos.h \
+		../EDD_Proyecto_1/cargador_proyectos.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o menueditarnivel2.o ../EDD_Proyecto_1/menueditarnivel2.cpp
 
 nodo_binario.o: ../EDD_Proyecto_1/nodo_binario.cpp ../EDD_Proyecto_1/nodo_binario.h \
 		../EDD_Proyecto_1/lista_puntos.h \

@@ -6,6 +6,7 @@ menuEditarNivel::menuEditarNivel()
 }
 
 void menuEditarNivel::mostrarMenuEdicion(Arbol_AVL* arbolProyectos, Arbol_Binario* arbolObjetos, int idProyecto){
+
     NodoArbol* proyectoActual = arbolProyectos->getProyecto(idProyecto, arbolProyectos->getRaiz());
     Lista_Niveles* listaNivelesActual = proyectoActual->getListaNiveles();
     string opciones[] = {"2.1. Agregar Nivel", "2.2. Editar Nivel", "2.3. Eliminar Nivel",
@@ -39,6 +40,9 @@ void menuEditarNivel::mostrarMenuEdicion(Arbol_AVL* arbolProyectos, Arbol_Binari
             imprimirEspacios(20);
         }
         if(opcion == 2){
+            menuEditarNivel2* nuevo = new menuEditarNivel2(proyectoActual, arbolObjetos, idProyecto);
+
+            nuevo->mostrarNiveles();
 
             imprimirEspacios(20);
         }

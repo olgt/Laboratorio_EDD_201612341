@@ -58,6 +58,9 @@ void MenuPrincipal::imprimirMenu(){
             cout << endl << "Proporcione el nombre del archivo: ";
             cin >> nombreArchivo;
             arbolProyectos = cargador.cargarNuevo(nombreArchivo, arbolObjetos);
+            if(arbolObjetos!=NULL){
+                arbolObjetos->crearGrafica();
+            }
             imprimirEspacios(20);
         }
         if(opcion == 4){

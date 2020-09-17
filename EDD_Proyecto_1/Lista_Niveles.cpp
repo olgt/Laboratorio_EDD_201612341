@@ -15,7 +15,7 @@ void Lista_Niveles::Delete(Nodo_Nivel* raiz){
     Nodo_Nivel* actual = raiz;
     Nodo_Nivel* next= raiz->getSiguiente();
     while(actual != NULL){
-        actual->getMatriz()->~Matriz();
+        actual->~Nodo_Nivel();
         delete actual;
         actual = NULL;
         if(next != NULL){
@@ -93,6 +93,7 @@ void Lista_Niveles::deleteNode(int id){
 
             aux = aux->getSiguiente();
          }
+        this->size = size -1;
 }
 
 void Lista_Niveles::graficarNiveles(string nombreProyecto){
@@ -247,6 +248,9 @@ void Lista_Niveles::nivelesPorNumeroDeObjetos(){
     llenarArrayProyectosNiveles();
 }
 
+void Lista_Niveles::aumentarObjetos(int cantidad){
+    this->size = this->size + cantidad;
+}
 
 int ** Lista_Niveles::llenarArray(int ** proyectoArray, Nodo_Nivel* nodo_Actual, int &pos){
     if(this->getHead() == NULL){
@@ -282,16 +286,7 @@ int ** Lista_Niveles::llenarArrayProyectosNiveles(){
 
 
     p = llenarArray(proyectoArray, this->getHead(), pos);
-/*
-    //Lsita desordenada
-    for(int i = 0; i< cantidadNodos*2; i++){
-        int h = *(p+i);
-        int residuo = i%2;
-        if(residuo == 0){
-            cout << h << endl;
-        }
-    }
-*/
+
     cout << "Ordenando" << endl;
 
     int aux;

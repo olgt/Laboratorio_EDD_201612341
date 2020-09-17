@@ -30,6 +30,7 @@ SOURCES += \
         main.cpp \
         menuPrincipal.cpp \
         menueditarnivel.cpp \
+        menueditarnivel2.cpp \
         nodo_binario.cpp \
         nodo_puntos.cpp \
         nodoarbol.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     lista_puntos.h \
     menuPrincipal.h \
     menueditarnivel.h \
+    menueditarnivel2.h \
     nodo_binario.h \
     nodo_puntos.h \
     nodoarbol.h \

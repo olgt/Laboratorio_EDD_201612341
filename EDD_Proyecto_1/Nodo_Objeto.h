@@ -31,6 +31,7 @@ public:
     void setColor(string color);
     void setId(int id);
     char getLetra();
+    string getXY();
 };
 
 #endif // NODO_OBJETO_H

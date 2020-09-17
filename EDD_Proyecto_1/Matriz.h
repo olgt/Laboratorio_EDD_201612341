@@ -60,16 +60,16 @@ public:
 
     void agregarNodosVaciosARank(ofstream & MyFile, int x);
 
-    void enlacesVaciosArribaAbajo(ofstream & MyFile, int idActual, int idAbajo, int xActual, int xAbajo, int y);
-    void enlacesNodosVaciosAbajoRestantes(ofstream & MyFile, int idActual,int xActual, int y);
+    void enlacesVaciosArribaAbajo(ofstream & MyFile, string idActual, string idAbajo, int xActual, int xAbajo, int y);
+    void enlacesNodosVaciosAbajoRestantes(ofstream & MyFile, string idActual,int xActual, int y);
 
-    void enlacesVaciosIzquierdaDerecha(ofstream & MyFile, int idActual, int idDerecha, int yActual, int yDerecha, int x);
-    void enlacesNodosVaciosDerechaRestantes(ofstream & MyFile, int idActual, int yActual, int x);
+    void enlacesVaciosIzquierdaDerecha(ofstream & MyFile, string idActual, string idDerecha, int yActual, int yDerecha, int x);
+    void enlacesNodosVaciosDerechaRestantes(ofstream & MyFile, string idActual, int yActual, int x);
 
-    void enlacesVaciosCabeceraIzquierdaDerecha(ofstream & MyFile, int yDerecha, int yCabecera, int posCabecera, int idDerecha);
-    void enlacesVaciosCabeceraArribaAbajo(ofstream & MyFile, int xAbajo, int xCabecera, int posCabecera, int idAbajo);
+    void enlacesVaciosCabeceraIzquierdaDerecha(ofstream & MyFile, int yDerecha, int yCabecera, int posCabecera, string idDerecha);
+    void enlacesVaciosCabeceraArribaAbajo(ofstream & MyFile, int xAbajo, int xCabecera, int posCabecera, string idAbajo);
 
-
+    Matriz* copiarMatriz();
 
 
 

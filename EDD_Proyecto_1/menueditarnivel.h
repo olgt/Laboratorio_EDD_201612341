@@ -11,6 +11,7 @@
 #include <Lista_Niveles.h>
 #include <cargador_proyectos.h>
 #include <stdbool.h>
+#include <menueditarnivel2.h>
 
 class menuEditarNivel
 {

@@ -9,6 +9,12 @@ Nodo_Nivel::Nodo_Nivel(int id, Matriz* matriz, Arbol_Binario* abb)
     this->anterior = NULL;
 }
 
+Nodo_Nivel::~Nodo_Nivel(){
+    this->abb->~Arbol_Binario();
+    this->getMatriz()->~Matriz();
+    delete this->abb;
+    delete this->matriz;
+}
 
 Nodo_Nivel* Nodo_Nivel::getSiguiente(){
     return this->siguiente;
@@ -53,4 +59,12 @@ Matriz* Nodo_Nivel::getMatriz(){
 
 void Nodo_Nivel::setABB(Arbol_Binario* abb){
     this->abb = abb;
+}
+
+Arbol_Binario* Nodo_Nivel::getABB(){
+    return this->abb;
+}
+
+void Nodo_Nivel::setMatriz(Matriz *nuevaMatriz){
+    this->matriz = nuevaMatriz;
 }

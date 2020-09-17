@@ -18,6 +18,28 @@ void Arbol_Binario::Delete(Nodo_Binario *raiz){
     delete raiz;
 }
 
+Nodo_Binario* Arbol_Binario::getObjeto(int id, Nodo_Binario* raiz){
+    Nodo_Binario* actual = NULL;
+
+    if(raiz->getIzquierda() != NULL){
+        if(actual == NULL){
+            actual = getObjeto(id, raiz->getIzquierda());
+        }
+    }
+
+    if(raiz->getDerecha() != NULL){
+        if(actual == NULL){
+            actual = getObjeto(id, raiz->getDerecha());
+        }
+    }
+
+    if(id == raiz->getId()){
+        return raiz;
+    } else {
+        return actual;
+    }
+}
+
 Nodo_Binario* Arbol_Binario::getRaiz(){
     return this->raiz;
 }
@@ -72,8 +94,15 @@ void Arbol_Binario::recorrerInorden(Nodo_Binario* raiz){
     }
 
     recorrerInorden(raiz->getIzquierda());
-    cout << "Dato: " << raiz->getId() << endl;;
+    cout << "* " << raiz->getId() << ". " << raiz->getName()
+         << "#X: " << raiz->getListaPuntos()->getSizeX() << "#Y: " << raiz->getListaPuntos()->getSizeY() << endl;;
     recorrerInorden(raiz->getDerecha());
+
+}
+
+Arbol_Binario* Arbol_Binario::copiarArbolInOrden(Arbol_Binario* arbolCopiado){
+
+
 
 }
 
@@ -202,3 +231,4 @@ void Arbol_Binario::destruir(Nodo_Binario *raizEliminar){
     raizEliminar->setDerecha(NULL);
     delete raizEliminar;
 }
+

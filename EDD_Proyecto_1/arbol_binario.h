@@ -25,6 +25,8 @@ class Arbol_Binario
         Nodo_Binario* getRaiz();
 
         void insertar(int id, string nombre, char letra, string color, Lista_Puntos* xy);
+        Nodo_Binario* getObjeto(int id, Nodo_Binario* raiz);
+
         void crearGrafica();
         void crearGraficaRamas(ofstream &file, Nodo_Binario* raiz);
 
@@ -37,6 +39,7 @@ class Arbol_Binario
         void reemplazar(Nodo_Binario* nodoRemplazar, Nodo_Binario* nuevoNodo);
         Nodo_Binario* minimo(Nodo_Binario* raiz);
         void destruir(Nodo_Binario* raizEliminar);
+        Arbol_Binario* copiarArbolInOrden(Arbol_Binario* arbolCopiado);
 };
 
 #endif // ARBOL_BINARIO_H
