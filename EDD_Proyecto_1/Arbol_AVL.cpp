@@ -137,7 +137,58 @@ NodoArbol* Arbol_AVL::insertar(NodoArbol *raiz, string name, bool &hc, Lista_Niv
                 break;
             }
         }
+    } else if(dato == raiz->getCodigo()){
+        if(raiz->getName() == name){
+
+        } else if(id > raiz->getId()){
+
+            NodoArbol* der = insertar(raiz->getDerecha(), name, hc, niveles, id, abb);
+            raiz->setDerecha(der);
+            if(hc){
+                switch(raiz->getFactor()){
+                case 1:
+                    n1=raiz->getDerecha();
+                    if(n1->getFactor()==1){
+                        raiz=rotacionDD(raiz,n1);
+                    } else {
+                        raiz=rotacionDI(raiz, n1);
+                    }
+                    hc=false;
+                    break;
+                case 0:
+                    raiz->setFactor(1);
+                    break;
+                case -1:
+                    raiz->setFactor(0);
+                    hc=false;
+                    break;
+                }
+            }
+        } else if (id < raiz->getId()){
+            NodoArbol* izq = insertar(raiz->getIzquierda(), name, hc, niveles, id, abb);
+            raiz->setIzquierda(izq);
+            if(hc){
+                switch(raiz->getFactor()){
+                    case 1:
+                    raiz->setFactor(0);
+                    hc=false;
+                        break;
+                case 0:
+                    raiz->setFactor(-1);
+                    break;
+
+                case -1:
+                    n1=raiz->getIzquierda();
+                    if(n1->getFactor()==-1){
+                        raiz=rotacionII(raiz, n1);
+                    } else {
+                        raiz=rotacionID(raiz,n1);
+                    }
+                }
+            }
+        }
     }
+
     return raiz;
 }
 

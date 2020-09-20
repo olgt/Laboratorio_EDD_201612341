@@ -6,4 +6,5 @@ Objeto_Television_id_2->Objeto_planta_id_3;
 Objeto_planta_id_3->Objeto_mesa_id_4; 
 Objeto_mesa_id_4->Objeto_puerta_id_5; 
 Objeto_puerta_id_5->Objeto_escalera_id_6; 
+Objeto_escalera_id_6->Objeto_mesaLInv_id_21; 
 }

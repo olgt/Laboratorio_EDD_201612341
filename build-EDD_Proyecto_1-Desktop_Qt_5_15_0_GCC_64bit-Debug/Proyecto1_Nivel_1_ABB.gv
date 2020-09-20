@@ -1,8 +1,9 @@
 digraph G {
 rankdir = TB; 
 node [shape=record, width=.1, height=.1]; 
-Objeto_Sofa_id_1->Objeto_Escoba_id_6; 
-Objeto_Escoba_id_6->Objeto_mesa_id_20; 
-Objeto_mesa_id_20->Objeto_Sillon_T1_id_10; 
-Objeto_mesa_id_20->Objeto_mesaLInv_id_21; 
+Objeto_Sofa_id_1->Objeto_Television_id_2; 
+Objeto_Television_id_2->Objeto_planta_id_3; 
+Objeto_planta_id_3->Objeto_mesa_id_4; 
+Objeto_mesa_id_4->Objeto_puerta_id_5; 
+Objeto_puerta_id_5->Objeto_escalera_id_6; 
 }

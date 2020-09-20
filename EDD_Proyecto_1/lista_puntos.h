@@ -24,7 +24,7 @@ public:
     int getSizeY();
     int getSizeNodos();
     Nodo_Puntos *getPunto(int pos);
-
+    Lista_Puntos* copiarEstaLista();
 private:
     Nodo_Puntos *head;
     Nodo_Puntos *tail;

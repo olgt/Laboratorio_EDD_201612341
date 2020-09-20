@@ -36,7 +36,7 @@ void MenuPrincipal::imprimirMenu(){
                 cout << "No Hay Proyectos Guardados" << endl;
             }
 
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 2){
             if(arbolProyectos != NULL){
@@ -65,13 +65,13 @@ void MenuPrincipal::imprimirMenu(){
             if(arbolObjetos!=NULL){
                 arbolObjetos->crearGrafica("ABB_Universal", 0);
             }
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 4){
             if(arbolProyectos!=NULL){
                 arbolProyectos->graficarTodosProyectos(arbolProyectos->getRaiz());
             }
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 5){
             Cargador_Save* nuevoSaver = new Cargador_Save(arbolProyectos, arbolObjetos);
@@ -91,7 +91,7 @@ void MenuPrincipal::imprimirMenu(){
             if(arbolObjetos != NULL){
                 arbolObjetos->crearGrafica("ABB_Universal", 0);
             }
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 7){
             cargadorReportes* cargador = new cargadorReportes(arbolProyectos, arbolObjetos);

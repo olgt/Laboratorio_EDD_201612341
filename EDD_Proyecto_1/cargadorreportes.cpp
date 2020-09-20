@@ -7,8 +7,6 @@ cargadorReportes::cargadorReportes(Arbol_AVL* arbolProyectos, Arbol_Binario* arb
 }
 
 void cargadorReportes::mostrarOpciones(){
-    Arbol_AVL* proyectoActual = this->proyectos;
-
 
     bool isContinue = true;
     int opcion = 0;
@@ -26,25 +24,25 @@ void cargadorReportes::mostrarOpciones(){
 
             reporteProyectoMayorNumeroNivelesAscendente();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
         }
         if(opcion == 2){
             reporteProyectoMayorNumeroNivelesDescendente();
-            imprimirEspacios(20);
+            imprimirEspacios(5);
         }
         if(opcion == 3){
             imprimirEspacios(5);
 
             reporteProyectoNivelesPorObjeto();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
         }
         if(opcion == 4){
             imprimirEspacios(5);
 
             reporteNivelMasEspacio();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
 
         }
         if(opcion == 5){
@@ -53,7 +51,7 @@ void cargadorReportes::mostrarOpciones(){
             reporteNivelMenosParedes();
 
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
 
         }
         if(opcion == 6){
@@ -61,7 +59,7 @@ void cargadorReportes::mostrarOpciones(){
 
             reporteNivelMasParedes();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
 
         }
         if(opcion == 7){
@@ -69,7 +67,7 @@ void cargadorReportes::mostrarOpciones(){
 
             reporteNivelMasEspacioMasVentanas();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
 
         }
         if(opcion == 8){
@@ -77,7 +75,7 @@ void cargadorReportes::mostrarOpciones(){
 
             reporteNivelMasEspacioMenosVentanas();
 
-            imprimirEspacios(20);
+            imprimirEspacios(5);
 
         }
         if(opcion == 9){

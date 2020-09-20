@@ -121,7 +121,8 @@ void Arbol_Binario::recorrerInorden(Nodo_Binario* raiz){
 Arbol_Binario* Arbol_Binario::copiarEsteArbolPreOrden(){
     Arbol_Binario* nuevoArbol = new Arbol_Binario();
     Nodo_Binario* raiz = this->getRaiz();
-    nuevoArbol->insertar(raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos());
+
+    nuevoArbol->insertar(raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos()->copiarEstaLista());
 
     nuevoArbol->llenarArbolCopiado(raiz, nuevoArbol);
 
@@ -134,7 +135,8 @@ void Arbol_Binario::llenarArbolCopiado(Nodo_Binario* raiz, Arbol_Binario* nuevoA
         return;
     }
 
-    nuevoArbol->insertar(raiz, raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos(), raiz);
+    //Nodo_Binario* nuevo = new Nodo_Binario(raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos()->copiarEstaLista(), NULL);
+    nuevoArbol->insertar(nuevoArbol->getRaiz(), raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos()->copiarEstaLista(), NULL);
 
     if(raiz->getIzquierda()!=NULL){
         llenarArbolCopiado(raiz->getIzquierda(), nuevoArbol);

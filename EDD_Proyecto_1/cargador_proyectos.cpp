@@ -237,6 +237,7 @@ Lista_Puntos* Cargador_Proyectos::cargarCoordenadasObjetosProyecto(json jasonFil
         int yEnJason = jasonFile["proyectos"][indiceProyecto]["niveles"][indiceNivel]["objetos"][indiceObjeto]["puntos"][j]["y"];
 
         Nodo_Puntos* nodoXY = new Nodo_Puntos(xEnJason, yEnJason);
+        nodoXY->setSiguiente(NULL);
 
         cout << "Insertando Coordenadas: " << xEnJason << ", " << yEnJason << endl;
 
@@ -476,6 +477,7 @@ Lista_Puntos* Cargador_Proyectos::cargarCoordenadasObjetosExtraNivel(json jasonF
         int yEnJason = jasonFile["niveles"][indiceNivel]["objetos"][indiceObjeto]["puntos"][j]["y"];
 
         Nodo_Puntos* nodoXY = new Nodo_Puntos(xEnJason, yEnJason);
+        nodoXY->setSiguiente(NULL);
 
         cout << "Insertando Coordenadas: " << xEnJason << ", " << yEnJason << endl;
 

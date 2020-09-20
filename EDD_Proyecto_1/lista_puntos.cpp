@@ -127,3 +127,20 @@ Nodo_Puntos* Lista_Puntos::getPunto(int pos){
     return punto;
 
 }
+
+Lista_Puntos* Lista_Puntos::copiarEstaLista(){
+    Lista_Puntos* nuevaListaPuntos = new Lista_Puntos();
+
+    Nodo_Puntos* actual = this->head;
+
+    while(actual!= NULL){
+        int x = actual->getX();
+        int y = actual->getY();
+
+        Nodo_Puntos* nodoIngresa = new Nodo_Puntos(x, y);
+        nuevaListaPuntos->addNode(nodoIngresa);
+
+        actual = actual->getSiguiente();
+    }
+    return nuevaListaPuntos;
+}

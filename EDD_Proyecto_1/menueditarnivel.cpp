@@ -37,14 +37,14 @@ void menuEditarNivel::mostrarMenuEdicion(Arbol_AVL* arbolProyectos, Arbol_Binari
 
             cargador.agregarNivelExtra(listaNivelesActual, arbolObjetos, nombreArchivo);
 
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 2){
             menuEditarNivel2* nuevo = new menuEditarNivel2(proyectoActual, arbolObjetos, idProyecto);
 
             nuevo->mostrarNiveles();
 
-            imprimirEspacios(20);
+            imprimirEspacios(10);
         }
         if(opcion == 3){
             int idNivel;
@@ -54,22 +54,22 @@ void menuEditarNivel::mostrarMenuEdicion(Arbol_AVL* arbolProyectos, Arbol_Binari
             cout << endl << "Ingrese Nivel a borrar: ";
             cin >> idNivel;
 
-            eliminarNivelMenu(listaNivelesActual,idNivel);
-            imprimirEspacios(20);
-
-        }
-        if(opcion == 3){
             string opcion;
             cout << endl << "Eliminar Proyecto? (Y/N): ";
             cin >> opcion;
 
             if(opcion == "Y" || opcion == "y"){
-
+                eliminarNivelMenu(listaNivelesActual,idNivel);
             } else {
-
+                cout << "Opcion Cancelada";
             }
+            imprimirEspacios(10);
 
-            imprimirEspacios(20);
+        }
+        if(opcion == 3){
+
+
+            imprimirEspacios(10);
 
         }
         if(opcion == 5){

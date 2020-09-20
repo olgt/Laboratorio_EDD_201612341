@@ -656,7 +656,7 @@ void Matriz::enlacesNodosVaciosAbajoRestantes(ofstream & MyFile, string idActual
         MyFile << "node" << idActual << "->" << "nodeExtra" << xActual+1 << y << "; \n";
         MyFile << "nodeExtra" << xActual +1 << y << "->" << "node" << idActual << "; \n";
 
-        for(int i = xActual + 1; i < cantidadX; i++){
+        for(int i = xActual + 1; i < cantidadX-1; i++){
             MyFile << "nodeExtra" << i << y << "->" << "nodeExtra" << i+1 << y << "; \n";
             MyFile << "nodeExtra" << i+1 << y << "->" << "nodeExtra" << i << y << "; \n";
         }
@@ -687,7 +687,7 @@ void Matriz::enlacesNodosVaciosDerechaRestantes(ofstream & MyFile, string idActu
         MyFile << "node" << idActual << "->" << "nodeExtra" << x << yActual+1 << "; \n";
         MyFile << "nodeExtra" << x << yActual +1 << "->" << "node" << idActual << "; \n";
 
-        for(int i = yActual + 1; i < cantidadY; i++){
+        for(int i = yActual + 1; i < cantidadY-1; i++){
             MyFile << "nodeExtra" << x << i << "->" << "nodeExtra" << x << i+1 << "; \n";
             MyFile << "nodeExtra" << x << i+1 << "->" << "nodeExtra" << x << i << "; \n";
         }
@@ -1028,7 +1028,60 @@ Matriz* Matriz::copiarMatriz(){
 }
 
 void Matriz::eliminarParedes(int x1, int y1, int x2, int y2){
-    if(x1 == x2){
+    if(x1 == x2 && y1 ==y2){
+        Nodo_Matriz* NodoABorrar = getFromMatriz(x1, y1);
+
+        string objeto = "Nada";
+
+        if(NodoABorrar != NULL){
+            objeto = ((Nodo_Objeto*)NodoABorrar)->getObjeto();
+        }
+
+        if(NodoABorrar != NULL && ( objeto == "pared" || objeto == "Pared")){
+            if(NodoABorrar->getDerecha() != NULL){
+                NodoABorrar->getDerecha()->setIzquierda(NodoABorrar->getIzquierda());
+            }
+            if(NodoABorrar->getIzquierda() != NULL){
+                NodoABorrar->getIzquierda()->setDerecha(NodoABorrar->getDerecha());
+
+            }
+            if(NodoABorrar->getAbajo() != NULL){
+                NodoABorrar->getAbajo()->setArriba(NodoABorrar->getArriba());
+            }
+            if(NodoABorrar->getArriba() != NULL){
+                NodoABorrar->getArriba()->setAbajo(NodoABorrar->getAbajo());
+            }
+
+            delete NodoABorrar;
+
+            Cabecera* cabeceraX = getVertical(x1);
+            Cabecera* cabeceraY = getHorizontal(y1);
+
+            Nodo_Matriz* ultimoVertical = obtenerUltimoVertical(cabeceraY, x1);
+            Nodo_Matriz* ultimoHorizontal = obtenerUltimoHorizontal(cabeceraX, y1);
+
+            if(ultimoHorizontal == cabeceraX){
+                if(cabeceraX->getAbajo() != NULL){
+                    cabeceraX->getAbajo()->setArriba(cabeceraX->getArriba());
+                }
+                if(cabeceraX->getArriba() != NULL){
+                    cabeceraX->getArriba()->setAbajo(cabeceraX->getAbajo());
+                }
+                delete cabeceraX;
+            }
+            if(ultimoVertical == cabeceraY){
+                if(cabeceraY->getDerecha() != NULL){
+                    cabeceraY->getDerecha()->setIzquierda(cabeceraY->getIzquierda());
+                }
+                if(cabeceraY->getIzquierda() != NULL){
+                    cabeceraY->getIzquierda()->setDerecha(cabeceraY->getDerecha());
+                }
+                delete cabeceraY;
+            }
+        }
+
+    }
+    else if(x1 == x2){
         for(int j = y1; j < y2+1; j++){
             Nodo_Matriz* NodoABorrar = getFromMatriz(x1, j);
             string objeto = "Nada";
@@ -1131,7 +1184,10 @@ void Matriz::eliminarParedes(int x1, int y1, int x2, int y2){
     }
 }
 
-void Matriz::eliminarObjeto(int id){
+void Matriz::eliminarObjeto(int id, int longitudObjeto){
+    int vez = 0;
+    int cantidadObjetos = 0;
+
     for(int j = 0; j < this->getLengthHorizontal()+1; j++){
         for(int i = 0; i < this->getLengthVertical()+1; i++){
             Nodo_Matriz* NodoABorrar = getFromMatriz(i, j);
@@ -1182,7 +1238,14 @@ void Matriz::eliminarObjeto(int id){
                     }
                     delete cabeceraY;
                 }
+                //Para Eliminar Objetos
+                vez++;
+                if(vez == longitudObjeto){
+                    vez = 0;
+                    cantidadObjetos++;
+                }
             }
         }
     }
+    this->objetos = objetos - cantidadObjetos;
 }

@@ -464,18 +464,21 @@ Nodo_Objeto* menuEditarNivel2::girar45(Nodo_Nivel* nivelActual, int size, int x,
 }
 
 void menuEditarNivel2::eliminarObjeto(Nodo_Nivel* nivelActual){
-    this->arbolObjetos->recorrerInorden(this->arbolObjetos->getRaiz());
+    nivelActual->getABB()->recorrerInorden(nivelActual->getABB()->getRaiz());
 
     int idObjeto;
+    int sizeOfNodosObjeto;
 
     cout << "Seleccione Objeto a Borrar: ";
     cin >> idObjeto;
-    nivelActual->getMatriz()->eliminarObjeto(idObjeto);
-    graficarNivel(nivelActual->getId());
 
-    this->arbolObjetos->eliminarNodo(this->arbolObjetos->getRaiz(), idObjeto);
+    sizeOfNodosObjeto = nivelActual->getABB()->getObjeto(idObjeto, nivelActual->getABB()->getRaiz())->getListaPuntos()->getSizeNodos();
+    nivelActual->getMatriz()->eliminarObjeto(idObjeto, sizeOfNodosObjeto);
 
+
+    nivelActual->getABB()->eliminarNodo(nivelActual->getABB()->getRaiz(), idObjeto);
     this->arbolObjetos->crearGrafica(this->proyecto->getName(), nivelActual->getId());
+    graficarNivel(nivelActual->getId());
 
     imprimirEspacios(1);
 

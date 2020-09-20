@@ -72,8 +72,7 @@ public:
     Matriz* copiarMatriz();
 
     void eliminarParedes(int x1, int y1, int x2, int y2);
-    void eliminarObjeto(int id);
-
+    void eliminarObjeto(int id, int longitudObjeto);
 
 };
 
