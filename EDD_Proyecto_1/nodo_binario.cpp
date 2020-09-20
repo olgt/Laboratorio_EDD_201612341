@@ -22,8 +22,8 @@ void Nodo_Binario::setDerecha(Nodo_Binario* der){
 
 Nodo_Binario* Nodo_Binario::getDerecha(){
     return this->hijoDerecho;
-
 }
+
 Nodo_Binario* Nodo_Binario::getIzquierda(){
     return this->hijoIzquierdo;
 }

@@ -18,16 +18,22 @@ Matriz::~Matriz(){
         while(aux2!=NULL){
             extra2 = aux2->getDerecha();
             delete aux2;
+            aux2 = NULL;
             aux2 = extra2;
         }
         delete aux;
+        aux = NULL;
         aux = extra;
     }
     while(tmp!=NULL){
         tmp2 = tmp->getDerecha();
         delete tmp;
+        tmp = NULL;
         tmp =  tmp2;
     }
+    this->horizontal = NULL;
+    this->vertical = NULL;
+    this->objetos = 0;
 }
 
 Cabecera* Matriz::crearHorizontal(int y){
@@ -124,7 +130,6 @@ Nodo_Matriz* Matriz::obtenerUltimoHorizontal(Cabecera* cabecera, int y){
 
     while(aux->getDerecha() != NULL){
         if(y == (((Nodo_Objeto*)aux)->getY())){
-               Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
                return aux;
         }
         else if(y < (((Nodo_Objeto*)aux)->getY())){
@@ -135,7 +140,6 @@ Nodo_Matriz* Matriz::obtenerUltimoHorizontal(Cabecera* cabecera, int y){
     if(y < (((Nodo_Objeto*)aux)->getY())){
         return aux->getIzquierda();
     }
-    Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
     return aux;
 }
 
@@ -144,11 +148,11 @@ Nodo_Matriz* Matriz::obtenerUltimoVertical(Cabecera* cabecera, int x){
     Nodo_Matriz* aux = cabecera->getAbajo();
 
     while(aux->getAbajo() != NULL){
+        int xObjeto = ((Nodo_Objeto*)aux)->getX();
         if(x == ((Nodo_Objeto*)aux)->getX()){
-            Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
                return aux;
         }
-        else if( x < ((Nodo_Objeto*)aux)->getX()){
+        else if( x < ((Nodo_Objeto*)aux)->getX()){ //error
             return aux->getArriba();
         }
         aux=aux->getAbajo();
@@ -156,10 +160,8 @@ Nodo_Matriz* Matriz::obtenerUltimoVertical(Cabecera* cabecera, int x){
     if(x < ((Nodo_Objeto*)aux)->getX()){
         return aux->getArriba();
     }
-    Nodo_Objeto* auxActual = ((Nodo_Objeto*)aux);
     return aux;
 }
-
 
 Cabecera* Matriz::getVertical(int x){
     if(this->vertical == NULL){return NULL;}
@@ -242,8 +244,6 @@ void Matriz::add(Nodo_Objeto *nuevo){
     }
 }
 
-
-
 bool Matriz::chequearNodoEsCabecera(Nodo_Matriz* nodoAnalizado){
     bool esCabecera = false;
 
@@ -324,7 +324,7 @@ void Matriz::crearGrafica(string nombre){
     string nombreArchivo = nombre + ".gv";
     string nombreGrafica = nombre + ".ps";
 
-        ofstream MyFile(nombreArchivo);
+        ofstream MyFile(nombreArchivo); //error?
         MyFile << "digraph G {";
         MyFile << "\n";
         MyFile << "rankdir = TB; \n";
@@ -407,7 +407,7 @@ void Matriz::crearGrafica(string nombre){
           MyFile << "node0" << "->" <<  "nodeY" << ((Cabecera*)tmpH)->getPos() << "; \n";
           MyFile << "node0" << "->" << "nodeX" <<((Cabecera*)tmpV)->getPos() << "; \n";
 
-          //FLECHAS CABECERA => MATRIZ & MATRIZ = MATRIZ
+          //FLECHAS CABECERA => MATRIZ & MATRIZ = MATRIZ //Problema?
           while(tmpH != NULL){
               if(tmpH->getDerecha() != NULL){
                   //tmpH es una cabecera, su pos = 0;
@@ -495,8 +495,8 @@ void Matriz::crearGrafica(string nombre){
 
 
           //Asignando Flechas a Nodos
-          tmpH = this->horizontal;
-          tmpV = this->vertical;
+          tmpH = NULL;
+          tmpV = NULL;
 
 
         cout << "Done";
@@ -512,7 +512,6 @@ void Matriz::crearGrafica(string nombre){
             cout << "error occurred" << endl;
         }
 }
-
 
 
 //Crea Nodos vacios para espacios en blanco
@@ -1026,4 +1025,164 @@ Matriz* Matriz::copiarMatriz(){
         }
     }
     return matrizCopiada;
+}
+
+void Matriz::eliminarParedes(int x1, int y1, int x2, int y2){
+    if(x1 == x2){
+        for(int j = y1; j < y2+1; j++){
+            Nodo_Matriz* NodoABorrar = getFromMatriz(x1, j);
+            string objeto = "Nada";
+
+            if(NodoABorrar != NULL){
+                objeto = ((Nodo_Objeto*)NodoABorrar)->getObjeto();
+            }
+
+            if(NodoABorrar != NULL && ( objeto == "pared" || objeto == "Pared")){
+                if(NodoABorrar->getDerecha() != NULL){
+                    NodoABorrar->getDerecha()->setIzquierda(NodoABorrar->getIzquierda());
+                }
+                if(NodoABorrar->getIzquierda() != NULL){
+                    NodoABorrar->getIzquierda()->setDerecha(NodoABorrar->getDerecha());
+
+                }
+                if(NodoABorrar->getAbajo() != NULL){
+                    NodoABorrar->getAbajo()->setArriba(NodoABorrar->getArriba());
+                }
+                if(NodoABorrar->getArriba() != NULL){
+                    NodoABorrar->getArriba()->setAbajo(NodoABorrar->getAbajo());
+                }
+
+                delete NodoABorrar;
+
+                Cabecera* cabeceraX = getVertical(x1);
+                Cabecera* cabeceraY = getHorizontal(j);
+
+                Nodo_Matriz* ultimoVertical = obtenerUltimoVertical(cabeceraY, x1);
+                Nodo_Matriz* ultimoHorizontal = obtenerUltimoHorizontal(cabeceraX, y1);
+
+                if(ultimoHorizontal == cabeceraX){
+                    if(cabeceraX->getAbajo() != NULL){
+                        cabeceraX->getAbajo()->setArriba(cabeceraX->getArriba());
+                    }
+                    if(cabeceraX->getArriba() != NULL){
+                        cabeceraX->getArriba()->setAbajo(cabeceraX->getAbajo());
+                    }
+                    delete cabeceraX;
+                }
+                if(ultimoVertical == cabeceraY){
+                    if(cabeceraY->getDerecha() != NULL){
+                        cabeceraY->getDerecha()->setIzquierda(cabeceraY->getIzquierda());
+                    }
+                    if(cabeceraY->getIzquierda() != NULL){
+                        cabeceraY->getIzquierda()->setDerecha(cabeceraY->getDerecha());
+                    }
+                    delete cabeceraY;
+                }
+            }
+        }
+    }
+    else if(y1 == y2){
+        for(int i = x1; i < x2+1; i++){
+            Nodo_Matriz* NodoABorrar = getFromMatriz(i, y1);
+            string objeto = "Nada";
+
+            if(NodoABorrar != NULL){
+                objeto = ((Nodo_Objeto*)NodoABorrar)->getObjeto();
+            }
+
+            if(NodoABorrar != NULL && ( objeto == "pared" || objeto == "Pared")){
+                if(NodoABorrar->getDerecha() != NULL){
+                    NodoABorrar->getDerecha()->setIzquierda(NodoABorrar->getIzquierda());
+                }
+                if(NodoABorrar->getIzquierda() != NULL){
+                    NodoABorrar->getIzquierda()->setDerecha(NodoABorrar->getDerecha());
+
+                }
+                if(NodoABorrar->getAbajo() != NULL){
+                    NodoABorrar->getAbajo()->setArriba(NodoABorrar->getArriba());
+                }
+                if(NodoABorrar->getArriba() != NULL){
+                    NodoABorrar->getArriba()->setAbajo(NodoABorrar->getAbajo());
+                }
+                NodoABorrar = NULL;
+
+                Cabecera* cabeceraX = getVertical(x1);
+                Cabecera* cabeceraY = getHorizontal(y1);
+
+                Nodo_Matriz* ultimoVertical = obtenerUltimoVertical(cabeceraY, x1);
+                Nodo_Matriz* ultimoHorizontal = obtenerUltimoHorizontal(cabeceraX, y1);
+
+                if(ultimoVertical == cabeceraY){
+                    cabeceraY->getDerecha()->setIzquierda(cabeceraY->getIzquierda());
+                    if(cabeceraY->getIzquierda() != NULL){
+                        cabeceraY->getIzquierda()->setDerecha(cabeceraY->getDerecha());
+                    }
+                    delete cabeceraY;
+                }
+                if(ultimoHorizontal == cabeceraX){
+                    cabeceraX->getAbajo()->setArriba(cabeceraX->getArriba());
+                    if(cabeceraX->getArriba() != NULL){
+                        cabeceraX->getArriba()->setAbajo(cabeceraX->getAbajo());
+                    }
+                    delete cabeceraX;
+                }
+            }
+        }
+    }
+}
+
+void Matriz::eliminarObjeto(int id){
+    for(int j = 0; j < this->getLengthHorizontal()+1; j++){
+        for(int i = 0; i < this->getLengthVertical()+1; i++){
+            Nodo_Matriz* NodoABorrar = getFromMatriz(i, j);
+            int idObjeto = 0;
+
+            if(NodoABorrar != NULL){
+                idObjeto = ((Nodo_Objeto*)NodoABorrar)->getId();
+            }
+
+            if(NodoABorrar != NULL && ( idObjeto == id)){
+                if(NodoABorrar->getDerecha() != NULL){
+                    NodoABorrar->getDerecha()->setIzquierda(NodoABorrar->getIzquierda());
+                }
+                if(NodoABorrar->getIzquierda() != NULL){
+                    NodoABorrar->getIzquierda()->setDerecha(NodoABorrar->getDerecha());
+
+                }
+                if(NodoABorrar->getAbajo() != NULL){
+                    NodoABorrar->getAbajo()->setArriba(NodoABorrar->getArriba());
+                }
+                if(NodoABorrar->getArriba() != NULL){
+                    NodoABorrar->getArriba()->setAbajo(NodoABorrar->getAbajo());
+                }
+
+                delete NodoABorrar;
+
+                Cabecera* cabeceraX = getVertical(i);
+                Cabecera* cabeceraY = getHorizontal(j);
+
+                Nodo_Matriz* ultimoVertical = obtenerUltimoVertical(cabeceraY, i);
+                Nodo_Matriz* ultimoHorizontal = obtenerUltimoHorizontal(cabeceraX, j);
+
+                if(ultimoHorizontal == cabeceraX){
+                    if(cabeceraX->getAbajo() != NULL){
+                        cabeceraX->getAbajo()->setArriba(cabeceraX->getArriba());
+                    }
+                    if(cabeceraX->getArriba() != NULL){
+                        cabeceraX->getArriba()->setAbajo(cabeceraX->getAbajo());
+                    }
+                    delete cabeceraX;
+                }
+                if(ultimoVertical == cabeceraY){
+                    if(cabeceraY->getDerecha() != NULL){
+                        cabeceraY->getDerecha()->setIzquierda(cabeceraY->getIzquierda());
+                    }
+                    if(cabeceraY->getIzquierda() != NULL){
+                        cabeceraY->getIzquierda()->setDerecha(cabeceraY->getDerecha());
+                    }
+                    delete cabeceraY;
+                }
+            }
+        }
+    }
 }

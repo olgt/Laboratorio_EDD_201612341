@@ -10,10 +10,10 @@ Nodo_Nivel::Nodo_Nivel(int id, Matriz* matriz, Arbol_Binario* abb)
 }
 
 Nodo_Nivel::~Nodo_Nivel(){
-    this->abb->~Arbol_Binario();
-    this->getMatriz()->~Matriz();
     delete this->abb;
     delete this->matriz;
+    this->abb = NULL;
+    this->matriz = NULL;
 }
 
 Nodo_Nivel* Nodo_Nivel::getSiguiente(){
@@ -51,6 +51,10 @@ void Nodo_Nivel::imprimirOpciones(){
 
 int Nodo_Nivel::getId(){
     return this->id;
+}
+
+void Nodo_Nivel::setId(int id){
+    this->id = id;
 }
 
 Matriz* Nodo_Nivel::getMatriz(){

@@ -1,0 +1,6 @@
+digraph G {
+rankdir = TB; 
+node [shape=record, width=.1, height=.1]; 
+Objeto_Sofa_id_1->Objeto_Escoba_id_6; 
+Objeto_Escoba_id_6->Objeto_mesa_id_20; 
+}

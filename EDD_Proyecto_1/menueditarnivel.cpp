@@ -84,7 +84,7 @@ void menuEditarNivel::eliminarNivelMenu(Lista_Niveles* listaNivelesActual,int id
     Nodo_Nivel* nodoAEliminar = listaNivelesActual->getNodo(idNivel);
     if(nodoAEliminar != NULL){
         listaNivelesActual->deleteNode(nodoAEliminar->getId());
-        nodoAEliminar->~Nodo_Nivel();
+        delete nodoAEliminar;
     }
 
 }

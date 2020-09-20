@@ -210,6 +210,7 @@ void Arbol_AVL::graficarTodosProyectos(NodoArbol *raiz){
     }
 
     raiz->getListaNiveles()->graficarNiveles(raiz->getName());
+    raiz->getListaNiveles()->graficarTodosABB(raiz->getName());
 }
 
 NodoArbol* Arbol_AVL::getRaiz(){

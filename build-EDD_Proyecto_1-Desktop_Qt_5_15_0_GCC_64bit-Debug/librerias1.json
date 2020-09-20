@@ -22,7 +22,7 @@
     },
     {
       "identificador": 10,
-      "nombre": "Sillon T1",
+      "nombre": "Sillon_T1",
       "letra": "S",
       "color": "#FDB646",
       "puntos": [
@@ -42,7 +42,7 @@
     },
     {
       "identificador": 11,
-      "nombre": "Sillon T2",
+      "nombre": "Sillon_T2",
       "letra": "S",
       "color": "#FDB546",
       "puntos": [
@@ -62,7 +62,7 @@
     },
     {
       "identificador": 12,
-      "nombre": "Sillon T4",
+      "nombre": "Sillon_T4",
       "letra": "S",
       "color": "#FDB546",
       "puntos": [
@@ -185,7 +185,7 @@
       ]
     },
     {
-      "identificador": 1,
+      "identificador": 20,
       "nombre": "mesa",
       "letra": "M",
       "color": "#0A18CB",
@@ -202,7 +202,28 @@
           "x": 0,
           "y": 1
         }
+        
       ]
-    }
-  ]
+    },
+        {
+      "identificador": 21,
+      "nombre": "mesaLInv",
+      "letra": "M",
+      "color": "#0A18CB",
+      "puntos": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 1
+        },
+        {
+          "x": 1,
+          "y": 1
+        }
+        ]
+     }
+     ]
 }

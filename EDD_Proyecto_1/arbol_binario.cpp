@@ -12,10 +12,17 @@ Arbol_Binario::~Arbol_Binario(){
 
 void Arbol_Binario::Delete(Nodo_Binario *raiz){
     if(raiz==NULL){return;}
-    Delete(raiz->getIzquierda());
-    Delete(raiz->getDerecha());
+    if(raiz->getIzquierda() != NULL){
+        Delete(raiz->getIzquierda());
+    }
+    if(raiz->getDerecha() != NULL){
+        Delete(raiz->getDerecha());
+    }
     raiz->getListaPuntos()->~Lista_Puntos();
+    raiz->setIzquierda(NULL);
+    raiz->setDerecha(NULL);
     delete raiz;
+    raiz = NULL;
 }
 
 Nodo_Binario* Arbol_Binario::getObjeto(int id, Nodo_Binario* raiz){
@@ -51,14 +58,25 @@ Nodo_Binario* Arbol_Binario::insertar(Nodo_Binario* raiz, int id, string nombre,
         raiz->setIzquierda(NULL);
     } else if(id<raiz->getId()){
         Nodo_Binario* izq = insertar(raiz->getIzquierda(), id, nombre, letra, color, xy, raiz);
+        //izq->setIzquierda(NULL);
+        //izq->setDerecha(NULL);
         if(izq->getId() != raiz->getId()){
             raiz->setIzquierda(izq);
         }
     } else if(id>raiz->getId()){
         Nodo_Binario* der = insertar(raiz->getDerecha(), id, nombre, letra, color, xy, raiz);
+        //der->setIzquierda(NULL);
+        //der->setDerecha(NULL);
         if(der->getId() != raiz->getId()){
             raiz->setDerecha(der);
         }
+    } else if(id == raiz->getId()){
+        raiz->setId(id);
+        raiz->setName(nombre);
+        raiz->setLetra(letra);
+        raiz->setColor(color);
+        raiz->setListaPuntos(xy);
+        raiz->setPadre(padre);
     }
     return raiz;
 }
@@ -100,28 +118,53 @@ void Arbol_Binario::recorrerInorden(Nodo_Binario* raiz){
 
 }
 
-Arbol_Binario* Arbol_Binario::copiarArbolInOrden(Arbol_Binario* arbolCopiado){
+Arbol_Binario* Arbol_Binario::copiarEsteArbolPreOrden(){
+    Arbol_Binario* nuevoArbol = new Arbol_Binario();
+    Nodo_Binario* raiz = this->getRaiz();
+    nuevoArbol->insertar(raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos());
 
+    nuevoArbol->llenarArbolCopiado(raiz, nuevoArbol);
 
-
+    return nuevoArbol;
 }
+
+void Arbol_Binario::llenarArbolCopiado(Nodo_Binario* raiz, Arbol_Binario* nuevoArbol){
+
+    if(raiz == NULL){
+        return;
+    }
+
+    nuevoArbol->insertar(raiz, raiz->getId(), raiz->getName(), raiz->getLetra(), raiz->getColor(), raiz->getListaPuntos(), raiz);
+
+    if(raiz->getIzquierda()!=NULL){
+        llenarArbolCopiado(raiz->getIzquierda(), nuevoArbol);
+    }
+    if(raiz->getDerecha()!=NULL){
+        llenarArbolCopiado(raiz->getDerecha(), nuevoArbol);
+    }
+}
+
 
 void Arbol_Binario::insertar(int id, string nombre, char letra, string color, Lista_Puntos* xy){
     this->raiz=insertar(this->getRaiz(), id, nombre, letra, color, xy, NULL);
 }
 
-void Arbol_Binario::crearGrafica(){
+void Arbol_Binario::crearGrafica(string nombreProyecto, int idNivel){
     Nodo_Binario* aux = this->getRaiz();
 
+    string nombreArchivo = nombreProyecto + "_Nivel_" + to_string(idNivel) + "_ABB" + ".gv";
+    string nombreGrafica = nombreProyecto + "_Nivel_" + to_string(idNivel) + "_ABB" + ".ps";
+
     cout << "ARBOL BINARIO" << endl;
-    ofstream MyFile("BinarioGrafica.gv");
+    ofstream MyFile(nombreArchivo);
     MyFile << "digraph G {";
     MyFile << "\n";
     MyFile << "rankdir = TB; \n";
     MyFile << "node [shape=record, width=.1, height=.1]; \n";
 
+
     if(this->getRaiz()->getDerecha() == NULL && this->getRaiz()->getIzquierda() == NULL){
-        MyFile << "Objeto_" << this->getRaiz()->getName() << "; \n";
+        MyFile << "Objeto_" << aux->getName() << aux->getId() << "; \n";
     } else {
         try {
             crearGraficaRamas(MyFile, aux);
@@ -135,7 +178,7 @@ void Arbol_Binario::crearGrafica(){
     MyFile.close();
     try {
         cout << "Creating" << endl;
-        system("dot -Tps BinarioGrafica.gv -o BinarioGrafica.ps");
+        system(("dot -Tps " + nombreArchivo + " -o " + nombreGrafica).c_str());
     } catch (exception e) {
         cout << "Oscar error occurred" << endl;
     }
@@ -147,12 +190,12 @@ void Arbol_Binario::crearGraficaRamas(ofstream &file, Nodo_Binario* aux){
     cout << "CodigoNodo: " << aux->getId() << endl;
 
     if(aux->getIzquierda() != NULL){
-        file << "Objeto_" << aux->getId() << aux->getName() << "->" << "Objeto_" << aux->getIzquierda()->getId() << aux->getIzquierda()->getName() <<  "; \n";
+        file << "Objeto_" << aux->getName() << "_id_"  << aux->getId() << "->" << "Objeto_" << aux->getIzquierda()->getName() << "_id_" << aux->getIzquierda()->getId() << "; \n";
         crearGraficaRamas(file, aux->getIzquierda());
     }
 
     if(aux->getDerecha() != NULL){
-        file << "Objeto_" << aux->getId() << aux->getName() << "->" << "Objeto_" << aux->getDerecha()->getId()<< aux->getDerecha()->getName() <<  "; \n";
+        file << "Objeto_" << aux->getName() << "_id_"  << aux->getId() << "->" << "Objeto_" << aux->getDerecha()->getName() << "_id_" << aux->getDerecha()->getId() <<  "; \n";
         crearGraficaRamas(file, aux->getDerecha());
     }
 }
@@ -212,7 +255,7 @@ Nodo_Binario* Arbol_Binario::minimo(Nodo_Binario* raiz){
 
 void Arbol_Binario::reemplazar(Nodo_Binario* nodoRemplazar, Nodo_Binario* nuevoNodo){
     if(nodoRemplazar->getPadre()){
-        if(nodoRemplazar->getId() == nodoRemplazar->getPadre()->getIzquierda()->getId()){
+        if(nodoRemplazar->getPadre()->getIzquierda() != NULL && nodoRemplazar->getId() == nodoRemplazar->getPadre()->getIzquierda()->getId()){
             nodoRemplazar->getPadre()->setIzquierda(nuevoNodo);
         }
         else if(nodoRemplazar->getId() == nodoRemplazar->getPadre()->getDerecha()->getId()){

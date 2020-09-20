@@ -15,7 +15,6 @@ void Lista_Niveles::Delete(Nodo_Nivel* raiz){
     Nodo_Nivel* actual = raiz;
     Nodo_Nivel* next= raiz->getSiguiente();
     while(actual != NULL){
-        actual->~Nodo_Nivel();
         delete actual;
         actual = NULL;
         if(next != NULL){
@@ -72,14 +71,17 @@ void Lista_Niveles::searchNode(int id)
 void Lista_Niveles::deleteNode(int id){
     Nodo_Nivel *aux = this->head;
         while(aux != NULL){
-
             if(aux->getId() == id){
                 if(aux == this->head){
                     if(aux->getSiguiente() == NULL){
                         this->head = NULL;
+                        this->tail = NULL;
                     } else {
                         this->head = this->head->getSiguiente();
                         this->head->setAnterior(NULL);
+                        if(this->head->getSiguiente() == NULL){
+                            this->tail = this->head;
+                        }
                     }
                 } else if (aux == this->tail){
                     this->tail = aux->getAnterior();
@@ -101,6 +103,15 @@ void Lista_Niveles::graficarNiveles(string nombreProyecto){
     while(actual != NULL){
         string nombreNivel = "Proyecto_" + nombreProyecto + "_Nivel" + to_string(actual->getId());
         actual->getMatriz()->crearGrafica(nombreNivel);
+        actual->getABB()->crearGrafica(nombreProyecto, actual->getId());
+        actual = actual->getSiguiente();
+    }
+}
+
+void Lista_Niveles::graficarTodosABB(string nombreProyecto){
+    Nodo_Nivel* actual = this->getHead();
+    while(actual != NULL){
+        actual->getABB()->crearGrafica(nombreProyecto, actual->getId());
         actual = actual->getSiguiente();
     }
 }

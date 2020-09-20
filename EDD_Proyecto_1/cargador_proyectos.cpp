@@ -52,26 +52,25 @@ Lista_Niveles* Cargador_Proyectos::cargarNiveles(json jasonFile, int numeroProye
     //****Imprimimos cantidad de Niveles
     int numeroNiveles = jasonFile["proyectos"][numeroProyecto]["niveles"].size();
     cout << "Niveles:" << numeroNiveles << endl;
-    //****Imprimimos cantidad de Niveles
 
     Lista_Niveles* listaNiveles = new Lista_Niveles();
 
-    numeroNiveles = jasonFile["proyectos"][numeroProyecto]["niveles"].size();
-
-
     for(int j = 0; j < numeroNiveles; j++){ // j = numero nivel
+        Arbol_Binario* nuevoABB = new Arbol_Binario();
         //Cargar Arbol Binario
         if(abbActual == NULL){
             abbActual = cargarLibreriasNivel(jasonFile, numeroProyecto, j);
         } else {
             //Comparar si tenemos los mismo objetos, si no los tenemos, agregarlo al abbActual
             agregarObjetosExtra(jasonFile, abbActual, numeroProyecto, j); //j = numero nivel
+            //Cremos nuevo ABB y lo agregamos al nivel (Cada nivel tiene su propio ABB)
+            agregarObjetosExtra(jasonFile, nuevoABB, numeroProyecto, j);
         }
 
         Matriz* nuevaMatriz = crearMatriz(jasonFile, numeroProyecto, j, abbActual);
         int idNivel = jasonFile["proyectos"][numeroProyecto]["niveles"][j]["nivel"];
 
-        Nodo_Nivel* nodoNivel = new Nodo_Nivel(idNivel, nuevaMatriz, abbActual);
+        Nodo_Nivel* nodoNivel = new Nodo_Nivel(idNivel, nuevaMatriz, nuevoABB);
 
         cout << "Insertando Nivel: " << jasonFile["proyectos"][numeroProyecto]["niveles"][j]["nivel"] << endl;
 
@@ -246,7 +245,6 @@ Lista_Puntos* Cargador_Proyectos::cargarCoordenadasObjetosProyecto(json jasonFil
     return nuevaListaPuntos;
 }
 
-
 //Cargar Librerias y Cargar Librerias de Nivel
 Arbol_Binario* Cargador_Proyectos::cargarLibrerias(string nombreArchivo){
     int numeroObjetos = 0;
@@ -350,7 +348,6 @@ void Cargador_Proyectos::agregarObjetosExtra(json jasonFile, Arbol_Binario* arbo
         cout << "Insertando Extra: " << (jasonFile["proyectos"][indiceProyecto]["niveles"][indiceNivel]["objetos"][i]["nombre"]) << endl;
         cout << "Done" << endl;
     }
-
 }
 
 //Metodos para Agregar Nivel Extra a Lista de Niveles
@@ -381,19 +378,25 @@ void Cargador_Proyectos::agregarNivelExtra(Lista_Niveles *listaActual, Arbol_Bin
     Lista_Niveles* listaNiveles = new Lista_Niveles();
 
     //A
-    for(int j = 0; j < numeroNiveles; j++){ // j = numero nivel
+    for(int j = 0; j < numeroNiveles; j++){
+        Arbol_Binario* nuevoABB = new Arbol_Binario();
+        // j = numero nivel
         //Cargar Arbol Binario
         if(abbActual == NULL){
             abbActual = cargarLibreriasNivelExtra(jasonFile,  j);
         } else {
             //Comparar si tenemos los mismo objetos, si no los tenemos, agregarlo al abbActual
             agregarObjetosExtraNivelExtra(jasonFile, abbActual, j); //j = numero nivel
+
+            //Cremos nuevo ABB y lo agregamos al nivel (Cada nivel tiene su propio ABB)
+            agregarObjetosExtraNivelExtra(jasonFile, nuevoABB, j);
         }
+
 
         Matriz* nuevaMatriz = crearMatrizNivelExtra(jasonFile, j);
         int idNivel = jasonFile["niveles"][j]["nivel"];
 
-        Nodo_Nivel* nodoNivel = new Nodo_Nivel(idNivel, nuevaMatriz, abbActual);
+        Nodo_Nivel* nodoNivel = new Nodo_Nivel(idNivel, nuevaMatriz, nuevoABB);
 
         cout << "Insertando Nivel: " << jasonFile["niveles"][j]["nivel"] << endl;
 

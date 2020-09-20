@@ -39,13 +39,17 @@ void MenuPrincipal::imprimirMenu(){
             imprimirEspacios(20);
         }
         if(opcion == 2){
-            arbolProyectos->recorrerArbol(arbolProyectos->getRaiz());
-            int a;
-            cout << "Ingrese id de proyecto a editar: ";
-            cin >> a;
-            menuEditarNivel menuEditar;
-            menuEditar.mostrarMenuEdicion(arbolProyectos, arbolObjetos, a);
-            imprimirEspacios(20);
+            if(arbolProyectos != NULL){
+                arbolProyectos->recorrerArbol(arbolProyectos->getRaiz());
+                int a;
+                cout << "Ingrese id de proyecto a editar: ";
+                cin >> a;
+                menuEditarNivel menuEditar;
+                menuEditar.mostrarMenuEdicion(arbolProyectos, arbolObjetos, a);
+            } else {
+                cout << endl << "No proyectos.." << endl;
+            }
+            imprimirEspacios(10);
         }
         if(opcion == 3){
             Cargador_Proyectos cargador;
@@ -59,16 +63,13 @@ void MenuPrincipal::imprimirMenu(){
             cin >> nombreArchivo;
             arbolProyectos = cargador.cargarNuevo(nombreArchivo, arbolObjetos);
             if(arbolObjetos!=NULL){
-                arbolObjetos->crearGrafica();
+                arbolObjetos->crearGrafica("ABB_Universal", 0);
             }
             imprimirEspacios(20);
         }
         if(opcion == 4){
             if(arbolProyectos!=NULL){
                 arbolProyectos->graficarTodosProyectos(arbolProyectos->getRaiz());
-            }
-            if(arbolObjetos != NULL){
-                arbolObjetos->crearGrafica();
             }
             imprimirEspacios(20);
         }
@@ -88,7 +89,7 @@ void MenuPrincipal::imprimirMenu(){
             cin >> nombreArchivo;
             arbolObjetos = cargador.cargarLibrerias(nombreArchivo);
             if(arbolObjetos != NULL){
-                arbolObjetos->crearGrafica();
+                arbolObjetos->crearGrafica("ABB_Universal", 0);
             }
             imprimirEspacios(20);
         }
@@ -106,3 +107,4 @@ void MenuPrincipal::imprimirMenu(){
     }
 
 }
+

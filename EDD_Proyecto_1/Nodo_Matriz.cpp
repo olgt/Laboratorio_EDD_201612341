@@ -9,5 +9,8 @@ Nodo_Matriz::Nodo_Matriz()
 }
 
 Nodo_Matriz::~Nodo_Matriz(){
-
+    this->abajo = NULL;
+    this->arriba = NULL;
+    this->derecha = NULL;
+    this->izquierda = NULL;
 }

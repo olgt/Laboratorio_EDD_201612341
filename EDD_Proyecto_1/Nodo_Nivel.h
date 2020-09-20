@@ -20,6 +20,7 @@ private:
 
 public:
     Nodo_Nivel(int id, Matriz* matriz, Arbol_Binario* abb);
+
     ~Nodo_Nivel();
 
     void imprimirOpciones();
@@ -32,6 +33,7 @@ public:
 
     Matriz* getMatriz();
     void setMatriz(Matriz* nuevaMatriz);
+    void setId(int id);
 
     void setABB(Arbol_Binario* abb);
     Arbol_Binario* getABB();

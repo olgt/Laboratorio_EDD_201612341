@@ -22,6 +22,7 @@ void menuEditarNivel2::mostrarNiveles(){
     cout << "Ingrese Nivel a Editar: ";
     cin >> idNivel;
     graficarNivel(idNivel);
+
     Nodo_Nivel* nivelActual = this->proyecto->getListaNiveles()->getNodo(idNivel);
 
     imprimirEspacios(10);
@@ -49,17 +50,17 @@ void menuEditarNivel2::mostrarNiveles(){
             imprimirEspacios(10);
         }
         if(opcion == 2){
-
+            eliminarObjeto(nivelActual);
             imprimirEspacios(10);
         }
         if(opcion == 3){
-            int idNivel;
+
+            eliminarPared(nivelActual);
             imprimirEspacios(10);
-
         }
-        if(opcion == 3){
-
-
+        if(opcion == 4){
+            copiarNivel();
+            graficarNivel(idNivel);
             imprimirEspacios(10);
 
         }
@@ -71,7 +72,6 @@ void menuEditarNivel2::mostrarNiveles(){
             isContinue = false;
         }
         graficarNivel(idNivel);
-
     }
 
 }
@@ -79,7 +79,8 @@ void menuEditarNivel2::mostrarNiveles(){
 
 void menuEditarNivel2::graficarNivel(int id){
     string nombre = "Proyecto_" + this->proyecto->getName() + "_Nivel" + to_string(id);
-    this->proyecto->getListaNiveles()->getNodo(id)->getMatriz()->crearGrafica(nombre);
+    Matriz* matrizActual = this->proyecto->getListaNiveles()->getNodo(id)->getMatriz();
+    matrizActual->crearGrafica(nombre);
 }
 
 void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
@@ -100,9 +101,10 @@ void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
     cout << "Inserte posicion Y: ";
     cin >> y;
     imprimirEspacios(1);
-    cout << "Inserte grados (0/45/90): ";
+    cout << "Inserte grados (0/45/90/180/270): ";
     cin >> grados;
     imprimirEspacios(1);
+
 
 
     int size = nodoAgregar->getListaPuntos()->getSizeNodos();
@@ -116,6 +118,10 @@ void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
     int posY = 0;
     int posNuevaX45;
     int posNuevaY45;
+
+    //Agregamos al ABB del nivel (Jalamos del universal)
+    nivelActual->getABB()->insertar(id, objeto, letra, color, listaActualPuntos);
+    nivelActual->getABB()->crearGrafica(this->proyecto->getName(), nivelActual->getId());
 
 
     if(grados == 0){
@@ -137,8 +143,10 @@ void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
             nivelActual->getMatriz()->add(nodoAgregado);
 
         }
+
     } else if (grados == 45){
         for(int i = 0; i < size; i++){
+            //Ponemos las x en donde son sin rotaciones
             if(xInicialObjeto-listaActualPuntos->getPunto(i)->getX() <= xInicialObjeto){
                 posX = x + (xInicialObjeto-listaActualPuntos->getPunto(i)->getX())*-1;
             } else{
@@ -151,29 +159,43 @@ void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
                 posY = y - yInicialObjeto-listaActualPuntos->getPunto(i)->getY();
             }
 
+            //Comenzamos a rotar
             if(i != 0){
                 int diferenciaX = listaActualPuntos->getPunto(i)->getX() - xInicialObjeto;
                 int diferenciaY = listaActualPuntos->getPunto(i)->getY() - yInicialObjeto;
+                Nodo_Puntos* nodoPuntosActual = listaActualPuntos->getPunto(i);
+                Nodo_Puntos* nodoSiguiente = listaActualPuntos->getPunto(i+1);
+                Nodo_Puntos* nodoAnterior = listaActualPuntos->getPunto(i-1);
 
                 //Rotaciones cuando esta inclinado 45 grados
                 if(abs(diferenciaX) == abs(diferenciaY)){
-                    if(diferenciaY > 0){
-                        if(diferenciaX > 0){
+                    if(nodoAnterior!= NULL && nodoAnterior->getX() != nodoPuntosActual->getX()
+                            && nodoAnterior->getY() == nodoPuntosActual->getY()){
+                        if(diferenciaX < 0){
+                            posNuevaX45 = x - abs(diferenciaX) + 1;
+                            posNuevaY45 = y + abs(diferenciaX) + 1;
+                        }if(diferenciaX > 0){
+                            posNuevaX45 = x + abs(diferenciaX) + 1;
+                            posNuevaY45 = y + abs(diferenciaX) - 1;
+                        }
+                    }
+                    else if(diferenciaY > 0){ //El Nodo Actual esta a la derecha del inicio
+                        if(diferenciaX > 0){ //Nodo Actual esta abajo (mayor)
                             posNuevaY45 = y;
                             posNuevaX45 = x + diferenciaX;
                         }
-                        if(diferenciaX < 0){
+                        if(diferenciaX < 0){ //Nodo Actual esta arriba (menor)
                             posNuevaX45 = x;
                             posNuevaY45 = y + abs(diferenciaY);
                         }
 
                     }
-                    if(diferenciaY < 0){
-                        if(diferenciaX > 0){
+                    else if(diferenciaY < 0){ //El Nodo Actual esta a la izquierda del inicio
+                        if(diferenciaX > 0){ //Nodo Actual esta abajo (Mayor)
                             posNuevaY45 = y - abs(diferenciaY);
                             posNuevaX45 = x;
                         }
-                        if(diferenciaX < 0){
+                        if(diferenciaX < 0){ //Nodo Actual esta arriba(menor)
                             posNuevaX45 = x - abs(diferenciaX);
                             posNuevaY45 = y;
                         }
@@ -211,22 +233,270 @@ void menuEditarNivel2::agregarObjeto(Nodo_Nivel* nivelActual){
             Nodo_Objeto* nodoAgregado = new Nodo_Objeto(id, objeto, letra, color, posNuevaX45, posNuevaY45);
 
             nivelActual->getMatriz()->add(nodoAgregado);
-
         }
+    }
+    else if (grados == 90){
+        for(int i = 0; i < size; i++){
+            //Ponemos las x en donde son sin rotaciones
+            if(xInicialObjeto-listaActualPuntos->getPunto(i)->getX() <= xInicialObjeto){
+                posX = x + (xInicialObjeto-listaActualPuntos->getPunto(i)->getX())*-1;
+            } else{
+                posX = x - xInicialObjeto-listaActualPuntos->getPunto(i)->getX();
+            }
+
+            if(yInicialObjeto-listaActualPuntos->getPunto(i)->getY() <= yInicialObjeto){
+                posY = y + (yInicialObjeto-listaActualPuntos->getPunto(i)->getY())*-1;
+            } else{
+                posY = y - yInicialObjeto-listaActualPuntos->getPunto(i)->getY();
+            }
+
+            //Comenzamos a rotar
+            if(i != 0){
+                int diferenciaX = listaActualPuntos->getPunto(i)->getX() - xInicialObjeto;
+                int diferenciaY = listaActualPuntos->getPunto(i)->getY() - yInicialObjeto;
+                Nodo_Puntos* nodoPuntosActual = listaActualPuntos->getPunto(i);
+                Nodo_Puntos* nodoSiguiente = listaActualPuntos->getPunto(i+1);
+                Nodo_Puntos* nodoAnterior = listaActualPuntos->getPunto(i-1);
+
+                //Rotaciones cuando esta inclinado 45 grados
+                if(abs(diferenciaX) == abs(diferenciaY)){
+                    if(nodoAnterior!= NULL && nodoAnterior->getX() != nodoPuntosActual->getX()
+                            && nodoAnterior->getY() == nodoPuntosActual->getY()){
+                        if(diferenciaX < 0){
+                            posNuevaX45 = x - abs(diferenciaX) + 1;
+                            posNuevaY45 = y + abs(diferenciaX) + 1;
+                        }if(diferenciaX > 0){
+                            posNuevaX45 = x + abs(diferenciaX) + 1;
+                            posNuevaY45 = y + abs(diferenciaX) - 1;
+                        }
+                    }
+                    else if(diferenciaY > 0){ //El Nodo Actual esta a la derecha del inicio
+                        if(diferenciaX > 0){ //Nodo Actual esta abajo (mayor)
+                            posNuevaY45 = y;
+                            posNuevaX45 = x + diferenciaX;
+                        }
+                        if(diferenciaX < 0){ //Nodo Actual esta arriba (menor)
+                            posNuevaX45 = x;
+                            posNuevaY45 = y + abs(diferenciaY);
+                        }
+
+                    }
+                    else if(diferenciaY < 0){ //El Nodo Actual esta a la izquierda del inicio
+                        if(diferenciaX > 0){ //Nodo Actual esta abajo (Mayor)
+                            posNuevaY45 = y - abs(diferenciaY);
+                            posNuevaX45 = x;
+                        }
+                        if(diferenciaX < 0){ //Nodo Actual esta arriba(menor)
+                            posNuevaX45 = x - abs(diferenciaX);
+                            posNuevaY45 = y;
+                        }
+                    }
+
+                }
+                //Rotaciones cuando esta en algun plano x o y
+                else if(diferenciaX == 0){
+                    if(diferenciaY > 0){
+                        posNuevaY45 = y + abs(diferenciaY);
+                        posNuevaX45 = x + abs(diferenciaY);
+                    }
+                    if(diferenciaY < 0){
+                        posNuevaX45 = x - abs(diferenciaY);
+                        posNuevaY45 = y - abs(diferenciaY);
+                    }
+                }
+                else if(diferenciaY == 0){
+                    if(diferenciaX > 0){
+                        posNuevaY45 = y - abs(diferenciaX);
+                        posNuevaX45 = x + abs(diferenciaX);
+                    }
+                    if(diferenciaX < 0){
+                        posNuevaX45 = x - abs(diferenciaX);
+                        posNuevaY45 = y + abs(diferenciaX);
+                    }
+                }
+
+
+            } else {
+                posNuevaX45 = posX;
+                posNuevaY45 = posY;
+            }
+
+            Nodo_Objeto* nodoAgregado = new Nodo_Objeto(id, objeto, letra, color, posNuevaX45, posNuevaY45);
+
+            nivelActual->getMatriz()->add(nodoAgregado);
+        }
+    }
+    else if (grados == 180){
+    }
+    else if (grados == 270){
+
     }
 
     this->proyecto->getListaNiveles()->aumentarObjetos(1);
 
-    //RM[x+y+1][-x+y+n] n=no columns
 }
 
+Nodo_Objeto* menuEditarNivel2::metodoGiro(Nodo_Binario* nodoAgregar, int x, int y, int grados){
 
-void menuEditarNivel2::eliminarObjeto(){
+    int xInicialObjeto, yInicialObjeto;
+    string objeto, color;
+    char letra;
+
+    int size = nodoAgregar->getListaPuntos()->getSizeNodos();
+    Lista_Puntos* listaActualPuntos = nodoAgregar->getListaPuntos();
+    xInicialObjeto = listaActualPuntos->gethead()->getX();
+    yInicialObjeto = listaActualPuntos->gethead()->getY();
+    objeto = nodoAgregar->getName();
+    color = nodoAgregar->getColor();
+    letra = nodoAgregar->getLetra();
+    int id = nodoAgregar->getId();
+    int posX = 0;
+    int posY = 0;
+    int veces = 0;
+    int vez = 0;
+    int & vezActual = vez;
+
+    veces = grados/45;
+
+    for(int i = 0; i < size; i++){        //Ponemos las x en donde son sin rotaciones
+        if(xInicialObjeto-listaActualPuntos->getPunto(i)->getX() <= xInicialObjeto){
+            posX = x + (xInicialObjeto-listaActualPuntos->getPunto(i)->getX())*-1;
+        } else{
+            posX = x - xInicialObjeto-listaActualPuntos->getPunto(i)->getX();
+        }
+
+        if(yInicialObjeto-listaActualPuntos->getPunto(i)->getY() <= yInicialObjeto){
+            posY = y + (yInicialObjeto-listaActualPuntos->getPunto(i)->getY())*-1;
+        } else{
+            posY = y - yInicialObjeto-listaActualPuntos->getPunto(i)->getY();
+        }
+    }
+
+    //girar45(size, x, y, xInicialObjeto, yInicialObjeto, posX, posY, listaActualPuntos, veces, vezActual, id, objeto, letra, color);
 
 }
-void menuEditarNivel2::eliminarPared(){
+
+Nodo_Objeto* menuEditarNivel2::girar45(Nodo_Nivel* nivelActual, int size, int x, int y, int xInicialObjeto, int yInicialObjeto,int posX, int posY,
+                                       Lista_Puntos* listaActualPuntos, int veces, int &vezActual, int id, string objeto,
+                                       char letra, string color){
+    int posNuevaX45;
+    int posNuevaY45;
+
+    for(int i = 0; i < size; i++){
+        //Comenzamos a rotar
+        if(i != 0){
+            int diferenciaX = listaActualPuntos->getPunto(i)->getX() - xInicialObjeto;
+            int diferenciaY = listaActualPuntos->getPunto(i)->getY() - yInicialObjeto;
+            Nodo_Puntos* nodoPuntosActual = listaActualPuntos->getPunto(i);
+            Nodo_Puntos* nodoSiguiente = listaActualPuntos->getPunto(i+1);
+            Nodo_Puntos* nodoAnterior = listaActualPuntos->getPunto(i-1);
+
+            //Rotaciones cuando esta inclinado 45 grados
+            if(abs(diferenciaX) == abs(diferenciaY)){
+                if(nodoAnterior!= NULL && nodoAnterior->getX() != nodoPuntosActual->getX()
+                        && nodoAnterior->getY() == nodoPuntosActual->getY()){
+                    if(diferenciaX < 0){
+                        posNuevaX45 = x - abs(diferenciaX) + 1;
+                        posNuevaY45 = y + abs(diferenciaX) + 1;
+                    }if(diferenciaX > 0){
+                        posNuevaX45 = x + abs(diferenciaX) + 1;
+                        posNuevaY45 = y + abs(diferenciaX) - 1;
+                    }
+                }
+                else if(diferenciaY > 0){ //El Nodo Actual esta a la derecha del inicio
+                    if(diferenciaX > 0){ //Nodo Actual esta abajo (mayor)
+                        posNuevaY45 = y;
+                        posNuevaX45 = x + diferenciaX;
+                    }
+                    if(diferenciaX < 0){ //Nodo Actual esta arriba (menor)
+                        posNuevaX45 = x;
+                        posNuevaY45 = y + abs(diferenciaY);
+                    }
+
+                }
+                else if(diferenciaY < 0){ //El Nodo Actual esta a la izquierda del inicio
+                    if(diferenciaX > 0){ //Nodo Actual esta abajo (Mayor)
+                        posNuevaY45 = y - abs(diferenciaY);
+                        posNuevaX45 = x;
+                    }
+                    if(diferenciaX < 0){ //Nodo Actual esta arriba(menor)
+                        posNuevaX45 = x - abs(diferenciaX);
+                        posNuevaY45 = y;
+                    }
+                }
+
+            }
+            //Rotaciones cuando esta en algun plano x o y
+            else if(diferenciaX == 0){
+                if(diferenciaY > 0){
+                    posNuevaY45 = y + abs(diferenciaY);
+                    posNuevaX45 = x + abs(diferenciaY);
+                }
+                if(diferenciaY < 0){
+                    posNuevaX45 = x - abs(diferenciaY);
+                    posNuevaY45 = y - abs(diferenciaY);
+                }
+            }
+            else if(diferenciaY == 0){
+                if(diferenciaX > 0){
+                    posNuevaY45 = y - abs(diferenciaX);
+                    posNuevaX45 = x + abs(diferenciaX);
+                }
+                if(diferenciaX < 0){
+                    posNuevaX45 = x - abs(diferenciaX);
+                    posNuevaY45 = y + abs(diferenciaX);
+                }
+            }
+
+        } else {
+            posNuevaX45 = posX;
+            posNuevaY45 = posY;
+        }
+       }
+    if(vezActual >= veces){
+        Nodo_Objeto* nodoAgregado = new Nodo_Objeto(id, objeto, letra, color, posNuevaX45, posNuevaY45);
+        nivelActual->getMatriz()->add(nodoAgregado);
+        return nodoAgregado;
+    } else {
+        vezActual++;
+        girar45(nivelActual, size, x, y, xInicialObjeto, yInicialObjeto, posX, posY, listaActualPuntos, veces, vezActual, id, objeto, letra, color);
+    }
+}
+
+void menuEditarNivel2::eliminarObjeto(Nodo_Nivel* nivelActual){
+    this->arbolObjetos->recorrerInorden(this->arbolObjetos->getRaiz());
+
+    int idObjeto;
+
+    cout << "Seleccione Objeto a Borrar: ";
+    cin >> idObjeto;
+    nivelActual->getMatriz()->eliminarObjeto(idObjeto);
+    graficarNivel(nivelActual->getId());
+
+    this->arbolObjetos->eliminarNodo(this->arbolObjetos->getRaiz(), idObjeto);
+
+    this->arbolObjetos->crearGrafica(this->proyecto->getName(), nivelActual->getId());
+
+    imprimirEspacios(1);
+
+
 
 }
+
+void menuEditarNivel2::eliminarPared(Nodo_Nivel* nivelActual){
+    int x1, x2, y1, y2;
+    cout << endl << "Ingrese Coordenada X Inicio: ";
+    cin >> x1;
+    cout << endl << "Ingrese Coordenada Y Inicio: ";
+    cin >> y1;
+    cout << endl << "Ingrese Coordenada X Final: ";
+    cin >> x2;
+    cout << endl << "Ingrese Coordenada Y Final: ";
+    cin >> y2;
+
+    nivelActual->getMatriz()->eliminarParedes(x1, y1, x2, y2);
+}
+
 void menuEditarNivel2::copiarNivel(){
     Nodo_Nivel* nivelACopiar;
     Nodo_Nivel* nivelASobrescribir;
@@ -235,13 +505,9 @@ void menuEditarNivel2::copiarNivel(){
     int idNivelASobreEscribir = 0;
 
     this->proyecto->getListaNiveles()->imprimirNiveles();
-
     cout << "Ingrese Nivel a Copiar: " ;
     cin >> idNivelACopiar;
     imprimirEspacios(2);
-
-    nivelACopiar= this->proyecto->getListaNiveles()->getNodo(idNivelACopiar);
-    Matriz* matrizCopiada = nivelACopiar->getMatriz()->copiarMatriz();
 
     this->proyecto->getListaNiveles()->imprimirNiveles();
     cout << "En que nivel quiere copiarlo? ";
@@ -249,13 +515,25 @@ void menuEditarNivel2::copiarNivel(){
 
     nivelASobrescribir = this->proyecto->getListaNiveles()->getNodo(idNivelASobreEscribir);
 
+    nivelACopiar= this->proyecto->getListaNiveles()->getNodo(idNivelACopiar);
+    Matriz* matrizCopiada = nivelACopiar->getMatriz()->copiarMatriz();
 
+    //Nivel Copiando
 
+    //    delete nivelASobrescribir; <<<<<<< Este me daba error y borraba la matriz y abb
+    delete nivelASobrescribir->getMatriz(); //Si los llamo por separado no me da error
+    delete nivelASobrescribir->getABB(); //
 
+    nivelASobrescribir->setMatriz(matrizCopiada);
+    nivelASobrescribir->setABB(nivelACopiar->getABB()->copiarEsteArbolPreOrden());
+    nivelASobrescribir->setId(idNivelASobreEscribir);
+    graficarNivel(nivelASobrescribir->getId());
 }
+
 void menuEditarNivel2::crearCantidadPisos(){
 
 }
+
 void menuEditarNivel2::moveObjeto(){
 
 }

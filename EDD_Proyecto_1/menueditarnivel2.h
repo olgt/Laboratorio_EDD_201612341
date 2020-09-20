@@ -28,12 +28,15 @@ public:
     void graficarNivel(int id);
 
     void agregarObjeto(Nodo_Nivel* nivelActual);
-    void eliminarObjeto();
-    void eliminarPared();
+    void eliminarObjeto(Nodo_Nivel* nivelActual);
+    void eliminarPared(Nodo_Nivel* nivelActual);
     void copiarNivel();
     void crearCantidadPisos();
     void moveObjeto();
-
+    Nodo_Objeto* metodoGiro(Nodo_Binario* nodoAgregar, int x, int y, int grados);
+    Nodo_Objeto* girar45(Nodo_Nivel* nodoActual, int size, int x, int y, int xInicialObjeto, int yInicialObjeto,int posX, int posY,
+                  Lista_Puntos* listaActualPuntos, int veces, int &vezActual, int id, string objeto,
+                  char letra, string color);
 };
 
 #endif // MENUEDITARNIVEL2_H
